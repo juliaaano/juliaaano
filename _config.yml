@@ -1,5 +1,5 @@
 name: Juliano Boesel Mohr
 markdown: kramdown
-permalink: /blog/:year/:month/:day/:title
+permalink: /blog/:year/:month/:day/:title/
 gems:
   - jekyll-feed
