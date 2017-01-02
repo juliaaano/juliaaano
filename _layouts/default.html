@@ -4,8 +4,8 @@
 <head>
     {% feed_meta %}
     <title>{{ page.title }}</title>
-    <!-- link to main stylesheet -->
     <link rel="stylesheet" type="text/css" href="/css/main.css">
+    {% seo %}
 </head>
 
 <body>
@@ -18,7 +18,6 @@
     <div class="container">
         {{ content }}
     </div>
-    <!-- /.container -->
     <footer>
         <ul>
             <li><a href="mailto:juliaaano@gmail.com">email</a></li>
