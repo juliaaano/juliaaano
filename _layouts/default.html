@@ -1,33 +1,41 @@
 ---
 layout: compress
 ---
-
 <!DOCTYPE html>
-<html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US" itemscope="" itemtype="http://schema.org/WebPage">
 
 <head>
+    <meta charset="utf-8" />
     {% feed_meta %}
-    <title>{{ page.title }}</title>
-    <link rel="stylesheet" type="text/css" href="/css/main.css">
     {% seo %}
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/typicons/typicons.css">
 </head>
 
 <body>
-    <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/about">About</a></li>
-        </ul>
-    </nav>
-    <div class="container">
-        {{ content }}
+    <div class="wrapper">
+        <aside class="header-toggle unprintable" id="header-toggle" title="show head menu" onclick="$('#header').show();$('#header-toggle').hide();">&#9776;</aside>
+        <header class="header" id="header">
+            <div class="face">
+                <a href="/about">
+                    <img src="/images/juliano-boesel-mohr-192x192.jpg" class="photo" alt="Photo of Juliano Boesel Mohr" />
+                </a>
+            </div>
+            <nav>
+                <ul class="menu social notranslate">
+                    <li><a href="https://twitter.com/intent/follow?screen_name=juliaaano" rel="nofollow" title="Follow me in Twitter"><i class="icon icon-twitter notranslate" aria-hidden="true"></i></a></li>
+                    <li><a href="/feed.xml" title="RSS Feed"><i class="icon icon-rss notranslate" aria-hidden="true"></i></a></li>
+                    <li><a href="https://github.com/juliaaano" rel="nofollow" title="My GitHub profile"><i class="icon icon-github notranslate" aria-hidden="true"></i></a></li>
+                    <li><a href="http://stackoverflow.com/users/2846785/juliaaano" rel="nofollow" title="My StackOverflow profile"><i class="icon icon-stackoverflow notranslate" aria-hidden="true"></i></a></li>
+                    <li><a href="https://www.instagram.com/julianomohr/" rel="nofollow" title="Follow me in Instagram"><i class="icon icon-instagram notranslate" aria-hidden="true"></i></a></li>
+                    <li><a href="https://www.linkedin.com/in/juliaaano" rel="nofollow" title="My LinkedIn profile"><i class="icon icon-linkedin notranslate" aria-hidden="true"></i></a></li>
+                    <li><a href="mailto:juliaaano@gmail.com" rel="nofollow" title="juliaaano@gmail.com"><i class="icon icon-mail notranslate" aria-hidden="true"></i></a></li>
+                </ul>
+            </nav>
+        </header>
     </div>
-    <footer>
-        <ul>
-            <li><a href="mailto:juliaaano@gmail.com">email</a></li>
-            <li><a href="https://github.com/juliaaano">github.com/juliaaano</a></li>
-        </ul>
-    </footer>
+    {{ content }}
     {% include disqus-count.html %}
     {% include google-analytics.html %}
 </body>

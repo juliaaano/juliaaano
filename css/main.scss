@@ -1,0 +1,143 @@
+---
+---
+
+@import 'defs';
+@import 'icons';
+@import 'wrapper';
+
+.header-toggle {
+    cursor: pointer;
+    font-size: 1.4 * $em;
+    @media all and (min-width: $width) {
+        display: none;
+    }
+}
+
+%unprintable {
+    @media print {
+        display: none !important;
+        visibility: hidden;
+    }
+}
+
+.unprintable {
+    @extend %unprintable;
+}
+
+%desktop-only {
+    @media all and (max-width: $width) {
+        display: none;
+    }
+}
+
+.desktop-only {
+    @extend %desktop-only;
+}
+
+.header {
+    @extend %desktop-only;
+    @extend %unprintable;
+    text-align: center;
+    @media all and (max-width: $width) {
+        text-align: left;
+    }
+    .hot {
+        @extend %unprintable;
+        font-family: $code-font;
+        font-size: 85%;
+        line-height: $em;
+        margin-bottom: 2 * $em;
+        margin-top: 2 * $em;
+        text-align: left;
+        ul {
+            list-style: none;
+            padding-left: 0;
+            li {
+                border-left: 4px solid $green;
+                color: darken($green, 25);
+                margin-bottom: $em;
+                padding-left: $em;
+            }
+        }
+    }
+    .menu {
+        list-style: none;
+        padding-left: 0;
+        li {
+            display: inline;
+            margin-right: .4 * $em;
+            &:after {
+                content: ' ';
+            }
+        }
+    }
+    .search {
+        form {
+            position: relative;
+        }
+        .google {
+            @extend %desktop-only;
+            height: 2.4em;
+            margin-left: 1em;
+            position: absolute;
+            top: .3em;
+            visibility: hidden;
+        }
+    }
+    .social {
+        a {
+            text-decoration: none;
+        }
+    }
+    .face {
+        position: relative;
+        .photo {
+            border-radius: 50%;
+            height: 80px;
+            width: 80px;
+        }
+        .hire {
+            @extend %desktop-only;
+            color: darken($green, 15);
+            left: 50%;
+            margin-left: 45px;
+            position: absolute;
+            text-decoration: underline;
+            top: 0;
+        }
+        .sub {
+            @extend %desktop-only;
+            color: darken($green, 15);
+            margin-right: 45px;
+            position: absolute;
+            right: 50%;
+            text-align: right;
+            text-decoration: underline;
+            top: 50px;
+        }
+    }
+}
+
+%main-font {
+    font-family: $main-font;
+}
+
+body {
+    @extend %main-font;
+    background-color: $white;
+    color: $black;
+    font-size: $em;
+    font-weight: 400;
+    height: 100%;
+    margin: 0;
+    overflow-x: hidden;
+    padding-bottom: 2 * $em;
+    padding-top: 2 * $em;
+    position: relative;
+}
+
+a,
+a:visited {
+    color: inherit;
+    text-decoration: underline;
+}

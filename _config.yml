@@ -10,3 +10,6 @@ gems:
 compress_html:
   ignore:
     envs: [development]
+
+sass:
+  style: compressed
