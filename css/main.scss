@@ -1,5 +1,5 @@
 ---
----
+--- 
 
 @import 'defs';
 @import 'icons';
@@ -140,4 +140,28 @@ a,
 a:visited {
     color: inherit;
     text-decoration: underline;
+}
+
+%gray {
+    color: $gray;
+    a,
+    a:visited {
+        color: inherit;
+    }
+}
+
+.gray {
+    @extend %gray;
+}
+
+%small {
+    font-size: .85 * $em;
+}
+
+.footer {
+    @extend %small;
+    @extend %gray;
+    @extend %desktop-only;
+    margin-top: 5 * $em;
+    text-align: center;
 }
