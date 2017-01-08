@@ -11,7 +11,7 @@ gems:
 excerpt_separator: <!--more-->
 
 # https://jekyllrb.com/docs/pagination/
-paginate: 1
+paginate: 10
 paginate_path: "/page/:num/"
 
 # https://github.com/jekyll/jekyll-feed

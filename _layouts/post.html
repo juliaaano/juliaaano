@@ -1,13 +1,74 @@
 ---
 layout: default
 ---
-<h1>{{ page.title }}</h1>
-<p class="meta">{{ page.date | date_to_string }}</p>
 
-<p>{{ page.tags | sort | array_to_sentence_string }}</p>
+<section itemscope="" itemtype="http://schema.org/BlogPosting">
 
-<div class="post">
-  {{ content }}
-</div>
+    {% include microdata.html %}
 
-{% include disqus.html %}
+    <div class="wrapper">
+        <header>
+
+            <h1 itemprop="name headline mainEntityOfPage">{{ page.title }}</h1>
+
+            <ul class="subline">
+                <li>
+                    <time itemprop="datePublished" datetime="{{ page.date | date_to_xmlschema }}">
+                        {{ page.date | date_to_long_string }}
+                    </time>
+                </li>
+
+                {% if page.location %}
+                    <li class="desktop-only" itemprop="locationCreated">{{ page.location }}</li>
+                {% endif %}
+
+                <li class="unprintable">
+                    <i class="icon icon-comments"></i>
+                    <a href="{{ site.url }}{{ page.url }}#disqus_thread" itemprop="discussionUrl">comments</a>
+                </li>
+            </ul>
+
+            <div class="buttons notranslate desktop-only">
+                <nav class="share">
+
+                    <a href="https://twitter.com/share?url={{ site.url }}{{ page.url }}&amp;text={{ page.title | cgi_escape }}" title="Share on Twitter" class="button" rel="nofollow">
+                        <span class="count count-twitter">0</span>
+                        <i class="icon icon-twitter notranslate" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/cws/share?url={{ site.url }}{{ page.url }}" title="Share on LinkedIn" class="button" rel="nofollow">
+                        <span class="count count-linkedin">0</span>
+                        <i class="icon icon-linkedin notranslate" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://plus.google.com/share?url={{ site.url }}{{ page.url }}" title="Share on Google+" class="button" rel="nofollow">
+                        <span class="count count-googleplus">0</span>
+                        <i class="icon icon-googleplus notranslate" aria-hidden="true"></i>
+                    </a>
+                    <a href="http://www.facebook.com/sharer/sharer.php?u={{ site.url }}{{ page.url }}" title="Share on Facebook" class="button" rel="nofollow">
+                        <span class="count count-facebook">0</span>
+                        <i class="icon icon-facebook notranslate" aria-hidden="true"></i>
+                    </a>
+<!--
+                    <a href="http://www.stumbleupon.com/submit?url={{ site.url }}{{ page.url }}&amp;title={{ page.title | cgi_escape }}" title="Share on StumbleUpon" class="button" rel="nofollow">
+                        <span class="count count-stumbleupon">0</span>
+                        <i class="icon icon-stumbleupon notranslate" aria-hidden="true"></i>
+                    </a>
+                    <a href="http://reddit.com/submit?url={{ site.url }}{{ page.url }}%3F{{ page.date | date: " %Y-%U " }}&amp;title={{ page.title | cgi_escape }}" title="Share on Reddit" class="button" rel="nofollow">
+                        <span class="count count-reddit">0</span>
+                        <i class="icon icon-reddit notranslate" aria-hidden="true"></i>
+                    </a>
+                    <a href="http://news.ycombinator.com/submitlink?u={{ site.url }}{{ page.url }}%3F{{ page.date | date: " %Y-%U " }}&amp;t={{ page.title | cgi_escape }}" title="Share on Hacker News" class="button" rel="nofollow">
+                        <span class="count count-hackernews">0</span>
+                        <i class="icon icon-hackernews notranslate" aria-hidden="true"></i>
+                    </a>
+ -->
+                </nav>
+            </div>
+        </header>
+        <main>
+            <article class="main" itemprop="articleBody">
+                {{ content }}
+            </article>
+        </main>
+    </div>
+    {% include disqus.html %}
+</section>

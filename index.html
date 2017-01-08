@@ -10,22 +10,7 @@ description: |
     <div class="wrapper">
         <section class="front" itemprop="blogPosts" itemscope="" itemtype="http://schema.org/BlogPosting">
 
-            <div itemprop="image" itemscope="" itemtype="http://schema.org/ImageObject">
-                <meta itemprop="url" content="{{ site.url }}/images/juliano-boesel-mohr-192x192.png" />
-                <meta itemprop="height" content="192" />
-                <meta itemprop="width" content="192" />
-            </div>
-            <div itemscope="" itemprop="author" itemtype="http://schema.org/Person" />
-                <meta itemprop="name" content="Juliano Boesel Mohr" />
-            </div>
-            <div itemscope="" itemprop="publisher" itemtype="http://schema.org/Organization">
-                <meta itemprop="name" content="juliaaano.com" />
-                <div itemprop="logo" itemscope="" itemtype="http://schema.org/ImageObject">
-                    <meta itemprop="url" content="{{ site.url }}/images/juliano-boesel-mohr-192x192.png" />
-                    <meta itemprop="height" content="192" />
-                    <meta itemprop="width" content="192" />
-                </div>
-            </div>
+            {% include microdata.html %}
 
             <header>
                 <h1>
@@ -67,11 +52,15 @@ description: |
 <div class="wrapper">
     <div class="pagination">
         {% if paginator.next_page %}
-            <a href="{{ paginator.next_page_path }}" class="left"><i class="icon icon-fast-backward"></i> Older</a>
+            <a href="{{ paginator.next_page_path }}" class="left">Older <i class="icon icon-fast-backward"></i></a>
+        {% else %}
+            <span class="mute left">Older <i class="icon icon-fast-backward"></i></span>
         {% endif %}
         <span>page {{ paginator.page }} of {{ paginator.total_pages }}<span>
         {% if paginator.previous_page %}
-            <a href="{{ paginator.previous_page_path }}" class="right">Newer <i class="icon icon-fast-forward"></i></a>
+            <a href="{{ paginator.previous_page_path }}" class="right"><i class="icon icon-fast-forward"></i> Newer</a>
+        {% else %}
+            <span class="mute right"><i class="icon icon-fast-forward"></i> Newer</span>
         {% endif %}
     </div>
 </div>

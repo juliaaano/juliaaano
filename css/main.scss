@@ -4,6 +4,8 @@
 @import 'defs';
 @import 'icons';
 @import 'wrapper';
+@import 'post';
+@import 'disqus';
 
 .header-toggle {
     cursor: pointer;
@@ -209,6 +211,10 @@ h1 {
     }
     .right {
         float: right;
+    }
+    .mute {
+        @extend %gray;
+        visibility: hidden;
     }
     a {
         text-decoration: none;

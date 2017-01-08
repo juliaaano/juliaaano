@@ -1,7 +1,8 @@
 ---
 layout: post
 title: "Blog's Second Post"
-date: 2016-01-02
+date: 2017-01-02
+location: Sydney, Australia
 comments: true
 tags: test demo
 ---

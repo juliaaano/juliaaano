@@ -1,5 +1,6 @@
 {% if jekyll.environment == "production" and page.comments %}
-<div id="disqus_thread"></div>
+<div class="disqus" role="complementary">
+<div id="disqus_thread" class="disqus-thread"></div>
 <script>
 var disqus_config = function() {
     this.page.url = document.location.href.split('?')[0].split('#')[0];

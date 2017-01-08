@@ -2,6 +2,7 @@
 layout: post
 title: "Blog's First Post"
 date: 2017-01-01
+location: Sydney, Australia
 comments: true
 tags: test demo
 ---
