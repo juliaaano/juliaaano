@@ -1,0 +1,28 @@
+---
+layout: page
+title: "Contents"
+description: |
+  Contents (archive) of all published blog posts, in chronological order.
+---
+
+All posts in chronological order:
+
+{% for post in site.posts %}
+<div class="tagged">
+    <div>
+        <a href="{{ post.url }}">
+            {{ post.title }}
+        </a>
+    </div>
+    <ul class="subline">
+        <li>
+            <time datetime="{{ post.date | date_to_xmlschema }}">
+                {{ post.date | date_to_long_string }}
+            </time>
+        </li>
+        <li class="unprintable">
+            <a href="{{ site.url }}{{ post.url }}#disqus_thread" class="notranslate">comments</a>
+        </li>
+    </ul>
+</div>
+{% endfor %}

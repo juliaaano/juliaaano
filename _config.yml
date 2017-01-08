@@ -1,15 +1,29 @@
 name: Juliano Boesel Mohr
 markdown: kramdown
 permalink: /blog/:year/:month/:day/:title/
+
 gems:
+  - jekyll-paginate
   - jekyll-feed
   - jekyll-seo-tag
   - jekyll-sitemap
+
+excerpt_separator: <!--more-->
+
+# https://jekyllrb.com/docs/pagination/
+paginate: 1
+paginate_path: "/page/:num/"
+
+# https://github.com/jekyll/jekyll-feed
+# feed:
+#   title: juliaaano.com
+#   subtitle: Programming Blog
 
 # https://github.com/penibelst/jekyll-compress-html
 compress_html:
   ignore:
     envs: [development]
 
+# https://jekyllrb.com/docs/assets/
 sass:
   style: compressed

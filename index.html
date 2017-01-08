@@ -1,13 +1,77 @@
 ---
 layout: default
+title: "Blog"
+description: |
+  Juliano Boesel Mohr ramblings. TODO.......
 ---
-<div class="blurb">
-    <h1>Hi there, I'm Juliano Boesel Mohr!</h1>
-    <p>I'm best known as the horrible cop from <em>A Touch of Evil</em> Don't trust me. <a href="/about">Read more about my life...</a></p>
+
+<div itemscope="" itemtype="http://schema.org/Blog">
+{% for post in paginator.posts %}
+    <div class="wrapper">
+        <section class="front" itemprop="blogPosts" itemscope="" itemtype="http://schema.org/BlogPosting">
+
+            <div itemprop="image" itemscope="" itemtype="http://schema.org/ImageObject">
+                <meta itemprop="url" content="{{ site.url }}/images/juliano-boesel-mohr-192x192.png" />
+                <meta itemprop="height" content="192" />
+                <meta itemprop="width" content="192" />
+            </div>
+            <div itemscope="" itemprop="author" itemtype="http://schema.org/Person" />
+                <meta itemprop="name" content="Juliano Boesel Mohr" />
+            </div>
+            <div itemscope="" itemprop="publisher" itemtype="http://schema.org/Organization">
+                <meta itemprop="name" content="juliaaano.com" />
+                <div itemprop="logo" itemscope="" itemtype="http://schema.org/ImageObject">
+                    <meta itemprop="url" content="{{ site.url }}/images/juliano-boesel-mohr-192x192.png" />
+                    <meta itemprop="height" content="192" />
+                    <meta itemprop="width" content="192" />
+                </div>
+            </div>
+
+            <header>
+                <h1>
+                    <a href="{{ post.url }}">
+                        <span itemprop="name headline mainEntityOfPage">{{ post.title }}</span>
+                    </a>
+                </h1>
+                <ul class="subline">
+                    <li>
+                        <time itemprop="datePublished dateModified" datetime="{{ post.date | date_to_xmlschema }}">
+                            {{ post.date | date_to_long_string }}
+                        </time>
+                    </li>
+                    <li itemprop="wordCount">
+                        {{ post.content | number_of_words }} words
+                    </li>
+                    <li>
+                        {% include reading-time.html %}
+                    </li>
+                    <li>
+                        <i class="icon icon-comments"></i>
+                        <a href="{{ site.url }}{{ post.url }}#disqus_thread" itemprop="discussionUrl">comments</a>
+                    </li>
+                </ul>
+            </header>
+
+            <div itemprop="description">
+                {{ post.excerpt }}
+            </div>
+            <p>
+                <a href="{{ post.url }}" itemprop="url">continue...</a>
+            </p>
+
+        </section>
+    </div>
+{% endfor %}
 </div>
-<ul class="posts">
-    {% for post in site.posts %}
-	<li><a href="{{ site.url }}{{ post.url }}#disqus_thread">comments</a></li>
-    <li><span>{{ post.date | date_to_string }}</span> » <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></li>
-    {% endfor %}
-</ul>
+
+<div class="wrapper">
+    <div class="pagination">
+        {% if paginator.next_page %}
+            <a href="{{ paginator.next_page_path }}" class="left"><i class="icon icon-fast-backward"></i> Older</a>
+        {% endif %}
+        <span>page {{ paginator.page }} of {{ paginator.total_pages }}<span>
+        {% if paginator.previous_page %}
+            <a href="{{ paginator.previous_page_path }}" class="right">Newer <i class="icon icon-fast-forward"></i></a>
+        {% endif %}
+    </div>
+</div>

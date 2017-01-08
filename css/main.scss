@@ -1,5 +1,5 @@
 ---
---- 
+---
 
 @import 'defs';
 @import 'icons';
@@ -162,6 +162,59 @@ a:visited {
     @extend %small;
     @extend %gray;
     @extend %desktop-only;
-    margin-top: 5 * $em;
+    margin-top: 4 * $em;
     text-align: center;
+}
+
+.front {
+    margin-bottom: 4 * $em;
+    margin-top: 2 * $em;
+}
+
+.subline {
+    @extend %gray;
+    @extend %small;
+    list-style: none;
+    margin-top: 0;
+    padding-left: 0;
+    li {
+        display: inline;
+        margin-right: .5 * $em;
+        white-space: nowrap;
+    }
+}
+
+%clear {
+    clear: both;
+}
+
+h1 {
+    @extend %clear;
+    font-size: 2 * $em;
+    font-weight: bold;
+    line-height: 2 * $em;
+    margin-bottom: .5 * $em;
+    a {
+        text-decoration: none;
+    }
+}
+
+.pagination {
+    @extend %unprintable;
+    text-align: center;
+    margin: auto;
+    width: 75%;
+    .left {
+        float: left;
+    }
+    .right {
+        float: right;
+    }
+    a {
+        text-decoration: none;
+    }
+}
+
+.tagged {
+  margin: $em 0;
 }
