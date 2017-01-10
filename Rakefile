@@ -22,5 +22,5 @@ end
 desc 'Validate generated side through HTML proofer'
 task :proofer do
 	sh "JEKYLL_ENV=production bundle exec jekyll build"
-	HTMLProofer.check_directory("./_site").run
+	HTMLProofer.check_directory("./_site", http_status_ignore: [999]).run
 end
