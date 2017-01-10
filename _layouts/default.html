@@ -12,8 +12,8 @@ layout: compress
     {% include favicon.html %}
     {% feed_meta %}
     {% seo %}
+    <script src="https://use.fontawesome.com/2f1221e7e8.js"></script>
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/typicons/typicons.css">
 </head>
 
 <body>
@@ -26,23 +26,12 @@ layout: compress
                 </a>
             </div>
             <nav>
-
-                <ul class="menu social notranslate">
-                    <li><a href="https://twitter.com/intent/follow?screen_name=juliaaano" rel="nofollow" title="Follow me in Twitter"><i class="icon icon-twitter notranslate" aria-hidden="true"></i></a></li>
-                    <li><a href="/feed.xml" title="RSS Feed"><i class="icon icon-rss notranslate" aria-hidden="true"></i></a></li>
-                    <li><a href="https://github.com/juliaaano" rel="nofollow" title="My GitHub Profile"><i class="icon icon-github notranslate" aria-hidden="true"></i></a></li>
-                    <li><a href="http://stackoverflow.com/users/2846785/juliaaano" rel="nofollow" title="My Stackoverflow Profile"><i class="icon icon-stackoverflow notranslate" aria-hidden="true"></i></a></li>
-                    <li><a href="https://www.instagram.com/julianomohr/" rel="nofollow" title="Follow me on Instagram"><i class="icon icon-instagram notranslate" aria-hidden="true"></i></a></li>
-                    <li><a href="https://www.linkedin.com/in/juliaaano" rel="nofollow" title="My LinkedIn Profile"><i class="icon icon-linkedin notranslate" aria-hidden="true"></i></a></li>
-                    <li><a href="mailto:juliaaano@gmail.com" rel="nofollow" title="juliaaano@gmail.com"><i class="icon icon-mail notranslate" aria-hidden="true"></i></a></li>
-                </ul>
-
+                {% include social.html %}
                 <ul class="menu">
                     <li><a href="/" title="home page">home</a></li>
                     <li><a href="/contents" title="all blog posts">all {{ site.posts.size }} posts</a></li>
                     <li><a href="/about-me" title="about me">about me</a></li>
                 </ul>
-
             </nav>
         </header>
     </div>
