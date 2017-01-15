@@ -73,19 +73,6 @@
             }
         }
     }
-    .search {
-        form {
-            position: relative;
-        }
-        .google {
-            @extend %desktop-only;
-            height: 2.4em;
-            margin-left: 1em;
-            position: absolute;
-            top: .3em;
-            visibility: hidden;
-        }
-    }
     .social {
         a {
             text-decoration: none;
@@ -97,25 +84,6 @@
             border-radius: 50%;
             height: 80px;
             width: 80px;
-        }
-        .hire {
-            @extend %desktop-only;
-            color: darken($green, 15);
-            left: 50%;
-            margin-left: 45px;
-            position: absolute;
-            text-decoration: underline;
-            top: 0;
-        }
-        .sub {
-            @extend %desktop-only;
-            color: darken($green, 15);
-            margin-right: 45px;
-            position: absolute;
-            right: 50%;
-            text-align: right;
-            text-decoration: underline;
-            top: 50px;
         }
     }
 }
@@ -163,7 +131,6 @@ a:visited {
 .footer {
     @extend %small;
     @extend %gray;
-    @extend %desktop-only;
     margin-top: 4 * $em;
     text-align: center;
 }
