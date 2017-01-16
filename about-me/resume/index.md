@@ -5,4 +5,4 @@ description: |
   Juliano Boesel Mohr Resume | CV.
 ---
 
-<object style="margin-top: 25px; height: 600px; width: 100%;" data="juliano-boesel-mohr-resume-cv.pdf"></object>
+<iframe src="https://docs.google.com/viewer?srcid=0B9TOR7lD1_7oV3lnRWVFeXAxam8&pid=explorer&embedded=true" style="margin-top: 25px; height: 600px; width: 100%;"></iframe>
