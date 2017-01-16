@@ -1,8 +1,8 @@
 ---
 layout: page
-title: "Resume"
+title: "Resume | CV"
 description: |
-  Juliano Boesel Mohr Resume / CV.
+  Juliano Boesel Mohr Resume | CV.
 ---
 
-My resume
+<object style="margin-top: 25px; height: 600px; width: 100%;" data="juliano-boesel-mohr-resume-cv.pdf" />
