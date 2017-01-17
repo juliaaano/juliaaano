@@ -5,7 +5,7 @@ description: |
   Juliano Boesel Mohr is a software engineer and a traveler.
 ---
 
-<img src="/images/juliano-traveling.jpg" alt="juliano-traveling" style="width: 300px; float: right; margin-left: 1em; margin-bottom: 1em;" />
+<img src="{{ layout.cdn }}/images/juliano-traveling.jpg" alt="juliano-traveling" style="width: 300px; float: right; margin-left: 1em; margin-bottom: 1em;" />
 
 Hello, my name is Juliano Boesel Mohr.
 

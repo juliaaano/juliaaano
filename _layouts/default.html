@@ -1,5 +1,6 @@
 ---
 layout: compress
+cdn: http://cdn.juliaaano.com
 ---
 
 <!DOCTYPE html>
@@ -12,7 +13,7 @@ layout: compress
     {% include favicon.html %}
     {% feed_meta %}
     {% seo %}
-    <script src="https://use.fontawesome.com/2f1221e7e8.js"></script>
+    <link rel="stylesheet" href="{{ layout.cdn }}/font-awesome/css/font-awesome.min.css" crossorigin="anonymous" />
     <link rel="stylesheet" href="/css/main.css">
 </head>
 
@@ -22,7 +23,7 @@ layout: compress
         <header class="header" id="header">
             <div class="face">
                 <a href="/about-me">
-                    <img src="/images/juliano-boesel-mohr-192x192.jpg" class="photo" alt="Photo of Juliano Boesel Mohr" />
+                    <img src="{{ layout.cdn }}/images/juliano-boesel-mohr-192x192.jpg" class="photo" alt="Photo of Juliano Boesel Mohr" />
                 </a>
             </div>
             <nav>
@@ -39,7 +40,7 @@ layout: compress
     {% include footer.html %}
     {% include disqus-count.html %}
     {% include google-analytics.html %}
-    <script src="//code.jquery.com/jquery-1.9.0.min.js"></script>
+    <script src="{{ layout.cdn }}/javascript/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 </body>
 
 </html>
