@@ -1,0 +1,7 @@
+{% if page.og_image %}
+	<meta property="og:image" content="{{ layout.cdn }}{{ page.og_image }}"/>
+{% else %}
+	<meta property="og:image" content="{{ layout.cdn }}/images/juliano-boesel-mohr-192x192.jpg"/>
+{% endif %}
+<meta property="og:type" content="article" />
+<meta property="og:locale" content="en_US" />
