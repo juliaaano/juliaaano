@@ -1,31 +1,41 @@
 ---
 layout: compress
-cdn: http://cdn.juliaaano.com
 ---
 
+{% capture disqus %}{% if jekyll.environment == "production" and page.comments %}enabled{% endif %}{% endcapture %}
+{% capture analytics %}{% if jekyll.environment != "production" %}enabled{% endif %}{% endcapture %}
+
 <!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US" itemscope="" itemtype="http://schema.org/WebPage">
-
+<html ⚡>
 <head>
     <meta charset="utf-8" />
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    {% if analytics == "enabled" %}
+        <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
+    {% endif %}
+    {% if disqus == "enabled" or page.iframe == "required" %}
+        <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
+    {% endif %}
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+    {% capture include_to_scssify %}
+        {% include main.scss %}
+    {% endcapture %}
+    <style amp-custom>
+        {{ include_to_scssify | scssify | strip_newlines }}
+    </style>
     {% include favicon.html %}
     {% include twitter-card.html %}
     {% include open-graph.html %}
     {% feed_meta %}
     {% seo %}
-    <link rel="stylesheet" href="{{ layout.cdn }}/font-awesome/css/font-awesome.min.css" crossorigin="anonymous" />
-    <link rel="stylesheet" href="/css/main.css">
 </head>
-
 <body>
     <div class="wrapper">
-        <aside class="header-toggle unprintable" id="header-toggle" title="show head menu" onclick="$('#header').show();$('#header-toggle').hide();">&#9776;</aside>
         <header class="header" id="header">
             <div class="face">
                 <a href="/about-me">
-                    <img src="{{ layout.cdn }}/images/juliano-boesel-mohr-192x192.jpg" class="photo" alt="Photo of Juliano Boesel Mohr" />
+                    <amp-img src="{{ site.cdn.http }}/images/juliano-boesel-mohr-192x192.jpg" class="photo" alt="Photo of Juliano Boesel Mohr" height="80" width="80"></amp-img>
                 </a>
             </div>
             <nav>
@@ -40,9 +50,8 @@ cdn: http://cdn.juliaaano.com
     </div>
     {{ content }}
     {% include footer.html %}
-    {% include disqus-count.html %}
-    {% include google-analytics.html %}
-    <script src="{{ layout.cdn }}/javascript/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    {% if analytics == "enabled" %}
+        {% include google-analytics.html %}
+    {% endif %}
 </body>
-
 </html>

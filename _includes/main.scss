@@ -1,23 +1,13 @@
----
----
-
+@import 'font-awesome';
 @import 'defs';
 @import 'icons';
 @import 'wrapper';
 @import 'post';
 @import 'disqus';
 
-.header-toggle {
-    cursor: pointer;
-    font-size: 1.4 * $em;
-    @media all and (min-width: $width) {
-        display: none;
-    }
-}
-
 %unprintable {
     @media print {
-        display: none !important;
+        display: none;
         visibility: hidden;
     }
 }
@@ -37,30 +27,10 @@
 }
 
 .header {
-    @extend %desktop-only;
     @extend %unprintable;
     text-align: center;
     @media all and (max-width: $width) {
         text-align: left;
-    }
-    .hot {
-        @extend %unprintable;
-        font-family: $code-font;
-        font-size: 85%;
-        line-height: $em;
-        margin-bottom: 2 * $em;
-        margin-top: 2 * $em;
-        text-align: left;
-        ul {
-            list-style: none;
-            padding-left: 0;
-            li {
-                border-left: 4px solid $green;
-                color: darken($green, 25);
-                margin-bottom: $em;
-                padding-left: $em;
-            }
-        }
     }
     .menu {
         list-style: none;
@@ -82,8 +52,6 @@
         position: relative;
         .photo {
             border-radius: 50%;
-            height: 80px;
-            width: 80px;
         }
     }
 }
@@ -189,5 +157,16 @@ h1 {
 }
 
 .tagged {
-  margin: $em 0;
+    margin: $em 0;
+}
+
+.image-right {
+    float: right;
+    min-width: 300px;
+    margin-left: 1em;
+    margin-bottom: 1em;
+}
+
+amp-iframe[id=resume] {
+    margin-top: 25px;
 }

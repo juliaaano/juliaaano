@@ -27,3 +27,7 @@ compress_html:
 # https://jekyllrb.com/docs/assets/
 sass:
   style: compressed
+
+cdn:
+  http: "http://cdn.juliaaano.com"
+  https: "https://d27nechif2d87h.cloudfront.net"

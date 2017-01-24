@@ -6,7 +6,15 @@ description: |
 og_image: /images/juliano-traveling.jpg
 ---
 
-<img src="{{ layout.cdn }}/images/juliano-traveling.jpg" alt="juliano-traveling" style="width: 300px; float: right; margin-left: 1em; margin-bottom: 1em;" />
+<amp-img
+    media="(min-width: 600px)"
+    src="{{ site.cdn.http }}/images/juliano-traveling.jpg"
+    alt="juliano-traveling"
+    class="image-right"
+    width="480"
+    height="640"
+    layout="responsive">
+</amp-img>
 
 Hello, my name is Juliano Boesel Mohr.
 
@@ -23,6 +31,15 @@ Some people **I follow** and admire are [Gregor Hohpe](http://www.enterpriseinte
 **Books** that have highly influenced me are [listed here](http://a.co/3mjBzXy){:target="_blank"}.
 
 I hold a BSc in Information Systems and a specialization title in Project Management with emphasis in the PMBOK® Guide and Standards.
+
+<amp-img
+    media="(max-width: 599px)"
+    src="{{ site.cdn.http }}/images/juliano-traveling-short.jpg"
+    alt="juliano-traveling"
+    width="480"
+    height="350"
+    layout="responsive">
+</amp-img>
 
 Traveling is absolutely part of my life and I take it seriously. Besides touristing every now and then, I have already lived, worked and studied in different countries, including Brazil, US, Germany and Australia.
 

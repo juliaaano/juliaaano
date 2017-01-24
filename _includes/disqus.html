@@ -1,18 +1,10 @@
-{% if jekyll.environment == "production" and page.comments %}
-<div class="disqus" role="complementary">
-<div id="disqus_thread" class="disqus-thread"></div>
-<script>
-var disqus_config = function() {
-    this.page.url = document.location.href.split('?')[0].split('#')[0];
-    this.page.identifier = this.page.url;
-};
-(function() {
-    var d = document,
-        s = d.createElement('script');
-    s.src = '//juliaaano.disqus.com/embed.js';
-    s.setAttribute('data-timestamp', +new Date());
-    (d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-{% endif %}
+<div id="disqus_thread" class="disqus" role="complementary">
+    <amp-iframe width="600"
+                height="400"
+                layout="responsive"
+                resizable
+                sandbox="allow-scripts allow-same-origin allow-modals allow-popups allow-forms"
+                src="{{ site.cdn.https }}/iframes/disqus-iframe.html#{{ page.id }}">
+        <div overflow class="required-by-amp-resizable"></div>
+    </amp-iframe>
+</div>
