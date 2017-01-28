@@ -8,60 +8,56 @@ description: |
 
 <div itemscope="" itemtype="http://schema.org/Blog">
 {% for post in paginator.posts %}
-    <div class="wrapper">
-        <section class="front" itemprop="blogPosts" itemscope="" itemtype="http://schema.org/BlogPosting">
+    <section class="wrapper" itemprop="blogPosts" itemscope="" itemtype="http://schema.org/BlogPosting">
 
-            {% include microdata.html %}
+        {% include microdata.html %}
 
-            <header>
-                <h1>
-                    <a href="{{ post.url }}">
-                        <span itemprop="name headline mainEntityOfPage">{{ post.title }}</span>
-                    </a>
-                </h1>
-                <ul class="subline">
-                    <li>
-                        <time itemprop="datePublished dateModified" datetime="{{ post.date | date_to_xmlschema }}">
-                            {{ post.date | date_to_long_string }}
-                        </time>
-                    </li>
-                    <li itemprop="wordCount">
-                        {{ post.content | number_of_words }} words
-                    </li>
-                    <li>
-                        {% include reading-time.html %}
-                    </li>
-                    <li>
-                        <i class="icon icon-comments"></i>
-                        <a href="{{ site.url }}{{ post.url }}#disqus_thread" itemprop="discussionUrl">comments</a>
-                    </li>
-                </ul>
-            </header>
+        <header>
+            <h1>
+                <a href="{{ post.url }}">
+                    <span itemprop="name headline mainEntityOfPage">{{ post.title }}</span>
+                </a>
+            </h1>
+            <ul class="subline">
+                <li>
+                    <time itemprop="datePublished dateModified" datetime="{{ post.date | date_to_xmlschema }}">
+                        {{ post.date | date_to_long_string }}
+                    </time>
+                </li>
+                <li itemprop="wordCount">
+                    {{ post.content | number_of_words }} words
+                </li>
+                <li>
+                    {% include reading-time.html %}
+                </li>
+                <li>
+                    <i class="icon icon-comments"></i>
+                    <a href="{{ site.url }}{{ post.url }}#disqus_thread" itemprop="discussionUrl">comments</a>
+                </li>
+            </ul>
+        </header>
 
-            <div itemprop="description">
-                {{ post.excerpt }}
-            </div>
-            <p>
-                <a href="{{ post.url }}" itemprop="url">continue...</a>
-            </p>
+        <div itemprop="description">
+            {{ post.excerpt }}
+        </div>
+        <p>
+            <a href="{{ post.url }}" itemprop="url">continue...</a>
+        </p>
 
-        </section>
-    </div>
+    </section>
 {% endfor %}
 </div>
 
-<div class="wrapper">
-    <div class="pagination">
-        {% if paginator.next_page %}
-            <a href="{{ paginator.next_page_path }}" class="left">Older <i class="icon icon-fast-backward"></i></a>
-        {% else %}
-            <span class="mute left">Older <i class="icon icon-fast-backward"></i></span>
-        {% endif %}
-        <span>page {{ paginator.page }} of {{ paginator.total_pages }}<span>
-        {% if paginator.previous_page %}
-            <a href="{{ paginator.previous_page_path }}" class="right"><i class="icon icon-fast-forward"></i> Newer</a>
-        {% else %}
-            <span class="mute right"><i class="icon icon-fast-forward"></i> Newer</span>
-        {% endif %}
-    </div>
+<div class="wrapper pagination">
+    {% if paginator.next_page %}
+        <a href="{{ paginator.next_page_path }}" class="left">Older <i class="icon icon-fast-backward"></i></a>
+    {% else %}
+        <span class="mute left">Older <i class="icon icon-fast-backward"></i></span>
+    {% endif %}
+    <span>page {{ paginator.page }} of {{ paginator.total_pages }}<span>
+    {% if paginator.previous_page %}
+        <a href="{{ paginator.previous_page_path }}" class="right"><i class="icon icon-fast-forward"></i> Newer</a>
+    {% else %}
+        <span class="mute right"><i class="icon icon-fast-forward"></i> Newer</span>
+    {% endif %}
 </div>

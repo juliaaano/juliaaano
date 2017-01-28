@@ -30,28 +30,52 @@
     @extend %unprintable;
     text-align: center;
     @media all and (max-width: $width) {
+        margin-bottom: 2 * $em;
         text-align: left;
+        .face {
+            float: left;
+        }
+        nav {
+            overflow: hidden;
+            margin-left: 95px;
+            .social {
+                margin-bottom: 0;
+            }
+            .menu {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+        }
     }
-    .menu {
-        list-style: none;
-        padding-left: 0;
+    // For small devices (iPhone 5), nav bar will get a line break.
+    @media all and (max-width: 391px) {
+        nav {
+            .social {
+                margin-top: 0;
+            }
+        }
+    }
+    .face {
+        amp-img {
+            border-radius: 50%;
+        }
+    }
+    nav {
+        .social {
+            a {
+                text-decoration: none;
+            }
+        }
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
         li {
             display: inline;
             margin-right: .4 * $em;
             &:after {
                 content: ' ';
             }
-        }
-    }
-    .social {
-        a {
-            text-decoration: none;
-        }
-    }
-    .face {
-        position: relative;
-        .photo {
-            border-radius: 50%;
         }
     }
 }
@@ -69,8 +93,6 @@ body {
     height: 100%;
     margin: 0;
     overflow-x: hidden;
-    padding-bottom: 2 * $em;
-    padding-top: 2 * $em;
     position: relative;
 }
 
@@ -101,11 +123,6 @@ a:visited {
     @extend %gray;
     margin-top: 4 * $em;
     text-align: center;
-}
-
-.front {
-    margin-bottom: 4 * $em;
-    margin-top: 2 * $em;
 }
 
 .subline {
@@ -154,10 +171,6 @@ h1 {
     a {
         text-decoration: none;
     }
-}
-
-.tagged {
-    margin: $em 0;
 }
 
 .image-right {

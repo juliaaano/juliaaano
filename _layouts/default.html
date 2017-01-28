@@ -31,23 +31,19 @@ layout: compress
     {% seo %}
 </head>
 <body>
-    <div class="wrapper">
-        <header class="header" id="header">
-            <div class="face">
-                <a href="/about-me">
-                    <amp-img src="{{ site.cdn.http }}/images/juliano-boesel-mohr-192x192.jpg" class="photo" alt="Photo of Juliano Boesel Mohr" height="80" width="80"></amp-img>
-                </a>
-            </div>
-            <nav>
-                {% include social.html %}
-                <ul class="menu">
-                    <li><a href="/" title="home page">home</a></li>
-                    <li><a href="/contents" title="all blog posts">all {{ site.posts.size }} posts</a></li>
-                    <li><a href="/about-me" title="about me">about me</a></li>
-                </ul>
-            </nav>
-        </header>
-    </div>
+    <header class="wrapper header">
+        <a href="/about-me" class="face">
+            <amp-img src="{{ site.cdn.http }}/images/juliano-boesel-mohr-192x192.jpg" alt="Photo of Juliano Boesel Mohr" height="80" width="80"></amp-img>
+        </a>
+        <nav>
+            {% include social.html %}
+            <ul class="menu">
+                <li><a href="/" title="home page">home</a></li>
+                <li><a href="/contents" title="all blog posts">all {{ site.posts.size }} posts</a></li>
+                <li><a href="/about-me" title="about me">about me</a></li>
+            </ul>
+        </nav>
+    </header>
     {{ content }}
     {% include footer.html %}
     {% if analytics == "enabled" %}
