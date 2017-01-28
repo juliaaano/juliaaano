@@ -45,4 +45,4 @@ Traveling is absolutely part of my life and I take it seriously. Besides tourist
 
 In my free time I enjoy taking photographs. Check out my [instagram](https://www.instagram.com/julianomohr){:target="_blank"} account.
 
-If you would like to know more about me, please have a look at **[my resume]({{ site.baseurl }}{% link about-me/resume/index.md %})** or get in touch through some of the channels I've made available on the top of this page.
+If you would like to know more about me, please have a look at **[my resume]({% link about-me/resume/index.md %})** or get in touch through some of the channels I've made available on the top of this page.
