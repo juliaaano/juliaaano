@@ -3,7 +3,7 @@ layout: compress
 ---
 
 {% capture disqus %}{% if jekyll.environment == "production" and page.comments %}enabled{% endif %}{% endcapture %}
-{% capture analytics %}{% if jekyll.environment != "production" %}enabled{% endif %}{% endcapture %}
+{% capture analytics %}{% if jekyll.environment == "production" %}enabled{% endif %}{% endcapture %}
 
 <!DOCTYPE html>
 <html ⚡>
