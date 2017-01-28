@@ -6,9 +6,9 @@ description: |
   philosophy and stuff.
 ---
 
-<div itemscope="" itemtype="http://schema.org/Blog">
+<div itemscope itemtype="http://schema.org/Blog">
 {% for post in paginator.posts %}
-    <section class="wrapper" itemprop="blogPosts" itemscope="" itemtype="http://schema.org/BlogPosting">
+    <section class="wrapper" itemprop="blogPosts" itemscope itemtype="http://schema.org/BlogPosting">
 
         {% include microdata.html %}
 
@@ -54,7 +54,7 @@ description: |
     {% else %}
         <span class="mute left">Older <i class="icon icon-fast-backward"></i></span>
     {% endif %}
-    <span>page {{ paginator.page }} of {{ paginator.total_pages }}<span>
+    <span>page {{ paginator.page }} of {{ paginator.total_pages }}</span>
     {% if paginator.previous_page %}
         <a href="{{ paginator.previous_page_path }}" class="right"><i class="icon icon-fast-forward"></i> Newer</a>
     {% else %}

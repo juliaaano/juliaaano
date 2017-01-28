@@ -1,8 +1,8 @@
+require 'html-proofer'
+
 task default: [
 	:serve
 ]
-
-require 'html-proofer'
 
 desc 'Clean Jekyll site'
 task :clean do
