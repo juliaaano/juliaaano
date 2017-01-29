@@ -1,4 +1,37 @@
-@import 'defs';
+@import 'variables';
+
+%unprintable {
+    @media print {
+        display: none;
+        visibility: hidden;
+    }
+}
+
+.unprintable {
+    @extend %unprintable;
+}
+
+%desktop-only {
+    @media all and (max-width: $width) {
+        display: none;
+    }
+}
+
+.desktop-only {
+    @extend %desktop-only;
+}
+
+%gray {
+    color: $gray;
+    a,
+    a:visited {
+        color: inherit;
+    }
+}
+
+.gray {
+    @extend %gray;
+}
 
 %wrapper {
     box-sizing: border-box;

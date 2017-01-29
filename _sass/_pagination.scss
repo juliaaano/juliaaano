@@ -1,0 +1,21 @@
+@import 'commons';
+
+.pagination {
+    @extend %unprintable;
+    text-align: center;
+    margin: auto;
+    width: 75%;
+    .left {
+        float: left;
+    }
+    .right {
+        float: right;
+    }
+    .mute {
+        @extend %gray;
+        visibility: hidden;
+    }
+    a {
+        text-decoration: none;
+    }
+}

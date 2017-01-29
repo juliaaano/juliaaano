@@ -1,0 +1,54 @@
+@import 'commons';
+
+.header {
+    @extend %unprintable;
+    text-align: center;
+    @media all and (max-width: $width) {
+        text-align: left;
+        .face {
+            float: left;
+        }
+        nav {
+            overflow: hidden;
+            margin-left: 95px;
+            .social {
+                margin-bottom: 0;
+            }
+            .menu {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+        }
+    }
+    // For small devices (iPhone 5), nav bar will get a line break.
+    @media all and (max-width: 391px) {
+        nav {
+            .social {
+                margin-top: 0;
+            }
+        }
+    }
+    .face {
+        amp-img {
+            border-radius: 50%;
+        }
+    }
+    nav {
+        .social {
+            a {
+                text-decoration: none;
+            }
+        }
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        li {
+            display: inline;
+            margin-right: .4 * $em;
+            &:after {
+                content: ' ';
+            }
+        }
+    }
+}

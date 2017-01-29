@@ -1,3 +1,5 @@
+@import 'commons';
+
 .buttons {
     @extend %unprintable;
     .share {
@@ -7,19 +9,6 @@
         }
         a {
             position: relative;
-            .count {
-                background-color: $white;
-                border: 1px solid $gray;
-                color: $gray;
-                display: none;
-                font-family: $code-font;
-                font-size: .6 * $em;
-                line-height: .7 * $em;
-                padding: 0 .2 * $em;
-                position: absolute;
-                right: .3 * $em;
-                top: -.7 * $em;
-            }
             .fa {
                 $size: 1.2;
                 border: 1px solid $gray;

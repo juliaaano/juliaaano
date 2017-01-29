@@ -1,0 +1,12 @@
+{% capture include_to_scssify %}
+    {% include scss/default.scss %}
+    {% if layout.style %}
+        {% include scss/{{ layout.style }} %}
+    {% endif %}
+    {% if page.style %}
+        {% include scss/{{ page.style }} %}
+    {% endif %}
+{% endcapture %}
+<style amp-custom>
+    {{ include_to_scssify | scssify | strip_newlines }}
+</style>

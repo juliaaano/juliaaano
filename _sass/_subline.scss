@@ -1,0 +1,14 @@
+@import 'commons';
+
+.subline {
+    @extend %gray;
+    font-size: .85 * $em;
+    list-style: none;
+    margin-top: 0;
+    padding-left: 0;
+    li {
+        display: inline;
+        margin-right: .5 * $em;
+        white-space: nowrap;
+    }
+}
