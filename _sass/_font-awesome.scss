@@ -1,8 +1,7 @@
 // Variables
 // --------------------------
 
-// $fa-font-path:        "https://d27nechif2d87h.cloudfront.net/fonts/font-awesome" !default;
-$fa-font-path:        "http://cdn.juliaaano.com/fonts/font-awesome" !default;
+$fa-font-path:        "#{$font-path}/fonts/font-awesome" !default;
 $fa-font-size-base:   14px !default;
 $fa-line-height-base: 1 !default;
 //$fa-font-path:        "//netdna.bootstrapcdn.com/font-awesome/4.7.0/fonts" !default; // for referencing Bootstrap CDN font files directly

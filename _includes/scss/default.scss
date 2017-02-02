@@ -1,5 +1,8 @@
+$font-path: "{{ site.cdn.http }}" !default;
+
 @import 'font-awesome';
 @import 'font-awesome-ext';
+@import 'fonts';
 @import 'variables';
 @import 'commons';
 @import 'header';
