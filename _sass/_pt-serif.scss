@@ -1,0 +1,47 @@
+$pts-font-path: "#{$font-path}/fonts/pt-serif" !default;
+
+// @font-face {
+//     font-family: 'PT Serif';
+//     font-style: normal;
+//     font-weight: 400;
+//     src: local('PT Serif'),
+//          local('PTSerif-Regular'),
+//          url('#{$pts-font-path}/PT_Serif-Web-Regular-latin-ext.woff2') format('woff2');
+//     unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
+// }
+
+@font-face {
+    font-family: 'PT Serif';
+    font-style: normal;
+    font-weight: 400;
+    src: url('#{$pts-font-path}/pt-serif-v8-latin-regular.eot'); /* IE9 Compat Modes */
+    src: local('PT Serif'),
+         local('PTSerif-Regular'),
+         url('#{$pts-font-path}/pt-serif-v8-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('#{$pts-font-path}/PT_Serif-Web-Regular-latin.woff2') format('woff2'), /* Super Modern Browsers */
+         url('#{$pts-font-path}/pt-serif-v8-latin-regular.woff') format('woff'), /* Modern Browsers */
+         url('#{$pts-font-path}/pt-serif-v8-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('#{$pts-font-path}/pt-serif-v8-latin-regular.svg#PTSerif') format('svg'); /* Legacy iOS */
+
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+}
+
+// @font-face {
+//     font-family: 'PT Serif';
+//     font-style: normal;
+//     font-weight: 700;
+//     src: local('PT Serif Bold'),
+//          local('PTSerif-Bold'),
+//          url('#{$pts-font-path}/PT_Serif-Web-Bold-latin-ext.woff2') format('woff2');
+//     unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
+// }
+
+@font-face {
+    font-family: 'PT Serif';
+    font-style: normal;
+    font-weight: 700;
+    src: local('PT Serif Bold'),
+         local('PTSerif-Bold'),
+         url('#{$pts-font-path}/PT_Serif-Web-Bold-latin.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+}
