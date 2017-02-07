@@ -3,6 +3,8 @@ layout: post
 title: "Building this blog"
 date: 2017-02-07
 location: Sydney, Australia
+description: |
+  The history, technology, tools and practices behind this blog.
 comments: true
 ---
 
