@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Building this blog"
+title: "Building this Blog"
 date: 2017-02-07
 location: Sydney, Australia
 description: |
@@ -25,7 +25,7 @@ Here comes the magic! **[GitHub Pages](https://pages.github.com){:target="_blank
 
 ### Disqus
 
-After realizing the benefits of having a static website, I asked myself: how am I going to provide comments for the posts? Here **[Disqus](https://disqus.com){:target="_blank"}** comes into play. Just like Google [Analytics](#analytics), you add a javascript to your html page and bam! It's there.
+After realising the benefits of having a static website, I asked myself: how am I going to provide comments for the posts? Here **[Disqus](https://disqus.com){:target="_blank"}** comes into play. Just like Google [Analytics](#analytics), you add a javascript to your html page and bam! It's there.
 
 ### Analytics
 

@@ -37,13 +37,12 @@
     margin-left: auto;
     margin-right: auto;
     margin-top: 2 * $em;
-    margin-bottom: 2.5 * $em;
+    margin-bottom: 2 * $em;
     padding-left: 2 * $em;
     padding-right: 2 * $em;
     width: $width;
     @media all and (max-width: $width) {
         margin-top: 1 * $em;
-        margin-bottom: 1.5 * $em;
         padding-left: $em;
         padding-right: $em;
         width: 100%;
