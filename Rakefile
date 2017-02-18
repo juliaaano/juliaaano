@@ -16,7 +16,7 @@ end
 
 desc 'Serve Jekyll site locally'
 task :serve do
-	sh "bundle exec jekyll serve"
+	sh "bundle exec jekyll serve --drafts"
 end
 
 desc 'Validate generated side through HTML proofer'
