@@ -1,6 +1,6 @@
 ---
-layout: post
 title: "Building this Blog"
+layout: post
 date: 2017-02-07
 location: Sydney, Australia
 description: |
@@ -17,7 +17,7 @@ I'll be brief, most of the topics deserve their own blog posts, and I'm looking 
 
 ### Jekyll
 
-The great deal about this website is that it is completely static. I use **[Jekyll](https://jekyllrb.com){:target="_blank"}** to generate, from templates, the whole content on every source commit. This means no dynamic content, no databases, no [CMS](https://en.wikipedia.org/wiki/Content_management_system){:target="_blank"}; just **plain html**. I reckon this makes development much simpler because I've established just enough of architecture to solve my problem.
+The great deal about this website is that it is completely static. I use **[Jekyll](https://jekyllrb.com){:target="_blank"}** to generate, from templates, the whole content on every source commit. This means no dynamic content, no databases, no [CMS](https://en.wikipedia.org/wiki/Content_management_system){:target="_blank"}; just **plain html**. I reckon this makes development much simpler because I've established just enough architecture to solve my problem.
 
 ### GitHub Pages
 
@@ -96,4 +96,3 @@ Fantastic tool to validate generated html output: **[HTMLProofer](https://github
 It's been a nice learning experience to go through this road. As a developer, I wanted to be a bit more professional by building my presence online with my own hands.
 
 I would like to aknowledge and thank **[Yegor Bugayenko](http://www.yegor256.com){:target="_blank"}** for his blog and [book](http://www.yegor256.com/256-bloghacks.html){:target="_blank"}. They've both served to me as a model and foundation for this project.
-
