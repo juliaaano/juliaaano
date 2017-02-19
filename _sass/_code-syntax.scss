@@ -1,25 +1,33 @@
-.highlight .c, .cm, .c1 { color: $gray; font-style: italic } /* Comment,  Comment.Multiline, Comment.Single */
-.highlight .o, .k, .kc, .kd, .kn, .kp, .kr, .kt { color: #000000; font-weight: bold } /* Operator, Keyword, Keyword.Constant, Keyword.Declaration, Keyword.Namespace, Keyword.Pseudo, Keyword.Reserved, Keyword.Type */
-.highlight .s, .mf, .mi { color: $med-gray } /* Literal.String, Literal.Number.Float, Literal.Number.Integer */
-.highlight .nd { color: $dark-gray; font-weight: bold } /* Name.Decorator */
-
 code,
 pre {
     font-family: $code-font;
+    font-size: 95%;
+    line-height: 1.20 * $em;
+    padding: 0;
+    margin: 0;
+    overflow: auto;
     @media all and (max-width: $width) {
-        font-family: 'Ubuntu Mono';
+        font-size: 85%;
+        line-height: $em;
         letter-spacing: -1px;
     }
 }
 
-code {
-    line-height: $em;
+.highlight {
+    background-color: $light-gray;
+    padding: ($em / 2);
+    margin: 0;
 }
+
+.highlight .c, .cm, .c1 { color: $gray; font-style: italic } /* Comment,  Comment.Multiline, Comment.Single */
+.highlight .o, .k, .kc, .kd, .kn, .kp, .kr, .kt { color: #000000; font-weight: bold } /* Operator, Keyword, Keyword.Constant, Keyword.Declaration, Keyword.Namespace, Keyword.Pseudo, Keyword.Reserved, Keyword.Type */
+.highlight .s, .mf, .mi { color: $med-gray } /* Literal.String, Literal.Number.Float, Literal.Number.Integer */
+// .highlight .nd { color: $dark-gray; font-weight: bold } /* Name.Decorator (@Annotation) */
 
 // https://raw.githubusercontent.com/richleland/pygments-css/master/github.css
 
 // .highlight .hll { background-color: #ffffcc }
-// .codehilite .c { color: #999988; font-style: italic } /* Comment */
+// .highlight .c { color: #999988; font-style: italic } /* Comment */
 // .highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
 // .highlight .k { color: #000000; font-weight: bold } /* Keyword */
 // .highlight .o { color: #000000; font-weight: bold } /* Operator */
