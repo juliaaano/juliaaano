@@ -34,7 +34,7 @@ public static void main(String... args) {
 }
 {% endhighlight %}
 
-Here we declare a **POST** endpoint that will only gets called if the client sets Accept: "application/json" request header. Moreover, we return an entity that is serialized to **JSON** using an object that implements ResponseTransformer; it could possibly use [Gson](https://github.com/google/gson){:target="_blank"} behind the scenes.
+Here we declare a **POST** endpoint that only gets called if the client sets Accept: "application/json" request header. Moreover, we return an entity that is serialized to **JSON** using an object that implements ResponseTransformer; it could possibly use [Gson](https://github.com/google/gson){:target="_blank"} behind the scenes.
 
 Spark Java has not invented anything new. The design is pretty much taken from Ruby's Sinatra framework.
 
