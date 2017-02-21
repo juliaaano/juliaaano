@@ -22,7 +22,7 @@ pre {
 .highlight .c, .cm, .c1 { color: $gray; font-style: italic } /* Comment,  Comment.Multiline, Comment.Single */
 .highlight .o, .k, .kc, .kd, .kn, .kp, .kr, .kt { color: #000000; font-weight: bold } /* Operator, Keyword, Keyword.Constant, Keyword.Declaration, Keyword.Namespace, Keyword.Pseudo, Keyword.Reserved, Keyword.Type */
 .highlight .s, .mf, .mi { color: $med-gray } /* Literal.String, Literal.Number.Float, Literal.Number.Integer */
-// .highlight .nd { color: $dark-gray; font-weight: bold } /* Name.Decorator (@Annotation) */
+.highlight .nd { color: $dark-gray; font-weight: bold } /* Name.Decorator (@Annotation) */
 
 // https://raw.githubusercontent.com/richleland/pygments-css/master/github.css
 
