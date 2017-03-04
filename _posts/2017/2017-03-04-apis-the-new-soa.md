@@ -6,7 +6,7 @@ location: Sydney, Australia
 description: |
   The API / Platform space and Service Oriented Architectures have much in common, specially the appetite from vendors to sell their solutions.
 comments: true
-og_image: /images/blue-bus.png
+og_image: /images/blue-bus-small.png
 ---
 
 The business around API's is growing these days. I've been reading a lot about how companies should be building platforms to achieve innovation and reach new markets. It's all about opening your business to let others create value on top of it. The financial industry (i.e. banks) is taking the lead in this area. One thing I didn't realize before is how similar all this is to the old gold SOA.
