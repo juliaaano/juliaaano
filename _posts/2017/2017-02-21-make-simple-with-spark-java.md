@@ -54,7 +54,7 @@ First, create a builder interface:
 
 {% highlight java %}
 public interface EndpointBuilder {
-  void configure(Spark spark, String basePath);
+  void configure(Service spark, String basePath);
 }
 {% endhighlight %}
 
@@ -70,7 +70,7 @@ public class CustomerEndpoint implements EndpointBuilder {
   }
 
   @Override
-  public void configure(Spark spark, String basePath) {
+  public void configure(Service spark, String basePath) {
     spark.get(basePath + "/customer", (req, res) -> {
       return "hello";
     });
