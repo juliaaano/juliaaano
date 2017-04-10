@@ -6,7 +6,7 @@ location: Sydney, Australia
 description: |
   Software build and release pipeline in Travis CI for a Java Maven based project.
 comments: true
-og_image: /images/pipeline.jpg
+og_image: /images/pipeline.png
 ---
 
 A guide to get you started with the implementation of a software build pipeline in **[Travis CI](https://travis-ci.org/){:target="_blank"}** that automatically gets your code released to GitHub and pushed to a Docker registry. It takes you through some extra features such as Java's JAR signing (GPG) and encryption of secret data for your build. The examples assume that Java and Maven are in use. Furthermore, if releasing to **[Maven Central](http://central.sonatype.org/pages/apache-maven.html){:target="_blank"}** is your goal, this guide will take you right there at the door.
