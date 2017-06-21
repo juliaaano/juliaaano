@@ -23,7 +23,8 @@ desc 'Validate generated side through HTML proofer'
 task :proofer do
 	options = {
 		:assume_extension => true,
-		:http_status_ignore => [999]
+		:http_status_ignore => [999],
+		:url_ignore => ["https://jekyllrb.com"],
 	}
 	HTMLProofer.check_directory("./_site", options).run
 end
