@@ -21,5 +21,9 @@ end
 
 desc 'Validate generated side through HTML proofer'
 task :proofer do
-	HTMLProofer.check_directory("./_site", http_status_ignore: [999]).run
+	options = {
+		:assume_extension => true,
+		:http_status_ignore => [999]
+	}
+	HTMLProofer.check_directory("./_site", options).run
 end
