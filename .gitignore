@@ -4,4 +4,6 @@ _site/
 _hosted/
 juliaaano.sublime-project
 juliaaano.sublime-workspace
+Gemfile.lock
+.ruby-version
 

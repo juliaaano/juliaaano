@@ -2,7 +2,7 @@ name: Juliano Boesel Mohr
 markdown: kramdown
 permalink: /blog/:year/:month/:day/:title/
 
-gems:
+plugins:
   - jekyll-paginate
   - jekyll-feed
   - jekyll-seo-tag
@@ -31,3 +31,6 @@ sass:
 cdn:
   http: "http://cdn.juliaaano.com"
   https: "https://d27nechif2d87h.cloudfront.net"
+
+# http://jekyllrb.com/docs/continuous-integration/travis-ci/
+exclude: [vendor]
