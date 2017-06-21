@@ -1,4 +1,4 @@
-## Welcome
+## Welcome [![Build Status](https://travis-ci.org/juliaaano/juliaaano.github.io.svg)](https://travis-ci.org/juliaaano/juliaaano.github.io)
 
 ![Juliano Boesel Mohr](http://cdn.juliaaano.com/images/juliano-boesel-mohr-192x192.jpg)
 
