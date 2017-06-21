@@ -2,7 +2,7 @@ name: Juliano Boesel Mohr
 markdown: kramdown
 permalink: /blog/:year/:month/:day/:title/
 
-exclude: ["Gemfile", "Gemfile.lock", "README.md", "Rakefile", "vendor"]
+exclude: ["Dockerfile", "Gemfile", "Gemfile.lock", "README.md", "Rakefile", "vendor"]
 
 plugins:
   - jekyll-paginate
