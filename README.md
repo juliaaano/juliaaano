@@ -1,4 +1,4 @@
-## Welcome [![Build Status](https://travis-ci.org/juliaaano/juliaaano.github.io.svg)](https://travis-ci.org/juliaaano/juliaaano.github.io)
+# Welcome
 
 ![Juliano Boesel Mohr](http://cdn.juliaaano.com/images/juliano-boesel-mohr-192x192.jpg)
 
@@ -6,6 +6,7 @@ This is my blog: [www.juliaaano.com](http://www.juliaaano.com/)
 
 It's powered by [Jekyll](https://jekyllrb.com/) and [GitHub Pages](https://pages.github.com/)
 
+[![Build Status](https://travis-ci.org/juliaaano/juliaaano.github.io.svg)](https://travis-ci.org/juliaaano/juliaaano.github.io)
 
 ## License
 
