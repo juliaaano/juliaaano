@@ -16,7 +16,7 @@ pre {
 .highlight {
     background-color: $light-gray;
     padding: ($em / 2);
-    margin: 0;
+    margin: 1;
 }
 
 .highlight .c, .cm, .c1 { color: $gray; font-style: italic } /* Comment,  Comment.Multiline, Comment.Single */
