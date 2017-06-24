@@ -6,7 +6,7 @@ This is my blog: [www.juliaaano.com](http://www.juliaaano.com/)
 
 It's powered by [Jekyll](https://jekyllrb.com/) and [GitHub Pages](https://pages.github.com/)
 
-[![Build Status](https://travis-ci.org/juliaaano/juliaaano.github.io.svg)](https://travis-ci.org/juliaaano/juliaaano.github.io)
+[![Build Status](https://travis-ci.org/juliaaano/juliaaano.svg)](https://travis-ci.org/juliaaano/juliaaano)
 
 ## License
 
