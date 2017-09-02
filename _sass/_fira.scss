@@ -1,0 +1,221 @@
+$fira-font-path: "#{$font-path}/fonts/Fira" !default;
+
+// @font-face{
+//     font-family: 'Fira Sans';
+//     src: url('#{$fira-font-path}/eot/FiraSans-Hair.eot');
+//     src: local('Fira Sans Hair'),
+//          url('#{$fira-font-path}/eot/FiraSans-Hair.eot') format('embedded-opentype'),
+//          url('#{$fira-font-path}/woff/FiraSans-Hair.woff') format('woff'),
+//          url('#{$fira-font-path}/ttf/FiraSans-Hair.ttf') format('truetype');
+//     font-weight: 100;
+//     font-style: normal;
+// }
+
+// @font-face{
+//     font-family: 'Fira Sans';
+//     src: url('#{$fira-font-path}/eot/FiraSans-HairItalic.eot');
+//     src: local('Fira Sans Hair Italic'),
+//          url('#{$fira-font-path}/eot/FiraSans-HairItalic.eot') format('embedded-opentype'),
+//          url('#{$fira-font-path}/woff/FiraSans-HairItalic.woff') format('woff'),
+//          url('#{$fira-font-path}/ttf/FiraSans-HairItalic.ttf') format('truetype');
+//     font-weight: 100;
+//     font-style: italic;
+// }
+
+// @font-face{
+//     font-family: 'Fira Sans';
+//     src: url('#{$fira-font-path}/eot/FiraSans-UltraLight.eot');
+//     src: local('Fira Sans UltraLight'),
+//          url('#{$fira-font-path}/eot/FiraSans-UltraLight.eot') format('embedded-opentype'),
+//          url('#{$fira-font-path}/woff/FiraSans-UltraLight.woff') format('woff'),
+//          url('#{$fira-font-path}/ttf/FiraSans-UltraLight.ttf') format('truetype');
+//     font-weight: 200;
+//     font-style: normal;
+// }
+
+// @font-face{
+//     font-family: 'Fira Sans';
+//     src: url('#{$fira-font-path}/eot/FiraSans-UltraLightItalic.eot');
+//     src: local('Fira Sans UltraLight Italic'),
+//          url('#{$fira-font-path}/eot/FiraSans-UltraLightItalic.eot') format('embedded-opentype'),
+//          url('#{$fira-font-path}/woff/FiraSans-UltraLightItalic.woff') format('woff'),
+//          url('#{$fira-font-path}/ttf/FiraSans-UltraLightItalic.ttf') format('truetype');
+//     font-weight: 200;
+//     font-style: italic;
+// }
+
+@font-face{
+    font-family: 'Fira Sans';
+    src: url('#{$fira-font-path}/eot/FiraSans-Light.eot');
+    src: local('Fira Sans Light'),
+         url('#{$fira-font-path}/eot/FiraSans-Light.eot') format('embedded-opentype'),
+         url('#{$fira-font-path}/woff/FiraSans-Light.woff') format('woff'),
+         url('#{$fira-font-path}/ttf/FiraSans-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+// @font-face{
+//     font-family: 'Fira Sans';
+//     src: url('#{$fira-font-path}/eot/FiraSans-LightItalic.eot');
+//     src: local('Fira Sans Light Italic'),
+//          url('#{$fira-font-path}/eot/FiraSans-LightItalic.eot') format('embedded-opentype'),
+//          url('#{$fira-font-path}/woff/FiraSans-LightItalic.woff') format('woff'),
+//          url('#{$fira-font-path}/ttf/FiraSans-LightItalic.ttf') format('truetype');
+//     font-weight: 300;
+//     font-style: italic;
+// }
+
+@font-face{
+    font-family: 'Fira Sans';
+    src: url('#{$fira-font-path}/eot/FiraSans-Regular.eot');
+    src: local('Fira Sans Regular'),
+         url('#{$fira-font-path}/eot/FiraSans-Regular.eot') format('embedded-opentype'),
+         url('#{$fira-font-path}/woff/FiraSans-Regular.woff') format('woff'),
+         url('#{$fira-font-path}/ttf/FiraSans-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+// @font-face{
+//     font-family: 'Fira Sans';
+//     src: url('#{$fira-font-path}/eot/FiraSans-Italic.eot');
+//     src: local('Fira Sans Regular Italic'),
+//          url('#{$fira-font-path}/eot/FiraSans-Italic.eot') format('embedded-opentype'),
+//          url('#{$fira-font-path}/woff/FiraSans-Italic.woff') format('woff'),
+//          url('#{$fira-font-path}/ttf/FiraSans-Italic.ttf') format('truetype');
+//     font-weight: 400;
+//     font-style: italic;
+// }
+
+// @font-face{
+//     font-family: 'Fira Sans';
+//     src: url('#{$fira-font-path}/eot/FiraSans-Medium.eot');
+//     src: local('Fira Sans Medium'),
+//          url('#{$fira-font-path}/eot/FiraSans-Medium.eot') format('embedded-opentype'),
+//          url('#{$fira-font-path}/woff/FiraSans-Medium.woff') format('woff'),
+//          url('#{$fira-font-path}/ttf/FiraSans-Medium.ttf') format('truetype');
+//     font-weight: 500;
+//     font-style: normal;
+// }
+
+// @font-face{
+//     font-family: 'Fira Sans';
+//     src: url('#{$fira-font-path}/eot/FiraSans-MediumItalic.eot');
+//     src: local('Fira Sans Medium Italic'),
+//          url('#{$fira-font-path}/eot/FiraSans-MediumItalic.eot') format('embedded-opentype'),
+//          url('#{$fira-font-path}/woff/FiraSans-MediumItalic.woff') format('woff'),
+//          url('#{$fira-font-path}/ttf/FiraSans-MediumItalic.ttf') format('truetype');
+//     font-weight: 500;
+//     font-style: italic;
+// }
+
+@font-face{
+    font-family: 'Fira Sans';
+    src: url('#{$fira-font-path}/eot/FiraSans-SemiBold.eot');
+    src: local('Fira Sans SemiBold'),
+         url('#{$fira-font-path}/eot/FiraSans-SemiBold.eot') format('embedded-opentype'),
+         url('#{$fira-font-path}/woff/FiraSans-SemiBold.woff') format('woff'),
+         url('#{$fira-font-path}/ttf/FiraSans-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+// @font-face{
+//     font-family: 'Fira Sans';
+//     src: url('#{$fira-font-path}/eot/FiraSans-SemiBoldItalic.eot');
+//     src: local('Fira Sans SemiBold Italic'),
+//          url('#{$fira-font-path}/eot/FiraSans-SemiBoldItalic.eot') format('embedded-opentype'),
+//          url('#{$fira-font-path}/woff/FiraSans-SemiBoldItalic.woff') format('woff'),
+//          url('#{$fira-font-path}/ttf/FiraSans-SemiBoldItalic.ttf') format('truetype');
+//     font-weight: 600;
+//     font-style: italic;
+// }
+
+// @font-face{
+//     font-family: 'Fira Sans';
+//     src: url('#{$fira-font-path}/eot/FiraSans-Bold.eot');
+//     src: local('Fira Sans Bold'),
+//          url('#{$fira-font-path}/eot/FiraSans-Bold.eot') format('embedded-opentype'),
+//          url('#{$fira-font-path}/woff/FiraSans-Bold.woff') format('woff'),
+//          url('#{$fira-font-path}/ttf/FiraSans-Bold.ttf') format('truetype');
+//     font-weight: 700;
+//     font-style: normal;
+// }
+
+// @font-face{
+//     font-family: 'Fira Sans';
+//     src: url('#{$fira-font-path}/eot/FiraSans-BoldItalic.eot');
+//     src: local('Fira Sans Bold Italic'),
+//          url('#{$fira-font-path}/eot/FiraSans-BoldItalic.eot') format('embedded-opentype'),
+//          url('#{$fira-font-path}/woff/FiraSans-BoldItalic.woff') format('woff'),
+//          url('#{$fira-font-path}/ttf/FiraSans-BoldItalic.ttf') format('truetype');
+//     font-weight: 700;
+//     font-style: italic;
+// }
+
+// @font-face{
+//     font-family: 'Fira Sans';
+//     src: url('#{$fira-font-path}/eot/FiraSans-ExtraBold.eot');
+//     src: local('Fira Sans ExtraBold'),
+//          url('#{$fira-font-path}/eot/FiraSans-ExtraBold.eot') format('embedded-opentype'),
+//          url('#{$fira-font-path}/woff/FiraSans-ExtraBold.woff') format('woff'),
+//          url('#{$fira-font-path}/ttf/FiraSans-ExtraBold.ttf') format('truetype');
+//     font-weight: 800;
+//     font-style: normal;
+// }
+
+// @font-face{
+//     font-family: 'Fira Sans';
+//     src: url('#{$fira-font-path}/eot/FiraSans-ExtraBoldItalic.eot');
+//     src: local('Fira Sans ExtraBold Italic'),
+//          url('#{$fira-font-path}/eot/FiraSans-ExtraBoldItalic.eot') format('embedded-opentype'),
+//          url('#{$fira-font-path}/woff/FiraSans-ExtraBoldItalic.woff') format('woff'),
+//          url('#{$fira-font-path}/ttf/FiraSans-ExtraBoldItalic.ttf') format('truetype');
+//     font-weight: 800;
+//     font-style: italic;
+// }
+
+// @font-face{
+//     font-family: 'Fira Sans';
+//     src: url('#{$fira-font-path}/eot/FiraSans-Heavy.eot');
+//     src: local('Fira Sans Heavy'),
+//          url('#{$fira-font-path}/eot/FiraSans-Heavy.eot') format('embedded-opentype'),
+//          url('#{$fira-font-path}/woff/FiraSans-Heavy.woff') format('woff'),
+//          url('#{$fira-font-path}/ttf/FiraSans-Heavy.ttf') format('truetype');
+//     font-weight: 900;
+//     font-style: normal;
+// }
+
+// @font-face{
+//     font-family: 'Fira Sans';
+//     src: url('#{$fira-font-path}/eot/FiraSans-HeavyItalic.eot');
+//     src: local('Fira Sans Heavy Italic'),
+//          url('#{$fira-font-path}/eot/FiraSans-HeavyItalic.eot') format('embedded-opentype'),
+//          url('#{$fira-font-path}/woff/FiraSans-HeavyItalic.woff') format('woff'),
+//          url('#{$fira-font-path}/ttf/FiraSans-HeavyItalic.ttf') format('truetype');
+//     font-weight: 900;
+//     font-style: italic;
+// }
+
+// @font-face{
+//     font-family: 'Fira Mono';
+//     src: url('#{$fira-font-path}/eot/FiraMono-Regular.eot');
+//     src: local('Fira Mono'),
+//          url('#{$fira-font-path}/eot/FiraMono-Regular.eot') format('embedded-opentype'),
+//          url('#{$fira-font-path}/woff/FiraMono-Regular.woff') format('woff'),
+//          url('#{$fira-font-path}/ttf/FiraMono-Regular.ttf') format('truetype');
+//     font-weight: 400;
+//     font-style: normal;
+// }
+
+// @font-face{
+//     font-family: 'Fira Mono';
+//     src: url('#{$fira-font-path}/eot/FiraMono-Bold.eot');
+//     src: local('Fira Mono Bold'),
+//          url('#{$fira-font-path}/eot/FiraMono-Bold.eot') format('embedded-opentype'),
+//          url('#{$fira-font-path}/woff/FiraMono-Bold.woff') format('woff'),
+//          url('#{$fira-font-path}/ttf/FiraMono-Bold.ttf') format('truetype');
+//     font-weight: 600;
+//     font-style: normal;
+// }
