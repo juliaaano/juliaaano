@@ -61,7 +61,7 @@ Why not have a deterministic approach to how your text will look like? I've noti
 
 ### Font Awesome
 
-How awesome is **[Font Awesome](http://fontawesome.io){:target="_blank"}** with its endless number of icons. You can setup a private account with their CDN where you are able to do some customisations as well as configure to asynchronously load the fonts in your page. Awesome!
+How awesome is **[Font Awesome](https://fontawesome.com){:target="_blank"}** with its endless number of icons. You can setup a private account with their CDN where you are able to do some customisations as well as configure to asynchronously load the fonts in your page. Awesome!
 
 ### Favicons
 
