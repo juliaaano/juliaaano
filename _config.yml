@@ -1,5 +1,6 @@
 name: Juliano Boesel Mohr
 markdown: kramdown
+url: http://www.juliaaano.com
 permalink: /blog/:year/:month/:day/:title/
 
 exclude: ["Dockerfile", "Dockerfile-travis", "Gemfile", "Gemfile.lock", "README.md", "Rakefile", "vendor"]
