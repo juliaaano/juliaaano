@@ -24,7 +24,7 @@ task :proofer do
 	options = {
 		:assume_extension => true,
 		:http_status_ignore => [999],
-		:url_ignore => ["https://jekyllrb.com", "https://fontawesome.com"],
+		:url_ignore => ["https://jekyllrb.com", "https://fontawesome.com", "http://www.juliaaano.com/blog/2018/02/25/fast-java-builds-with-docker/#disqus_thread", "http://www.juliaaano.com/blog/2018/02/25/fast-java-builds-with-docker"],
 	}
 	HTMLProofer.check_directory("./_site", options).run
 end
