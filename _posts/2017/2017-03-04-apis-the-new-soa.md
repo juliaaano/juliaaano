@@ -17,7 +17,7 @@ When I think about Service Oriented Architectures, I remember the promise of hav
 
 <amp-img
 	media="(min-width: 600px)"
-    src="{{ site.cdn.http }}/images/blue-bus.svg"
+    src="{{ site.cdn.https }}/images/blue-bus.svg"
     alt="enterprise-service-bus"
     width="1"
     height="1"
@@ -27,7 +27,7 @@ When I think about Service Oriented Architectures, I remember the promise of hav
 
 <amp-img
     media="(max-width: 599px)"
-    src="{{ site.cdn.http }}/images/blue-bus.svg"
+    src="{{ site.cdn.https }}/images/blue-bus.svg"
     alt="enterprise-service-bus"
     width="1"
     height="1"

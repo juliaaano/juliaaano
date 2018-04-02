@@ -8,7 +8,7 @@ og_image: /images/juliano-traveling.jpg
 
 <amp-img
     media="(min-width: 600px)"
-    src="{{ site.cdn.http }}/images/juliano-traveling.jpg"
+    src="{{ site.cdn.https }}/images/juliano-traveling.jpg"
     alt="juliano-traveling"
     class="image-right"
     width="480"
@@ -34,7 +34,7 @@ I hold a BSc in Information Systems and a specialization title in Project Manage
 
 <amp-img
     media="(max-width: 599px)"
-    src="{{ site.cdn.http }}/images/juliano-traveling-short.jpg"
+    src="{{ site.cdn.https }}/images/juliano-traveling-short.jpg"
     alt="juliano-traveling"
     width="480"
     height="350"

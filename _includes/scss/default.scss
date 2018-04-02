@@ -1,4 +1,4 @@
-$font-path: "{{ site.cdn.http }}" !default;
+$font-path: "{{ site.cdn.https }}" !default;
 
 @import 'pt-serif';
 @import 'source-code-pro';
