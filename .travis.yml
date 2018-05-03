@@ -15,8 +15,9 @@ install:
   - rake build
   - docker build -f Dockerfile-travis -t $TRAVIS_REPO_SLUG .
 
-#script:
-#  - rake proofer
+script:
+  # - rake proofer
+  - rake build
 
 after_success:
   - docker login -u=$DOCKER_USERNAME -p=$DOCKER_PASSWORD
