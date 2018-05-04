@@ -24,7 +24,11 @@ task :proofer do
 	options = {
 		:assume_extension => true,
 		:http_status_ignore => [999],
-		:url_ignore => ["https://jekyllrb.com", "https://fontawesome.com"]
+		:url_ignore => ["https://jekyllrb.com", "https://fontawesome.com"],
+		:typhoeus => {
+			:ssl_verifypeer => false,
+			:ssl_verifyhost => 0
+		}
 	}
 	HTMLProofer.check_directory("./_site", options).run
 end
