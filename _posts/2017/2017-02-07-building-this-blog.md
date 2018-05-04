@@ -35,7 +35,7 @@ I guess **[Google Analytics](https://www.google.com/analytics/){:target="_blank"
 
 Time to setup a custom domain name. I've long used juliaaano as an online identity and I hope one day I can tell you the story why. DNS is provided by **[Amazon Route 53](https://aws.amazon.com/route53/){:target="_blank"}**. All I had to do there was to create a [couple of CNAME entries here and there](https://help.github.com/articles/using-a-custom-domain-with-github-pages/){:target="_blank"}.
 
-### AMP
+### Accelerated Mobile Pages
 
 I'm proud to say this website is powered by **[AMP](https://www.ampproject.org){:target="_blank"}**. I stumbled upon this technology by accident and got immediately really excited about it. Besides ensuring your pages load super fast, AMP helps you to build better html. Other than that, it's a step towards the [Progressive Web Apps](https://en.wikipedia.org/wiki/Progressive_web_app){:target="_blank"} movement. It's been designed to delivery content to mobile devices, but I see no reason why I wouldn't use with desktops.
 
