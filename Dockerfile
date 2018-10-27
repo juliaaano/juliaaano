@@ -1,5 +1,5 @@
 ### BUILDER IMAGE ###
-FROM ruby:2.5.0 as builder
+FROM ruby:2.5.3 as builder
 
 COPY ./ ./build
 
