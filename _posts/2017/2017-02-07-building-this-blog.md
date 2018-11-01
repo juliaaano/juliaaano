@@ -65,7 +65,7 @@ How awesome is **[Font Awesome](https://fontawesome.com){:target="_blank"}** wit
 
 ### Favicons
 
-Nowadays favicons go beyond the scope of displaying a nice little image in your browser when a web page is bookmarked. There are specific icons for Android, iPhone and so on. Therefore, if you want to look good in all different platforms, make sure you [define them properly](https://realfavicongenerator.net){:target="_blank"}.
+Nowadays favicons go beyond the scope of displaying a nice little image in your browser when a web page is bookmarked. There are specific icons for Android, iPhone and so on. Therefore, if you want to look good in all different platforms, make sure you define them properly [here](https://realfavicongenerator.net){:target="_blank"} or [here](https://www.websiteplanet.com/webtools/favicon-generator){:target="_blank"}.
 
 ### Atom Feeds (RSS)
 
