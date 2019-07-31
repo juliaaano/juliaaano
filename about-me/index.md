@@ -20,7 +20,7 @@ Hello, my name is Juliano Boesel Mohr.
 
 I am a **software engineer** who has proudly designed, developed and delivered quality software for complex domains such as finance and pharmaceutical.
 
-I've spent most of my IT career working with **enterprise software**. During this time, my passion and skills have grown towards the areas of **architecture**, **design** and **integration**. More specifically, I have put extra effort into subjects like [Domain-driven design](https://en.wikipedia.org/wiki/Domain-driven_design){:target="_blank"}, [APIs](http://history.apievangelist.com){:target="_blank"}, [Event-driven architecture](https://en.wikipedia.org/wiki/Event-driven_architecture){:target="_blank"}, [Integration Patterns](http://www.enterpriseintegrationpatterns.com/patterns/messaging){:target="_blank"}, [Rules Engine](https://martinfowler.com/bliki/RulesEngine.html){:target="_blank"}, and so on...
+I've spent most of my IT career working with **enterprise software**. During this time, my passion and skills have grown towards the areas of **architecture**, **design** and **integration**. More specifically, I have put extra effort into subjects like [Domain-driven design](https://en.wikipedia.org/wiki/Domain-driven_design){:target="_blank"}, [APIs](https://en.wikipedia.org/wiki/Roy_Fielding){:target="_blank"}, [Event-driven architecture](https://en.wikipedia.org/wiki/Event-driven_architecture){:target="_blank"}, [Integration Patterns](http://www.enterpriseintegrationpatterns.com/patterns/messaging){:target="_blank"}, [Rules Engine](https://martinfowler.com/bliki/RulesEngine.html){:target="_blank"}, and so on...
 
 Most recently I've been also interested in the potential and technology behind the Blockchain.
 

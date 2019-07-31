@@ -24,7 +24,7 @@ task :proofer do
 	options = {
 		:assume_extension => true,
 		:http_status_ignore => [999],
-		:url_ignore => ["https://jekyllrb.com", "https://fontawesome.com"],
+		:url_ignore => ["https://jekyllrb.com", "https://fontawesome.com", "https://www.websiteplanet.com/webtools/favicon-generator"],
 		:typhoeus => {
 			:ssl_verifypeer => false,
 			:ssl_verifyhost => 0
