@@ -65,4 +65,4 @@ CMD ["java", "-jar", "app.jar"]
 
 The idea is to show how easy Docker can be used to both build and run your software. Ultimately, entire pipelines could be created with just a Dockerfile and multi-stage builds. That would be a very comfortable position for the developer who would be able to execute all these stages locally exactly the same as the CI agent. 
 
-More information at [https://github.com/juliaaano/java-starter](https://github.com/juliaaano/java-starter){:target="_blank"}
+More information at [https://github.com/juliaaano/archetypes](https://github.com/juliaaano/archetypes){:target="_blank"}

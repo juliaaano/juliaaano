@@ -102,7 +102,7 @@ The codesign.asc is nothing more than another private key I have once created wi
 
 A Maven [plugin](http://maven.apache.org/components/plugins/maven-gpg-plugin/){:target="_blank"} has the job to do the actual JAR signing. For this case, it assumes my key is set as default in the environment (gpg --fast-import). The passphrase is expected to be configured ahead in Travis as an environment variable: $GPG_PASSPHRASE.
 
-The **pom.xml** for this example can be found [here](https://github.com/juliaaano/java-starter/blob/1.0.0/pom.xml){:target="_blank"}.
+There is a project with the **pom.xml** configured with GPG [here](https://github.com/juliaaano/payload/blob/1.0.0/pom.xml){:target="_blank"}.
 
 ## Docker
 
@@ -118,4 +118,4 @@ Every successful build derived from master and with a tag is directly posted to 
 
 Much has been said about continuous delivery. I strongly agree it is a matter of process and people before anything else. Nonetheless, I don't find examples or how-to's out there quite often. Probably because the resulting implementation is specific to the development process in place. I hope you can use this to get you started and evolve it towards your own deployment pipeline.
 
-The solution presented in this blog came from my **Java Starter** project. Check out the source code at [https://github.com/juliaaano/java-starter](https://github.com/juliaaano/java-starter){:target="_blank"}.
+The solution presented in this blog came from my Spark Java Maven **Archetypes** project. Check out the source code at [https://github.com/juliaaano/archetypes/tree/master/sparkjava](https://github.com/juliaaano/archetypes/tree/master/sparkjava){:target="_blank"}.
