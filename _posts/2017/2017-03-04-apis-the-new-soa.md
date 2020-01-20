@@ -16,21 +16,12 @@ The business around API's is growing these days. There has been quite a lot of t
 When I think about Service Oriented Architectures, I remember the promise of having areas of business modeled as **web services** that were supposed to be shared and discoverable on the internet. A significant fact which represented this period was the vendor-mafia that came and raped the industry by pushing their heavy weight ESB products. 
 
 <amp-img
-	media="(min-width: 600px)"
+    media="(min-width: 600px)"
     src="{{ site.cdn.https }}/images/blue-bus.svg"
     alt="enterprise-service-bus"
     width="1"
     height="1"
-	class="image-right"
-	layout="responsive">
-</amp-img>
-
-<amp-img
-    media="(max-width: 599px)"
-    src="{{ site.cdn.https }}/images/blue-bus.svg"
-    alt="enterprise-service-bus"
-    width="1"
-    height="1"
+    class="image-right"
     layout="responsive">
 </amp-img>
 

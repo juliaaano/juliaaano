@@ -33,7 +33,7 @@ Some people **I follow** and admire are [Gregor Hohpe](http://www.enterpriseinte
 I hold a BSc in Information Systems and a specialization title in Project Management with emphasis in the PMBOK® Guide and Standards.
 
 <amp-img
-    media="(max-width: 599px)"
+    media="(max-width: 600px)"
     src="{{ site.cdn.https }}/images/juliano-traveling-short.jpg"
     alt="juliano-traveling"
     width="480"
