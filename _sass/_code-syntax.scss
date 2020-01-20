@@ -1,7 +1,7 @@
 code,
 pre {
     font-family: $code-font;
-    font-size: 95%;
+    font-size: 90%;
     line-height: 1.20 * $em;
     padding: 0;
     margin: 0;
@@ -63,9 +63,9 @@ pre {
 // .highlight .ne { color: #990000; font-weight: bold } /* Name.Exception */
 // .highlight .nf { color: #990000; font-weight: bold } /* Name.Function */
 // .highlight .nl { color: #990000; font-weight: bold } /* Name.Label */
-// .highlight .nn { color: #555555 } /* Name.Namespace */
-// .highlight .nt { color: #000080 } /* Name.Tag */
-// .highlight .nv { color: #008080 } /* Name.Variable */
+.highlight .nn { color: #555555 } /* Name.Namespace */
+.highlight .nt { color: #000080 } /* Name.Tag */
+.highlight .nv { color: #008080 } /* Name.Variable */
 // .highlight .ow { color: #000000; font-weight: bold } /* Operator.Word */
 // .highlight .w { color: #bbbbbb } /* Text.Whitespace */
 // .highlight .mf { color: #009999 } /* Literal.Number.Float */

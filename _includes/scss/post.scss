@@ -9,3 +9,17 @@
     margin-left: 1em;
     margin-bottom: 1em;
 }
+
+.image-center {
+    float: none;
+    max-width: 450px;
+    max-height: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.image-center-caption {
+    text-align: center;
+    display: block;
+    font-size: small;
+}
