@@ -1,3 +1,12 @@
+env:
+  global:
+    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true # speeds up installation of html-proofer
+    - secure: "PF8N73NjCi4RdKbzxZTSD/rmWmszYTWFzlk0VH21hbSYN/oyd1r+VCRwnHhZODhx5+7yr34Y3BtXCxgV7xYvd1aF5SsRDJYhPGpSXU7o8UTMxYeJAxEpHfGY/k43Lg1EzfVPC4JrqQjmnic7FvM1iyMvZF+OVXwFmhCccmxYitTYOzE6tK68VjcRuEmCqKzlO/aCiYd1w3s+mqhgsjDqJXRK9qfLww5yFm2mWn56dYthgPw7xU7leiDmhMfjZ4O/GKJFObYJUxI4GVe/FLhNRN4ZF2Z9ll1IErKvVnqV7vB0Dls9X/3NIjIx5oRB74gh/RIokfZ/ijDjEMazhPWTx5WcZOEgBGg5sb7TR2LOC5Asb0i24cLdeHae64boRk2acUZIsCnbxmVlMHOebOMTG2do9rW63DPU7DYYm3jVV3eTgEzpb2H2fPQxJyI0vN0dr7R9GF24Yd70Mdl9WXJpNRKCZHNSmkqHwzsGDu1O21J5LCg/QX2OIaFySa7mzYqeTl9N8MI7j1n7Xi2wpr9o6gm+a2y42ra6fjY5pfCQCANzWlZIkPuq9Rg1uKWhyTewW1B02K4bgvFkU9W0icDuGAXREl2pRDdmQuF9dy/Wbb7tRc+0FQWgq9NLkDfGkrzAwTzj8hzij7D6/nqqzNrvlt0V1pTHWypr4UHDmvO/mC0="
+    - secure: "LmZPErwYR/V1YjGogPgXJHef9bOqyJUucopKpWTVt+Qnt/YqRjgIzOIq+w43TPDDibuwTqjo2zhaswz+OEy7haUPCRvXUZ47+XTbC5shOO3UnsKdSiL//ArdQ1M+Z6CrnCiz4TbPoBkbmYbqD5vop5Qfihgfwi4r+uAwbBGidSULYZ1o2MyzEP9Rz4O9XK0ihiOH89QKp3Sti8qZxzjw+P9OdDf3c3Q6chsvpcghqPZJc7wcQ5J+AtefqKVPvslVGFR4rjWhRIkB3uBHizVOczJN8vXuPzHd8RSfDEhM2Ci/847U1JNmU3NpZGJWm9VmTi/JSFGnEyDzuV8MraYgf2fBT2LXtlOdk6EnpkYMxdxsEXtSoAduvkhgxJ9IMqReNv6IWUtfAU63Yulw6XDqO78/dmFZ4XeoBF6pple8bs+WidEYl6J5N05vWe3BmHN9Su/OlO88G7pvb2BAodKZLdF5p4TSRIojV21X4WITIwb28PpJoN4qJYyMa/RTJ81sP1LwYgEdO610tzF+3jAgKWx1iGVQ70Zfr/EqxU12Et6kmBskg5KTi+WjV7FE5t14gEGdDcm8AK29JbchFvaSn/CL53oqiSDP+9LU1SSoHHJRAJ6U7mhtH9GLbW6vMCinaR/wbS4S586aifusMZ7R/cpiaNEw8oW+8tdx2NmdDfo="
+
+os:
+  - linux
+
 language: ruby
 
 rvm:
@@ -6,12 +15,6 @@ rvm:
 services:
   - docker
 
-env:
-  global:
-    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true # speeds up installation of html-proofer
-    - secure: "PF8N73NjCi4RdKbzxZTSD/rmWmszYTWFzlk0VH21hbSYN/oyd1r+VCRwnHhZODhx5+7yr34Y3BtXCxgV7xYvd1aF5SsRDJYhPGpSXU7o8UTMxYeJAxEpHfGY/k43Lg1EzfVPC4JrqQjmnic7FvM1iyMvZF+OVXwFmhCccmxYitTYOzE6tK68VjcRuEmCqKzlO/aCiYd1w3s+mqhgsjDqJXRK9qfLww5yFm2mWn56dYthgPw7xU7leiDmhMfjZ4O/GKJFObYJUxI4GVe/FLhNRN4ZF2Z9ll1IErKvVnqV7vB0Dls9X/3NIjIx5oRB74gh/RIokfZ/ijDjEMazhPWTx5WcZOEgBGg5sb7TR2LOC5Asb0i24cLdeHae64boRk2acUZIsCnbxmVlMHOebOMTG2do9rW63DPU7DYYm3jVV3eTgEzpb2H2fPQxJyI0vN0dr7R9GF24Yd70Mdl9WXJpNRKCZHNSmkqHwzsGDu1O21J5LCg/QX2OIaFySa7mzYqeTl9N8MI7j1n7Xi2wpr9o6gm+a2y42ra6fjY5pfCQCANzWlZIkPuq9Rg1uKWhyTewW1B02K4bgvFkU9W0icDuGAXREl2pRDdmQuF9dy/Wbb7tRc+0FQWgq9NLkDfGkrzAwTzj8hzij7D6/nqqzNrvlt0V1pTHWypr4UHDmvO/mC0="
-    - secure: "LmZPErwYR/V1YjGogPgXJHef9bOqyJUucopKpWTVt+Qnt/YqRjgIzOIq+w43TPDDibuwTqjo2zhaswz+OEy7haUPCRvXUZ47+XTbC5shOO3UnsKdSiL//ArdQ1M+Z6CrnCiz4TbPoBkbmYbqD5vop5Qfihgfwi4r+uAwbBGidSULYZ1o2MyzEP9Rz4O9XK0ihiOH89QKp3Sti8qZxzjw+P9OdDf3c3Q6chsvpcghqPZJc7wcQ5J+AtefqKVPvslVGFR4rjWhRIkB3uBHizVOczJN8vXuPzHd8RSfDEhM2Ci/847U1JNmU3NpZGJWm9VmTi/JSFGnEyDzuV8MraYgf2fBT2LXtlOdk6EnpkYMxdxsEXtSoAduvkhgxJ9IMqReNv6IWUtfAU63Yulw6XDqO78/dmFZ4XeoBF6pple8bs+WidEYl6J5N05vWe3BmHN9Su/OlO88G7pvb2BAodKZLdF5p4TSRIojV21X4WITIwb28PpJoN4qJYyMa/RTJ81sP1LwYgEdO610tzF+3jAgKWx1iGVQ70Zfr/EqxU12Et6kmBskg5KTi+WjV7FE5t14gEGdDcm8AK29JbchFvaSn/CL53oqiSDP+9LU1SSoHHJRAJ6U7mhtH9GLbW6vMCinaR/wbS4S586aifusMZ7R/cpiaNEw8oW+8tdx2NmdDfo="
-
 install:
   - bundle install --jobs=3 --retry=3
   - rake build
@@ -19,10 +22,10 @@ install:
 
 script:
 #  - rake proofer
-  - echo skipped
+  - echo "skip - do nothing"
 
 after_success:
-  - docker login -u=$DOCKER_USR -p=$DOCKER_PWD
+  - echo "$DOCKER_PWD" | docker login --username "$DOCKER_USR" --password-stdin
   - docker push $TRAVIS_REPO_SLUG
 
 deploy:
