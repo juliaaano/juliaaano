@@ -1,5 +1,5 @@
 ---
-title: Fast Java Builds with Docker 
+title: Fast Java builds with Docker
 layout: post
 date: 2018-02-25
 location: Sydney, Australia

@@ -1,5 +1,5 @@
 ---
-title: Build and Release Pipeline
+title: Build and release pipeline
 layout: post
 date: 2017-04-10
 location: Sydney, Australia
