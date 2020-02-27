@@ -2,8 +2,11 @@ $font-path: "{{ site.cdn.https }}" !default;
 
 @import 'pt-serif';
 @import 'source-code-pro';
-@import 'font-awesome';
-@import 'font-awesome-ext';
+@import 'font-awesome/fontawesome';
+@import 'font-awesome/solid';
+@import 'font-awesome/regular';
+@import 'font-awesome/brands';
+@import 'font-awesome/fontawesome-ext';
 @import 'variables';
 @import 'commons';
 @import 'header';
