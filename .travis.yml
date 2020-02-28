@@ -31,7 +31,7 @@ after_success:
 deploy:
   provider: pages
   skip_cleanup: true
-  github_token:
+  token:
     secure: "JrpVwXCxwHOK8Q8I9LwyeiNzGvi8SmLZ8e0Gei6SXbStyTKseGPp+6SFkUR4KD/q5901gcd8TLMpn3t10MW7I3Bcpvi+0I6zblk0Y088+5eb1g/d34ALSIezpSRwiwLlbNLsuSi5LgrYQM2S9mybwQrkz8PlKdwVwuMkL3LdtgYd9+qReH7FrO5ZL6IouA1vKqnlo9TLaix417jY4N6Z78CZrCoeetOKLcw+OxY4nJc//UXLr7oXjYI2dt6KM1Jo6mguhMO7Hv305G/F5icU7rdUK2J8AEuilpwX2rtZAYA2vDFUBNTbWCkdfIVnGJY1v0y8057jS8TT5k3KT/yepR8xEMiSNNOa817XFD19E45c/msO7+5JbOg5l6tbqcUP9sCtC9v+7yIzZRRCLmBxheVKCy2gDPZhIOzvh7JWqDE/L35xOjHI9+bOMLxjvxJT3KFvmqwRqzpISYQQh4boxZIPBBCVGHQxW5+4/dBYd661+VvK6Rbjd9o1++OnPlNHzaKIjria+OxpROsBt2gmQb51Her06bHxP8qaIObjrunHdCWIPY2JIV2QQxPzMX4Wx0Qeji6IYyoTV2KDjZ31zyW5HcuUWnk1yvGa3OJPHgTTnTrK42g6wqv8GXdab+XUiUjrDmtvYKy5KKBA1iIRagk2JlyAVASfPug6qyXguhs="
   local_dir: _site
   on:
