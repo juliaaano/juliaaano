@@ -18,6 +18,11 @@
     margin-right: auto;
 }
 
+.image-center-2 {
+    @extend .image-center;
+    max-width: 540px;
+}
+
 .image-center-caption {
     text-align: center;
     display: block;
