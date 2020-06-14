@@ -43,6 +43,6 @@ I hold a BSc in Information Systems and a specialization title in Project Manage
 
 Travelling is absolutely part of my life and I take it seriously. Besides touristing every now and then, I have already lived, worked and studied in different countries, including Brazil, the US, Germany and Australia.
 
-In my free time I enjoy taking photographs. Check out my [instagram](https://www.instagram.com/julianomohr){:target="_blank"} account.
+In my free time I enjoy taking photographs. Check out my [instagram](https://www.instagram.com/juliaaanobm){:target="_blank"} account.
 
 If you would like to know more about me, please have a look at **[my resume]({% link about-me/resume/index.md %})** or get in touch through some of the channels I've made available on the top of this page.
