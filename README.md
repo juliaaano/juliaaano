@@ -1,6 +1,6 @@
 # Welcome
 
-![Juliano Mohr](http://cdn.juliaaano.com/images/juliano-boesel-mohr-192x192.jpg)
+![Juliano Mohr](https://d27nechif2d87h.cloudfront.net/images/juliano-boesel-mohr-192x192.jpg)
 
 This is my blog: [www.juliaaano.com](https://www.juliaaano.com/)
 
