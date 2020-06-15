@@ -1,6 +1,6 @@
 # Welcome
 
-![Juliano Boesel Mohr](http://cdn.juliaaano.com/images/juliano-boesel-mohr-192x192.jpg)
+![Juliano Mohr](http://cdn.juliaaano.com/images/juliano-boesel-mohr-192x192.jpg)
 
 This is my blog: [www.juliaaano.com](https://www.juliaaano.com/)
 
@@ -10,7 +10,7 @@ It's powered by [Jekyll](https://jekyllrb.com/) and [GitHub Pages](https://pages
 
 ## License
 
-Copyright (c) 2017 Juliano Boesel Mohr
+Copyright (c) 2017 Juliano Mohr
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

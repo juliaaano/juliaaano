@@ -2,7 +2,7 @@
 layout: page
 title: "About Me"
 description: |
-  Juliano Boesel Mohr is a software engineer and a traveller.
+  Juliano Mohr is a software engineer and a traveller.
 og_image: /images/juliano-traveling.jpg
 ---
 

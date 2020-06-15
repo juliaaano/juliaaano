@@ -2,7 +2,7 @@
 layout: page
 title: "Resume | CV"
 description: |
-  Juliano Boesel Mohr Resume | CV.
+  Juliano Mohr Resume | CV.
 iframe: required
 ---
 
