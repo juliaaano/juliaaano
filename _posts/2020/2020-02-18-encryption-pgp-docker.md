@@ -18,7 +18,7 @@ Encryption is complicated. People don't pay too much attention because the proce
 The goal is **for anyone** to encrypt a message **from anywhere** addressed to a recipient (in this case myself):
 
 {% highlight bash %}
-echo "send me a secret" | docker run juliaaano/encrypt
+echo "send me a secret" | docker run -i juliaaano/encrypt
 {% endhighlight %}
 
 ## Show me how
@@ -51,20 +51,20 @@ Once you've got your keys, you can build and distribute your container image so 
 <li>
 Encrypt a text message or a text file:
 {% highlight bash %}
-echo "send me a secret" | docker run juliaaano/encrypt
-cat my-sample-file.txt | docker run juliaaano/encrypt
+echo "send me a secret" | docker run -i juliaaano/encrypt
+cat my-sample-file.txt | docker run -i juliaaano/encrypt
 {% endhighlight %}
 </li>
 <li>
 Save encrypted output to a file:
 {% highlight bash %}
-echo "send me a secret" | docker run juliaaano/encrypt > secret.txt.asc
+echo "send me a secret" | docker run -i juliaaano/encrypt > secret.txt.asc
 {% endhighlight %}
 </li>
 <li>
 Copy encrypted output to the clipboard (MacOS only):
 {% highlight bash %}
-cat my-sample-file.txt | docker run juliaaano/encrypt | pbcopy
+cat my-sample-file.txt | docker run -i juliaaano/encrypt | pbcopy
 {% endhighlight %}
 </li>
 <li>
@@ -76,8 +76,8 @@ docker run -v $(pwd):/tmp juliaaano/encrypt /tmp/myfile.zip > myfile.zip.asc
 <li>
 Use Podman containers instead of Docker:
 {% highlight bash %}
-echo "send me a secret" | podman run juliaaano/encrypt
-cat my-sample-file.txt | podman run juliaaano/encrypt
+echo "send me a secret" | podman run -i juliaaano/encrypt
+cat my-sample-file.txt | podman run -i juliaaano/encrypt
 {% endhighlight %}
 </li>
 </ol>
