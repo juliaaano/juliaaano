@@ -1,10 +1,10 @@
 ### BUILDER IMAGE ###
-FROM ruby:2.7.0 as builder
+FROM ruby:2 as builder
 
 COPY ./ ./build
 
 RUN cd build \
-	&& gem install jekyll bundler \
+	&& gem install bundler jekyll \
 	&& bundle install \
 	&& rake build
 
