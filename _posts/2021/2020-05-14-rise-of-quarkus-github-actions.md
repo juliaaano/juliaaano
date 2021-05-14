@@ -147,7 +147,7 @@ Also, it is worth mentioning the label name was not chosen arbitrarily, but base
 
 ## Conclusion
 
-Here you have seen a little bit of how to do continuous integration with modern frameworks. Despite the tools, what really matters is how close to the developers you can get. With GitHub Actions and a modern language like Quarkus, people who get to write the code can feel more than empowered to build and ship code fast. That is the point of disciplines like DevOps and Continuous Delivery. 
+You have seen a little bit of how to do continuous integration using modern frameworks. Despite the tools, what really matters is how close to the developers the processes can get. With GitHub Actions and a modern language like Quarkus, people who get to write the code can now feel more than empowered to build and ship code fast. After all, that is the point of disciplines like DevOps and Continuous Delivery.
 
 There is way more you can learn by going through the source code at:
 
