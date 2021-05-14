@@ -63,7 +63,7 @@ Next, I will highlight the best practices and patterns that can be found in the 
 
 Perhaps one of the best traits in Actions is the ability to import existing actions in order to execute even trivial tasks. The reason I say this is because pipeline code is not something that can be (at least easily) **tested**. Having the opportunity to delegate tasks to code that have been tried before increases the overall trust in the pipeline as well as reducing the errors and maintenance.
 
-In the example above, I felt tempted to ignore using the action and instead just run a *docker login* shell command. However, that would still e prone to error (think of leaking the password); I also would not have handled the **logout** having coded the logic myself.
+In the example above, I felt tempted to ignore using the action and instead just run a *docker login* shell command. However, that would still be prone to error (think of leaking the password); I also would not have handled the **logout** having coded the logic myself.
 
 ### Maven Cache
 
@@ -137,7 +137,7 @@ $ mvn package -Dquarkus.container-image.push=true
 
 ### Image Labels
 
-Container images labels are relevant. In the example I give, a label is used to trace back to the git commit where that image was built from. With Quarkus, JIB and GitHub Actions, this is done by adding the following argument to the Maven build:
+Container image labels are relevant. In the example I give, a label is used to trace back to the git commit where that image was built from. With Quarkus, JIB and GitHub Actions, this is done by adding the following argument to the Maven build:
 
 * *'-Dquarkus.jib.labels."org.opencontainers.image.revision"='$GITHUB_SHA*
 
@@ -147,7 +147,7 @@ Also, it is worth mentioning the label name was not chosen arbitrarily, but base
 
 ## Conclusion
 
-You have seen a little bit of how to do continuous integration using modern frameworks. Despite the tools, what really matters is how close to the developers the processes can get. With GitHub Actions and a modern language like Quarkus, people who get to write the code can now feel more than empowered to build and ship code fast. After all, that is the point of disciplines like DevOps and Continuous Delivery.
+You have seen a little bit of how to do continuous integration using modern frameworks. Despite the tools, what really matters is how close to the developers the process can get. With GitHub Actions and a modern language like Quarkus, people who get to write the code can now feel more than empowered to build and ship code fast. After all, that is the point of disciplines like DevOps and Continuous Delivery.
 
 There is way more you can learn by going through the source code at:
 
