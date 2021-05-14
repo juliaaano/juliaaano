@@ -116,7 +116,7 @@ Following the **least privilege** security principle, I set everything to read-o
 
 ### Container Builds with JIB
 
-In the obsession to find the most efficient way to build container images, I found [this](https://quarkus.io/guides/container-image#jib){:target="_blank"}. Following is an extract straight from the docs:
+In the obsession to find the most efficient way to build container images, I found [JIB for Quarkus](https://quarkus.io/guides/container-image#jib){:target="_blank"}. Next is an extract straight from the docs:
 
 *The extension quarkus-container-image-jib is powered by Jib for performing container image builds. The major benefit of using Jib with Quarkus is that all the dependencies (everything found under target/lib) are cached in a different layer than the actual application making rebuilds really fast and small (when it comes to pushing). Another important benefit of using this extension is that it provides the ability to create a container image without having to have any dedicated client side tooling (like Docker) or running daemon processes (like the Docker daemon) when all that is needed is the ability to push to a container image registry.*
 
