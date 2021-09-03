@@ -1,16 +1,20 @@
 # Welcome
 
-![Juliano Mohr](./favicon.ico)
+[![ci](https://github.com/juliaaano/juliaaano/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/juliaaano/juliaaano/actions/workflows/ci-cd.yml)
 
 This is my blog: [www.juliaaano.com](https://www.juliaaano.com/)
 
 It's powered by [Jekyll](https://jekyllrb.com/) and [GitHub Pages](https://pages.github.com/)
 
-[![Build Status](https://travis-ci.com/juliaaano/juliaaano.svg)](https://travis-ci.com/juliaaano/juliaaano)
+## Run It
+
+```
+$ docker run --rm -p 50080:80 ghcr.io/juliaaano/juliaaano:latest
+```
 
 ## License
 
-Copyright (c) 2017 Juliano Mohr
+Copyright (c) 2021 Juliano Mohr
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,3 +33,5 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+![Juliano Mohr](./source/favicon.ico)
