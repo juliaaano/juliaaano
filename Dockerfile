@@ -3,7 +3,7 @@ FROM docker.io/ruby:2.7.4-bullseye as builder
 
 RUN gem install bundler jekyll
 
-COPY Gemfile _config.yml /build/
+COPY Gemfile Gemfile.lock _config.yml /build/
 
 RUN cd build && bundle install
 
