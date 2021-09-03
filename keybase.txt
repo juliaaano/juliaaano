@@ -1,0 +1,56 @@
+==================================================================
+https://keybase.io/juliaaano
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://www.juliaaano.com
+  * I am juliaaano (https://keybase.io/juliaaano) on keybase.
+  * I have a public key ASDTe0w6CKDmxyLMmVc0NPZ4NElseDZRpdv1dz_FfgH6wQo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "0120d37b4c3a08a0e6c722cc99573434f67834496c783651a5dbf5773fc57e01fac10a",
+      "host": "keybase.io",
+      "kid": "0120d37b4c3a08a0e6c722cc99573434f67834496c783651a5dbf5773fc57e01fac10a",
+      "uid": "17d33c58d095f841195f35186c661a19",
+      "username": "juliaaano"
+    },
+    "merkle_root": {
+      "ctime": 1530699166,
+      "hash": "bba5ee9f3d386a0cc6c9772e99d9b9e610004f28a246f8fe35c34df16494c4415b92508b1ca6f851d1ca7fb9fd271d21ec81f3a3b90357bdc1c75fd3c7cd7204",
+      "hash_meta": "0b62b91999e3a9e522869cbe1b5cb9870c075359f2cdee863fd04e6638fd67f4",
+      "seqno": 3198305
+    },
+    "service": {
+      "entropy": "lVYj+fSDqQgfpiPb3wTVdxeW",
+      "hostname": "www.juliaaano.com",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "2.1.2"
+  },
+  "ctime": 1530699189,
+  "expire_in": 504576000,
+  "prev": "4eec1dbbf31ea9e9692ee0921bdbc286a961b861c76fa83545e38336363ef37e",
+  "seqno": 13,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEg03tMOgig5scizJlXNDT2eDRJbHg2UaXb9Xc/xX4B+sEKp3BheWxvYWTESpcCDcQgTuwdu/MeqelpLuCSG9vChqlhuGHHb6g1ReODNjY+837EIHaztWrvZtRa4W+gDEz5RZI9lQSeVYQ1BY6TOK21ed8YAgHCo3NpZ8RAuiB+JPkZcIUnD4JlXXYdhzwOboyUbJnL5XxFbnZOMBbDf0qbJ4Aa2vYHgHELCXYivnHEh/GBO5zxVQXrSAIzAKhzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIGti4BjsisEvj++AyUeE8caD7QEMgfrXC72w2IaZzpp6o3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/juliaaano
+
+==================================================================
