@@ -8,6 +8,7 @@ on:
 
 permissions:
   packages: write
+  contents: write
 
 concurrency:
   group: ci
@@ -19,8 +20,6 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-        with:
-          submodules: true
       - name: set datetime
         run: |
           echo "datetime=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_ENV
@@ -43,8 +42,20 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy:
+    if: github.ref == 'refs/heads/master'
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+      - name: copy generated site
+        run: docker run --rm ghcr.io/juliaaano/juliaaano:$GITHUB_SHA tar -c -C /usr/share/nginx html | tar -x
       - name: deploy github pages
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
           branch: gh-pages
-          folder: _site
+          folder: html
