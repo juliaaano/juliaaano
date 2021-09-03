@@ -12,21 +12,21 @@ language: ruby
 rvm:
   - 2.7.4
 
-services:
-  - docker
+# services:
+#   - docker
 
 install:
   - bundle install --jobs=3 --retry=3
   - rake build
-  - docker build -f Dockerfile-travis -t $TRAVIS_REPO_SLUG .
+  # - docker build -f Dockerfile-travis -t $TRAVIS_REPO_SLUG .
 
 script:
 #  - rake proofer
   - echo "skip - do nothing"
 
-after_success:
-  - echo "$DOCKERHUB_PWD" | docker login --username "$DOCKERHUB_USR" --password-stdin
-  - docker push $TRAVIS_REPO_SLUG
+# after_success:
+#   - echo "$DOCKERHUB_PWD" | docker login --username "$DOCKERHUB_USR" --password-stdin
+#   - docker push $TRAVIS_REPO_SLUG
 
 deploy:
   provider: pages
