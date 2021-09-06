@@ -54,6 +54,11 @@ jobs:
           ref: gh-pages
       - name: copy generated site
         run: docker run --rm ghcr.io/juliaaano/juliaaano:$GITHUB_SHA tar -c -C /usr/share/nginx html | tar -x
+      - name: html proofer
+        uses: chabad360/htmlproofer@master
+        with:
+          directory: html
+          arguments: "--assume_extension --http_status_ignore 999 --url-ignore 'https://jekyllrb.com', 'https://fontawesome.com', 'https://www.websiteplanet.com/webtools/favicon-generator'"
       - name: deploy github pages
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
