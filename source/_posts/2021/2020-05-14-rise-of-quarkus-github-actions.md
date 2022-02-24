@@ -35,7 +35,7 @@ It is specifically the process to build, test and package the software artifact 
 
 ## GitHub Actions
 
-Think of [GitHub Actions](https://github.com/features/actions){:target="_blank"} as the CI tool, a replacement for Jenkins or Travis CI, for example. The aspect I like most about it is the fact it's so well integrated with the GitHub repository. This can be very empowering for developers who can control and get feedback from their CI pipelines in the same place where the code and pull requests are managed.
+Think of [GitHub Actions](https://github.com/features/actions){:target="_blank"} as the CI tool, a replacement for Jenkins or Travis CI, for example. The aspect I like most about it is the fact it's so well integrated with the GitHub repository. This can be empowering for developers who can control and get feedback from their CI pipelines in the same place where the code and pull requests are managed.
 
 ## GitHub Packages
 

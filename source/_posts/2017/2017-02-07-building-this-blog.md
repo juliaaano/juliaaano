@@ -11,7 +11,7 @@ comments: true
 A few weeks ago I decided to engage in a project of building a blog. I was looking for challenges, I wanted to build something of my own, without using some of these well known platforms like Wordpress, Blogger, etc. It was more about the journey and satisfaction of dealing with a domain that I was never very familiar with: **front-end development**.
 
 <!--more-->
-The result is this website you are seeing now. Although it may look very simple (that's always the goal!), there has been many things I've been through during this project. I would like to share with you the major practices and tools I learned the past weeks. This way I hope I can help you if you are also interested on building your own website.
+The result is this website you are seeing now. Although it may look simple (that's always the goal!), there has been many things I've been through during this project. I would like to share with you the major practices and tools I learned the past weeks. This way I hope I can help you if you are also interested on building your own website.
 
 I'll be brief, most of the topics deserve their own blog posts, and I'm looking forward to write more about them in the future.
 
