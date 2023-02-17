@@ -15,7 +15,7 @@ pre {
 
 .highlight {
     background-color: $light-gray;
-    padding: ($em / 2);
+    padding: calc($em / 2);
     margin-inline-start: $em;
     margin-inline-end: $em;
 }
