@@ -14,7 +14,7 @@ $ docker run --rm -p 50080:80 ghcr.io/juliaaano/juliaaano:latest
 
 ## License
 
-Copyright (c) 2022 Juliano Mohr
+Copyright (c) 2023 Juliano Mohr
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
