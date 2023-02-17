@@ -1,822 +1,822 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://www.juliaaano.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.juliaaano.com/" rel="alternate" type="text/html" /><updated>2022-04-06T15:30:51+00:00</updated><id>https://www.juliaaano.com/feed.xml</id><title type="html">Juliano Mohr</title><entry><title type="html">The Rise of Quarkus and GitHub Actions</title><link href="https://www.juliaaano.com/blog/2021/05/14/rise-of-quarkus-github-actions/" rel="alternate" type="text/html" title="The Rise of Quarkus and GitHub Actions" /><published>2021-05-14T00:00:00+00:00</published><updated>2021-05-14T00:00:00+00:00</updated><id>https://www.juliaaano.com/blog/2021/05/14/rise-of-quarkus-github-actions</id><content type="html" xml:base="https://www.juliaaano.com/blog/2021/05/14/rise-of-quarkus-github-actions/">&lt;p&gt;Thanks to &lt;a href=&quot;https://quarkus.io/&quot; target=&quot;_blank&quot;&gt;&lt;strong&gt;Quarkus&lt;/strong&gt;&lt;/a&gt; and &lt;a href=&quot;https://github.com/features/actions&quot; target=&quot;_blank&quot;&gt;&lt;strong&gt;GitHub Actions&lt;/strong&gt;&lt;/a&gt;, I now find enjoyable to do Java development and create continuous integration (CI) workflows for my applications. In this post, you will learn how to efficiently build and push container images using the GitHub ecosystem, as well as look at examples on how to write pipelines with good practices in mind. Finally, I will demonstrate a few tricks specific to building Quarkus and Java apps with Actions.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://www.juliaaano.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.juliaaano.com/" rel="alternate" type="text/html" /><updated>2023-02-17T11:52:38+00:00</updated><id>https://www.juliaaano.com/feed.xml</id><title type="html">Juliano Mohr</title><entry><title type="html">The Rise of Quarkus and GitHub Actions</title><link href="https://www.juliaaano.com/blog/2021/05/14/rise-of-quarkus-github-actions/" rel="alternate" type="text/html" title="The Rise of Quarkus and GitHub Actions" /><published>2021-05-14T00:00:00+00:00</published><updated>2021-05-14T00:00:00+00:00</updated><id>https://www.juliaaano.com/blog/2021/05/14/rise-of-quarkus-github-actions</id><content type="html" xml:base="https://www.juliaaano.com/blog/2021/05/14/rise-of-quarkus-github-actions/"><![CDATA[<p>Thanks to <a href="https://quarkus.io/" target="_blank"><strong>Quarkus</strong></a> and <a href="https://github.com/features/actions" target="_blank"><strong>GitHub Actions</strong></a>, I now find enjoyable to do Java development and create continuous integration (CI) workflows for my applications. In this post, you will learn how to efficiently build and push container images using the GitHub ecosystem, as well as look at examples on how to write pipelines with good practices in mind. Finally, I will demonstrate a few tricks specific to building Quarkus and Java apps with Actions.</p>
 
-&lt;!--more--&gt;
+<!--more-->
 
-&lt;figure class=&quot;image&quot;&gt;
-&lt;amp-img src=&quot;https://d27nechif2d87h.cloudfront.net/images/pipelines-by-sea.jpeg&quot; alt=&quot;pipelines-by-sea&quot; class=&quot;image-center&quot; height=&quot;1&quot; width=&quot;1&quot; layout=&quot;responsive&quot;&gt;
-&lt;/amp-img&gt;
-&lt;figcaption class=&quot;image-center-caption&quot;&gt;Image: Pipelines by the sea.&lt;/figcaption&gt;
-&lt;/figure&gt;
+<figure class="image">
+<amp-img src="https://d27nechif2d87h.cloudfront.net/images/pipelines-by-sea.jpeg" alt="pipelines-by-sea" class="image-center" height="1" width="1" layout="responsive">
+</amp-img>
+<figcaption class="image-center-caption">Image: Pipelines by the sea.</figcaption>
+</figure>
 
-&lt;p&gt;First and foremost, let me just define what continuous integration or CI pipeline is for the purposes of this article.&lt;/p&gt;
+<p>First and foremost, let me just define what continuous integration or CI pipeline is for the purposes of this article.</p>
 
-&lt;p&gt;It is specifically the process to build, test and package the software artifact in a container, so it can be ready to be deployed in any given environment.&lt;/p&gt;
+<p>It is specifically the process to build, test and package the software artifact in a container, so it can be ready to be deployed in any given environment.</p>
 
-&lt;h2 id=&quot;quarkus&quot;&gt;Quarkus&lt;/h2&gt;
+<h2 id="quarkus">Quarkus</h2>
 
-&lt;p&gt;&lt;a href=&quot;https://quarkus.io/&quot; target=&quot;_blank&quot;&gt;&lt;strong&gt;Quarkus&lt;/strong&gt;&lt;/a&gt; is an amazing Java stack for developing modern cloud-native applications. The example used throughout this blog is an app written in Quarkus. Take some time to explore the &lt;a href=&quot;https://github.com/juliaaano/quarkus&quot; target=&quot;_blank&quot;&gt;source code here&lt;/a&gt;.&lt;/p&gt;
+<p><a href="https://quarkus.io/" target="_blank"><strong>Quarkus</strong></a> is an amazing Java stack for developing modern cloud-native applications. The example used throughout this blog is an app written in Quarkus. Take some time to explore the <a href="https://github.com/juliaaano/quarkus" target="_blank">source code here</a>.</p>
 
-&lt;h2 id=&quot;github-actions&quot;&gt;GitHub Actions&lt;/h2&gt;
+<h2 id="github-actions">GitHub Actions</h2>
 
-&lt;p&gt;Think of &lt;a href=&quot;https://github.com/features/actions&quot; target=&quot;_blank&quot;&gt;GitHub Actions&lt;/a&gt; as the CI tool, a replacement for Jenkins or Travis CI, for example. The aspect I like most about it is the fact it’s so well integrated with the GitHub repository. This can be empowering for developers who can control and get feedback from their CI pipelines in the same place where the code and pull requests are managed.&lt;/p&gt;
+<p>Think of <a href="https://github.com/features/actions" target="_blank">GitHub Actions</a> as the CI tool, a replacement for Jenkins or Travis CI, for example. The aspect I like most about it is the fact it’s so well integrated with the GitHub repository. This can be empowering for developers who can control and get feedback from their CI pipelines in the same place where the code and pull requests are managed.</p>
 
-&lt;h2 id=&quot;github-packages&quot;&gt;GitHub Packages&lt;/h2&gt;
+<h2 id="github-packages">GitHub Packages</h2>
 
-&lt;p&gt;GitHub’s response to having a container registry comes with &lt;a href=&quot;https://github.com/features/packages&quot; target=&quot;_blank&quot;&gt;GitHub Packages&lt;/a&gt;. The container image produced by the pipeline featured in this blog is pushed to the &lt;em&gt;ghcr.io&lt;/em&gt; registry. Similar to Actions, Packages are well integrated with GitHub’s repository, especially the way access control is granted to the pipeline.&lt;/p&gt;
+<p>GitHub’s response to having a container registry comes with <a href="https://github.com/features/packages" target="_blank">GitHub Packages</a>. The container image produced by the pipeline featured in this blog is pushed to the <em>ghcr.io</em> registry. Similar to Actions, Packages are well integrated with GitHub’s repository, especially the way access control is granted to the pipeline.</p>
 
-&lt;h2 id=&quot;time-for-actions&quot;&gt;Time for Action&lt;del&gt;s&lt;/del&gt;&lt;/h2&gt;
+<h2 id="time-for-actions">Time for Action<del>s</del></h2>
 
-&lt;p&gt;The CI pipeline is defined as code in what GitHub call workflows. These are yaml files contained inside the &lt;em&gt;.github/workflows/&lt;/em&gt; directory.&lt;/p&gt;
+<p>The CI pipeline is defined as code in what GitHub call workflows. These are yaml files contained inside the <em>.github/workflows/</em> directory.</p>
 
-&lt;p&gt;Next, I will highlight the best practices and patterns that can be found in the workflows of the Quarkus &lt;a href=&quot;https://github.com/juliaaano/quarkus&quot; target=&quot;_blank&quot;&gt;example application&lt;/a&gt; of this blog.&lt;/p&gt;
+<p>Next, I will highlight the best practices and patterns that can be found in the workflows of the Quarkus <a href="https://github.com/juliaaano/quarkus" target="_blank">example application</a> of this blog.</p>
 
-&lt;h3 id=&quot;the-reuse-of-existing-actions&quot;&gt;The Reuse of Existing Actions&lt;/h3&gt;
+<h3 id="the-reuse-of-existing-actions">The Reuse of Existing Actions</h3>
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;login ghcr.io&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;uses&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker/login-action@v1.8.0&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;with&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;na&quot;&gt;registry&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ghcr.io&lt;/span&gt;
-      &lt;span class=&quot;na&quot;&gt;username&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;${{ github.actor }}&lt;/span&gt;
-      &lt;span class=&quot;na&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;${{ secrets.GITHUB_TOKEN }}&lt;/span&gt;
-      &lt;span class=&quot;na&quot;&gt;logout&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">login ghcr.io</span>
+  <span class="na">uses</span><span class="pi">:</span> <span class="s">docker/login-action@v1.8.0</span>
+  <span class="na">with</span><span class="pi">:</span>
+      <span class="na">registry</span><span class="pi">:</span> <span class="s">ghcr.io</span>
+      <span class="na">username</span><span class="pi">:</span> <span class="s">${{ github.actor }}</span>
+      <span class="na">password</span><span class="pi">:</span> <span class="s">${{ secrets.GITHUB_TOKEN }}</span>
+      <span class="na">logout</span><span class="pi">:</span> <span class="kc">true</span></code></pre></figure>
 
-&lt;p&gt;Perhaps one of the best traits in Actions is the ability to import existing actions in order to execute even trivial tasks. The reason I say this is because pipeline code is not something that can be (at least easily) &lt;strong&gt;tested&lt;/strong&gt;. Having the opportunity to delegate tasks to code that have been tried before increases the overall trust in the pipeline as well as reducing the errors and maintenance.&lt;/p&gt;
+<p>Perhaps one of the best traits in Actions is the ability to import existing actions in order to execute even trivial tasks. The reason I say this is because pipeline code is not something that can be (at least easily) <strong>tested</strong>. Having the opportunity to delegate tasks to code that have been tried before increases the overall trust in the pipeline as well as reducing the errors and maintenance.</p>
 
-&lt;p&gt;In the example above, I felt tempted to ignore using the action and instead just run a &lt;em&gt;docker login&lt;/em&gt; shell command. However, that would still be prone to error (think of leaking the password); I also would not have handled the &lt;strong&gt;logout&lt;/strong&gt; having coded the logic myself.&lt;/p&gt;
+<p>In the example above, I felt tempted to ignore using the action and instead just run a <em>docker login</em> shell command. However, that would still be prone to error (think of leaking the password); I also would not have handled the <strong>logout</strong> having coded the logic myself.</p>
 
-&lt;h3 id=&quot;maven-cache&quot;&gt;Maven Cache&lt;/h3&gt;
+<h3 id="maven-cache">Maven Cache</h3>
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;cache ~/.m2&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;uses&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;actions/cache@v2&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;with&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;~/.m2&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;restore-keys&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;${{ runner.os }}-m2&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">cache ~/.m2</span>
+  <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/cache@v2</span>
+  <span class="na">with</span><span class="pi">:</span>
+    <span class="na">path</span><span class="pi">:</span> <span class="s">~/.m2</span>
+    <span class="na">key</span><span class="pi">:</span> <span class="s">${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}</span>
+    <span class="na">restore-keys</span><span class="pi">:</span> <span class="s">${{ runner.os }}-m2</span></code></pre></figure>
 
-&lt;p&gt;Maven is famous for downloading half, if not the entire, internet. Jokes aside, it is wise to cache the dependencies as it normally happens in your local dev machine.&lt;/p&gt;
+<p>Maven is famous for downloading half, if not the entire, internet. Jokes aside, it is wise to cache the dependencies as it normally happens in your local dev machine.</p>
 
-&lt;p&gt;The level of abstraction provided by the action is great, it gives the developers flexibility and easiness to understand.&lt;/p&gt;
+<p>The level of abstraction provided by the action is great, it gives the developers flexibility and easiness to understand.</p>
 
-&lt;p&gt;Cache invalidation will basically occur whenever the pom.xml changes.&lt;/p&gt;
+<p>Cache invalidation will basically occur whenever the pom.xml changes.</p>
 
-&lt;h3 id=&quot;code-scanning&quot;&gt;Code Scanning&lt;/h3&gt;
+<h3 id="code-scanning">Code Scanning</h3>
 
-&lt;p&gt;Another powerful feature is the &lt;a href=&quot;https://github.com/features/security&quot; target=&quot;_blank&quot;&gt;code scanning&lt;/a&gt; action. Powered by CodeQL, it can be found in the Quarkus app as a separate &lt;a href=&quot;https://github.com/juliaaano/quarkus/blob/master/.github/workflows/scanning.yml&quot; target=&quot;_blank&quot;&gt;workflow&lt;/a&gt;.&lt;/p&gt;
+<p>Another powerful feature is the <a href="https://github.com/features/security" target="_blank">code scanning</a> action. Powered by CodeQL, it can be found in the Quarkus app as a separate <a href="https://github.com/juliaaano/quarkus/blob/master/.github/workflows/scanning.yml" target="_blank">workflow</a>.</p>
 
-&lt;figure class=&quot;image&quot;&gt;
-&lt;amp-img src=&quot;https://d27nechif2d87h.cloudfront.net/images/github-code-scanning.png&quot; alt=&quot;github-code-scanning&quot; class=&quot;image-center&quot; height=&quot;1&quot; width=&quot;1&quot; layout=&quot;responsive&quot;&gt;
-&lt;/amp-img&gt;
-&lt;figcaption class=&quot;image-center-caption&quot;&gt;Image: GitHub code scanning.&lt;/figcaption&gt;
-&lt;/figure&gt;
+<figure class="image">
+<amp-img src="https://d27nechif2d87h.cloudfront.net/images/github-code-scanning.png" alt="github-code-scanning" class="image-center" height="1" width="1" layout="responsive">
+</amp-img>
+<figcaption class="image-center-caption">Image: GitHub code scanning.</figcaption>
+</figure>
 
-&lt;p&gt;Security vulnerabilities are reported at the pull request level, in the code diff. A brilliant application of the shift-left security concept.&lt;/p&gt;
+<p>Security vulnerabilities are reported at the pull request level, in the code diff. A brilliant application of the shift-left security concept.</p>
 
-&lt;h3 id=&quot;permissions&quot;&gt;Permissions&lt;/h3&gt;
+<h3 id="permissions">Permissions</h3>
 
-&lt;p&gt;All calls to GitHub APIs are authenticated using a GITHUB_TOKEN which is present by default in the workflow. The permissions assigned to this token can be configured as code inside the workflow definition.&lt;/p&gt;
+<p>All calls to GitHub APIs are authenticated using a GITHUB_TOKEN which is present by default in the workflow. The permissions assigned to this token can be configured as code inside the workflow definition.</p>
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;permissions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;packages&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;write&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;security-events&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;write&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">permissions</span><span class="pi">:</span>
+  <span class="na">packages</span><span class="pi">:</span> <span class="s">write</span>
+  <span class="na">security-events</span><span class="pi">:</span> <span class="s">write</span></code></pre></figure>
 
-&lt;p&gt;Following the &lt;strong&gt;least privilege&lt;/strong&gt; security principle, I set everything to read-only at the repository level and then explicitly grant the required permissions as displayed above.&lt;/p&gt;
+<p>Following the <strong>least privilege</strong> security principle, I set everything to read-only at the repository level and then explicitly grant the required permissions as displayed above.</p>
 
-&lt;h3 id=&quot;container-builds-with-jib&quot;&gt;Container Builds with JIB&lt;/h3&gt;
+<h3 id="container-builds-with-jib">Container Builds with JIB</h3>
 
-&lt;p&gt;In the obsession to find the most efficient way to build container images, I found &lt;a href=&quot;https://quarkus.io/guides/container-image#jib&quot; target=&quot;_blank&quot;&gt;JIB for Quarkus&lt;/a&gt;. Next is an extract straight from the docs:&lt;/p&gt;
+<p>In the obsession to find the most efficient way to build container images, I found <a href="https://quarkus.io/guides/container-image#jib" target="_blank">JIB for Quarkus</a>. Next is an extract straight from the docs:</p>
 
-&lt;p&gt;&lt;em&gt;The extension quarkus-container-image-jib is powered by Jib for performing container image builds. The major benefit of using Jib with Quarkus is that all the dependencies (everything found under target/lib) are cached in a different layer than the actual application making rebuilds really fast and small (when it comes to pushing). Another important benefit of using this extension is that it provides the ability to create a container image without having to have any dedicated client side tooling (like Docker) or running daemon processes (like the Docker daemon) when all that is needed is the ability to push to a container image registry.&lt;/em&gt;&lt;/p&gt;
+<p><em>The extension quarkus-container-image-jib is powered by Jib for performing container image builds. The major benefit of using Jib with Quarkus is that all the dependencies (everything found under target/lib) are cached in a different layer than the actual application making rebuilds really fast and small (when it comes to pushing). Another important benefit of using this extension is that it provides the ability to create a container image without having to have any dedicated client side tooling (like Docker) or running daemon processes (like the Docker daemon) when all that is needed is the ability to push to a container image registry.</em></p>
 
-&lt;p&gt;To use it with Quarkus simply add the dependency:&lt;/p&gt;
+<p>To use it with Quarkus simply add the dependency:</p>
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;io.quarkus&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;quarkus-container-image-jib&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>io.quarkus<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>quarkus-container-image-jib<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span></code></pre></figure>
 
-&lt;p&gt;Then add the following argument to the Maven build.&lt;/p&gt;
+<p>Then add the following argument to the Maven build.</p>
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mvn package &lt;span class=&quot;nt&quot;&gt;-Dquarkus&lt;/span&gt;.container-image.push&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mvn package <span class="nt">-Dquarkus</span>.container-image.push<span class="o">=</span><span class="nb">true</span></code></pre></figure>
 
-&lt;h3 id=&quot;image-labels&quot;&gt;Image Labels&lt;/h3&gt;
+<h3 id="image-labels">Image Labels</h3>
 
-&lt;p&gt;Container image labels are relevant. In the example I give, a label is used to trace back to the git commit where that image was built from. With Quarkus, JIB and GitHub Actions, this is done by adding the following argument to the Maven build:&lt;/p&gt;
+<p>Container image labels are relevant. In the example I give, a label is used to trace back to the git commit where that image was built from. With Quarkus, JIB and GitHub Actions, this is done by adding the following argument to the Maven build:</p>
 
-&lt;ul&gt;
-  &lt;li&gt;&lt;em&gt;‘-Dquarkus.jib.labels.”org.opencontainers.image.revision”=’$GITHUB_SHA&lt;/em&gt;&lt;/li&gt;
-&lt;/ul&gt;
+<ul>
+  <li><em>‘-Dquarkus.jib.labels.”org.opencontainers.image.revision”=’$GITHUB_SHA</em></li>
+</ul>
 
-&lt;p&gt;Pay attention to the use of single and double quotes as it makes a difference in the command line.&lt;/p&gt;
+<p>Pay attention to the use of single and double quotes as it makes a difference in the command line.</p>
 
-&lt;p&gt;Also, it is worth mentioning the label name was not chosen arbitrarily, but based on standards from the &lt;a href=&quot;https://github.com/opencontainers/image-spec&quot; target=&quot;_blank&quot;&gt;Open Container Initiative&lt;/a&gt;.&lt;/p&gt;
+<p>Also, it is worth mentioning the label name was not chosen arbitrarily, but based on standards from the <a href="https://github.com/opencontainers/image-spec" target="_blank">Open Container Initiative</a>.</p>
 
-&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+<h2 id="conclusion">Conclusion</h2>
 
-&lt;p&gt;You have seen a little bit of how to do continuous integration using modern frameworks. Despite the tools, what really matters is how close to the developers the process can get. With GitHub Actions and a modern language like Quarkus, people who get to write the code can now feel more than empowered to build and ship code fast. After all, that is the point of disciplines like DevOps and Continuous Delivery.&lt;/p&gt;
+<p>You have seen a little bit of how to do continuous integration using modern frameworks. Despite the tools, what really matters is how close to the developers the process can get. With GitHub Actions and a modern language like Quarkus, people who get to write the code can now feel more than empowered to build and ship code fast. After all, that is the point of disciplines like DevOps and Continuous Delivery.</p>
 
-&lt;p&gt;There is way more you can learn by going through the source code at:&lt;/p&gt;
+<p>There is way more you can learn by going through the source code at:</p>
 
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/juliaaano/quarkus&quot; target=&quot;_blank&quot;&gt;https://github.com/juliaaano/quarkus&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
+<ul>
+  <li><a href="https://github.com/juliaaano/quarkus" target="_blank">https://github.com/juliaaano/quarkus</a></li>
+</ul>
 
-&lt;p&gt;Bonus: worth checking there how the pipeline handles build and testing in Quarkus &lt;strong&gt;NATIVE&lt;/strong&gt; mode.&lt;/p&gt;</content><author><name></name></author><summary type="html">Thanks to Quarkus and GitHub Actions, I now find enjoyable to do Java development and create continuous integration (CI) workflows for my applications. In this post, you will learn how to efficiently build and push container images using the GitHub ecosystem, as well as look at examples on how to write pipelines with good practices in mind. Finally, I will demonstrate a few tricks specific to building Quarkus and Java apps with Actions.</summary></entry><entry><title type="html">5 Java App Essentials</title><link href="https://www.juliaaano.com/blog/2020/04/08/five-java-app-essentials/" rel="alternate" type="text/html" title="5 Java App Essentials" /><published>2020-04-08T00:00:00+00:00</published><updated>2020-04-08T00:00:00+00:00</updated><id>https://www.juliaaano.com/blog/2020/04/08/five-java-app-essentials</id><content type="html" xml:base="https://www.juliaaano.com/blog/2020/04/08/five-java-app-essentials/">&lt;p&gt;You’re building from scratch just another microservice and the programing language of choice is once again Java. What are the 5 non-functional capabilities you’re more likely to need to set up before writing any business code? Well, that usually depends on the project’s requirements, however, more often than not I find myself dealing with the same concerns over and over. Here, I’ll show you what they are and &lt;strong&gt;how to implement them in a lightweight, almost framework-free approach.&lt;/strong&gt;&lt;/p&gt;
+<p>Bonus: worth checking there how the pipeline handles build and testing in Quarkus <strong>NATIVE</strong> mode.</p>]]></content><author><name></name></author><summary type="html"><![CDATA[Continuous integration pipeline for Quarkus and Java applications using GitHub Actions.]]></summary></entry><entry><title type="html">5 Java App Essentials</title><link href="https://www.juliaaano.com/blog/2020/04/08/five-java-app-essentials/" rel="alternate" type="text/html" title="5 Java App Essentials" /><published>2020-04-08T00:00:00+00:00</published><updated>2020-04-08T00:00:00+00:00</updated><id>https://www.juliaaano.com/blog/2020/04/08/five-java-app-essentials</id><content type="html" xml:base="https://www.juliaaano.com/blog/2020/04/08/five-java-app-essentials/"><![CDATA[<p>You’re building from scratch just another microservice and the programing language of choice is once again Java. What are the 5 non-functional capabilities you’re more likely to need to set up before writing any business code? Well, that usually depends on the project’s requirements, however, more often than not I find myself dealing with the same concerns over and over. Here, I’ll show you what they are and <strong>how to implement them in a lightweight, almost framework-free approach.</strong></p>
 
-&lt;!--more--&gt;
+<!--more-->
 
-&lt;figure class=&quot;image&quot;&gt;
-&lt;amp-img src=&quot;https://d27nechif2d87h.cloudfront.net/images/five-app-essentials.png&quot; alt=&quot;filters-in-action&quot; class=&quot;image-center-2&quot; height=&quot;1&quot; width=&quot;1&quot; layout=&quot;responsive&quot;&gt;
-&lt;/amp-img&gt;
-&lt;figcaption class=&quot;image-center-caption&quot;&gt;Image: Top five.&lt;/figcaption&gt;
-&lt;/figure&gt;
+<figure class="image">
+<amp-img src="https://d27nechif2d87h.cloudfront.net/images/five-app-essentials.png" alt="filters-in-action" class="image-center-2" height="1" width="1" layout="responsive">
+</amp-img>
+<figcaption class="image-center-caption">Image: Top five.</figcaption>
+</figure>
 
-&lt;h2 id=&quot;get-started&quot;&gt;Get Started&lt;/h2&gt;
+<h2 id="get-started">Get Started</h2>
 
-&lt;p&gt;First of all, I acknowledge we are past another decade, where popular frameworks such as Spring Boot and &lt;a href=&quot;https://quarkus.io/&quot; target=&quot;_blank&quot;&gt;&lt;strong&gt;Quarkus&lt;/strong&gt;&lt;/a&gt; have taken over the Java development landscape. The examples shown here have been intentionally created to be independent of these frameworks.&lt;/p&gt;
+<p>First of all, I acknowledge we are past another decade, where popular frameworks such as Spring Boot and <a href="https://quarkus.io/" target="_blank"><strong>Quarkus</strong></a> have taken over the Java development landscape. The examples shown here have been intentionally created to be independent of these frameworks.</p>
 
-&lt;p&gt;Robert C. Martin &lt;a href=&quot;https://blog.cleancoder.com/uncle-bob/2014/05/11/FrameworkBound.html&quot; target=&quot;_blank&quot;&gt;has once said&lt;/a&gt; software teams get excessively bound to frameworks to the point the control over the software architecture is lost. There’s no doubt this resonates with his work on the &lt;a href=&quot;https://en.wikipedia.org/wiki/SOLID&quot; target=&quot;_blank&quot;&gt;SOLID&lt;/a&gt; software design principles. Remember, higher-level policies of systems (business domain) should not depend on lower-level ones (frameworks).&lt;/p&gt;
+<p>Robert C. Martin <a href="https://blog.cleancoder.com/uncle-bob/2014/05/11/FrameworkBound.html" target="_blank">has once said</a> software teams get excessively bound to frameworks to the point the control over the software architecture is lost. There’s no doubt this resonates with his work on the <a href="https://en.wikipedia.org/wiki/SOLID" target="_blank">SOLID</a> software design principles. Remember, higher-level policies of systems (business domain) should not depend on lower-level ones (frameworks).</p>
 
-&lt;p&gt;Enough said, I rest my case and give you here my list of &lt;strong&gt;five essential microservices capabilities&lt;/strong&gt;:&lt;/p&gt;
+<p>Enough said, I rest my case and give you here my list of <strong>five essential microservices capabilities</strong>:</p>
 
-&lt;h3 id=&quot;1-api&quot;&gt;1. API&lt;/h3&gt;
+<h3 id="1-api">1. API</h3>
 
-&lt;p&gt;The most common way to reach a service from the “outside” is via an &lt;strong&gt;HTTP API&lt;/strong&gt;. The majority of software backend applications nowadays implement some sort of REST API.&lt;/p&gt;
+<p>The most common way to reach a service from the “outside” is via an <strong>HTTP API</strong>. The majority of software backend applications nowadays implement some sort of REST API.</p>
 
-&lt;p&gt;&lt;a href=&quot;http://sparkjava.com/&quot; target=&quot;_blank&quot;&gt;&lt;strong&gt;Spark Java&lt;/strong&gt;&lt;/a&gt; is a simple, yet powerful micro-framework that provides a DSL for rapid development of HTTP endpoints. It is less invasive compared to other web frameworks, but still offers a lot of power and flexibility.&lt;/p&gt;
+<p><a href="http://sparkjava.com/" target="_blank"><strong>Spark Java</strong></a> is a simple, yet powerful micro-framework that provides a DSL for rapid development of HTTP endpoints. It is less invasive compared to other web frameworks, but still offers a lot of power and flexibility.</p>
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;spark&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Spark&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.*;&lt;/span&gt;
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">static</span> <span class="n">spark</span><span class="o">.</span><span class="na">Spark</span><span class="o">.*;</span>
 
-&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;HelloWorld&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/hello&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Hello World&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloWorld</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">get</span><span class="o">(</span><span class="s">"/hello"</span><span class="o">,</span> <span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">res</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="s">"Hello World"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
 
-&lt;p&gt;I wrote a blog post in the past about Spark Java &lt;a href=&quot;https://www.juliaaano.com/blog/2017/02/21/make-simple-with-spark-java/&quot;&gt;&lt;strong&gt;here&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
+<p>I wrote a blog post in the past about Spark Java <a href="https://www.juliaaano.com/blog/2017/02/21/make-simple-with-spark-java/"><strong>here</strong></a>.</p>
 
-&lt;h3 id=&quot;2-testing&quot;&gt;2. Testing&lt;/h3&gt;
+<h3 id="2-testing">2. Testing</h3>
 
-&lt;p&gt;Seeing that &lt;em&gt;&lt;del&gt;REST&lt;/del&gt;&lt;/em&gt; APIs are everywhere, we must think about how to &lt;strong&gt;test&lt;/strong&gt; them.&lt;/p&gt;
+<p>Seeing that <em><del>REST</del></em> APIs are everywhere, we must think about how to <strong>test</strong> them.</p>
 
-&lt;p&gt;&lt;a href=&quot;http://rest-assured.io/&quot; target=&quot;_blank&quot;&gt;&lt;strong&gt;Rest Assured&lt;/strong&gt;&lt;/a&gt; is a great option. It has been out there for a while, so chances are you have heard about it. In short, it’s a Java DSL for testing of REST services.&lt;/p&gt;
+<p><a href="http://rest-assured.io/" target="_blank"><strong>Rest Assured</strong></a> is a great option. It has been out there for a while, so chances are you have heard about it. In short, it’s a Java DSL for testing of REST services.</p>
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;greet_john&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Test</span>
+<span class="kt">void</span> <span class="nf">greet_john</span><span class="o">()</span> <span class="o">{</span>
 
-    &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jsonBody&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;{\&quot;name\&quot;:\&quot;%s\&quot;,\&quot;surname\&quot;:\&quot;%s\&quot;}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;John&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Smith&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    <span class="kd">final</span> <span class="nc">String</span> <span class="n">jsonBody</span> <span class="o">=</span> <span class="n">format</span><span class="o">(</span><span class="s">"{\"name\":\"%s\",\"surname\":\"%s\"}"</span><span class="o">,</span> <span class="s">"John"</span><span class="o">,</span> <span class="s">"Smith"</span><span class="o">);</span>
 
-    &lt;span class=&quot;n&quot;&gt;given&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;accept&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;JSON&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;contentType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;JSON&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jsonBody&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;when&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/greeting&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;statusCode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;contentType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;JSON&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;greeting&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;not&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nullValue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()))&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;greeting&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;equalTo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Hello, John Smith!&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+    <span class="n">given</span><span class="o">()</span>
+        <span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="no">JSON</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">contentType</span><span class="o">(</span><span class="no">JSON</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">body</span><span class="o">(</span><span class="n">jsonBody</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">when</span><span class="o">()</span>
+        <span class="o">.</span><span class="na">post</span><span class="o">(</span><span class="s">"/greeting"</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">then</span><span class="o">()</span>
+        <span class="o">.</span><span class="na">statusCode</span><span class="o">(</span><span class="mi">200</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">contentType</span><span class="o">(</span><span class="no">JSON</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">body</span><span class="o">(</span><span class="s">"greeting"</span><span class="o">,</span> <span class="n">not</span><span class="o">(</span><span class="n">nullValue</span><span class="o">()))</span>
+        <span class="o">.</span><span class="na">body</span><span class="o">(</span><span class="s">"greeting"</span><span class="o">,</span> <span class="n">equalTo</span><span class="o">(</span><span class="s">"Hello, John Smith!"</span><span class="o">));</span>
+<span class="o">}</span></code></pre></figure>
 
-&lt;p&gt;Full example can be found in my &lt;a href=&quot;https://github.com/juliaaano/archetypes/blob/master/sparkjava/src/main/resources/archetype-resources/src/test/java/route/GreetingRouteShould.java&quot; target=&quot;_blank&quot;&gt;&lt;strong&gt;GitHub&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
+<p>Full example can be found in my <a href="https://github.com/juliaaano/archetypes/blob/master/sparkjava/src/main/resources/archetype-resources/src/test/java/route/GreetingRouteShould.java" target="_blank"><strong>GitHub</strong></a>.</p>
 
-&lt;h3 id=&quot;3-logging&quot;&gt;3. Logging&lt;/h3&gt;
+<h3 id="3-logging">3. Logging</h3>
 
-&lt;p&gt;Logging, in general, certainly deserves its own topic. Here I’ll discuss specifically two related aspects of application logging: &lt;strong&gt;correlation ID&lt;/strong&gt; and &lt;strong&gt;log filter&lt;/strong&gt;.&lt;/p&gt;
+<p>Logging, in general, certainly deserves its own topic. Here I’ll discuss specifically two related aspects of application logging: <strong>correlation ID</strong> and <strong>log filter</strong>.</p>
 
-&lt;h4 id=&quot;31-correlation-id&quot;&gt;3.1. Correlation ID&lt;/h4&gt;
+<h4 id="31-correlation-id">3.1. Correlation ID</h4>
 
-&lt;p&gt;In a world of distributed microservices, it’s imperative to be able to trace requests that travel from one service to another.&lt;/p&gt;
+<p>In a world of distributed microservices, it’s imperative to be able to trace requests that travel from one service to another.</p>
 
-&lt;p&gt;For this reason, it is recommended that every logging statement should include a correlation identifier to the request that it belongs to.&lt;/p&gt;
+<p>For this reason, it is recommended that every logging statement should include a correlation identifier to the request that it belongs to.</p>
 
-&lt;p&gt;In Java, a popular solution is to use a logging framework that supports &lt;a href=&quot;http://logback.qos.ch/manual/mdc.html&quot; target=&quot;_blank&quot;&gt;&lt;strong&gt;MDC - Mapped Diagnostic Context&lt;/strong&gt;&lt;/a&gt;. With MDC, you are given access to store information in the context of a thread. This allows for an elegant solution where a “Request ID” is set to MDC and later read and written by the logging framework.&lt;/p&gt;
+<p>In Java, a popular solution is to use a logging framework that supports <a href="http://logback.qos.ch/manual/mdc.html" target="_blank"><strong>MDC - Mapped Diagnostic Context</strong></a>. With MDC, you are given access to store information in the context of a thread. This allows for an elegant solution where a “Request ID” is set to MDC and later read and written by the logging framework.</p>
 
-&lt;p&gt;The Request ID should originate from the incoming request and always propagate through by each service. A common approach is to use HTTP Headers to carry this information. The header names should be standardized, &lt;strong&gt;X-Request-ID&lt;/strong&gt; being a usual example of a name.&lt;/p&gt;
+<p>The Request ID should originate from the incoming request and always propagate through by each service. A common approach is to use HTTP Headers to carry this information. The header names should be standardized, <strong>X-Request-ID</strong> being a usual example of a name.</p>
 
-&lt;p&gt;If the incoming request does not bring the expected X-Request-ID header, the app should create one and be the originator of that request.&lt;/p&gt;
+<p>If the incoming request does not bring the expected X-Request-ID header, the app should create one and be the originator of that request.</p>
 
-&lt;p&gt;Here is an example of generating an X-Request-ID and assigning it to the MDC:&lt;/p&gt;
+<p>Here is an example of generating an X-Request-ID and assigning it to the MDC:</p>
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;// APP-YEAR-DAYOFYEAR-randomUUID: APP-2020-150-194a89c21ffa
-String correlationId = &quot;APP-&quot;.concat(now().format(ISO_ORDINAL_DATE)).concat(randomUUID().toString().substring(23, 36));
-MDC.put(&quot;X-Request-ID&quot;, correlationId);&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml">// APP-YEAR-DAYOFYEAR-randomUUID: APP-2020-150-194a89c21ffa
+String correlationId = "APP-".concat(now().format(ISO_ORDINAL_DATE)).concat(randomUUID().toString().substring(23, 36));
+MDC.put("X-Request-ID", correlationId);</code></pre></figure>
 
-&lt;p&gt;And finally, an example of how to use X-Request-ID in &lt;a href=&quot;http://logback.qos.ch/&quot; target=&quot;_blank&quot;&gt;&lt;strong&gt;Logback&lt;/strong&gt;&lt;/a&gt;:&lt;/p&gt;
+<p>And finally, an example of how to use X-Request-ID in <a href="http://logback.qos.ch/" target="_blank"><strong>Logback</strong></a>:</p>
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;appender&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;STDOUT&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ch.qos.logback.core.ConsoleAppender&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;encoder&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;pattern&amp;gt;&lt;/span&gt;%date [%thread] %-5level %logger{15} [%X{X-Request-ID}] - %msg%n&lt;span class=&quot;nt&quot;&gt;&amp;lt;/pattern&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/encoder&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/appender&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;appender</span> <span class="na">name=</span><span class="s">"STDOUT"</span> <span class="na">class=</span><span class="s">"ch.qos.logback.core.ConsoleAppender"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;encoder&gt;</span>
+    <span class="nt">&lt;pattern&gt;</span>%date [%thread] %-5level %logger{15} [%X{X-Request-ID}] - %msg%n<span class="nt">&lt;/pattern&gt;</span>
+  <span class="nt">&lt;/encoder&gt;</span>
+<span class="nt">&lt;/appender&gt;</span></code></pre></figure>
 
-&lt;p&gt;Checkout working example from &lt;a href=&quot;https://github.com/juliaaano/archetypes/blob/master/sparkjava/src/main/resources/archetype-resources/src/main/java/spark/SparkContext.java&quot; target=&quot;_blank&quot;&gt;&lt;strong&gt;here&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
+<p>Checkout working example from <a href="https://github.com/juliaaano/archetypes/blob/master/sparkjava/src/main/resources/archetype-resources/src/main/java/spark/SparkContext.java" target="_blank"><strong>here</strong></a>.</p>
 
-&lt;h4 id=&quot;32-log-filter&quot;&gt;3.2. Log Filter&lt;/h4&gt;
+<h4 id="32-log-filter">3.2. Log Filter</h4>
 
-&lt;p&gt;Recently, &lt;a href=&quot;https://www.juliaaano.com/blog/2020/01/20/request-log-level-filter/&quot;&gt;I have written a full post about log filters&lt;/a&gt;. You can jump straight there in case you’re interested.&lt;/p&gt;
+<p>Recently, <a href="https://www.juliaaano.com/blog/2020/01/20/request-log-level-filter/">I have written a full post about log filters</a>. You can jump straight there in case you’re interested.</p>
 
-&lt;p&gt;I recommend setting up log filters to enable the use case of &lt;strong&gt;adjusting the log level on a per HTTP request basis&lt;/strong&gt;. In practice, it could let you access the DEBUG logging of a service in production, without having to restart for configuration updates.&lt;/p&gt;
+<p>I recommend setting up log filters to enable the use case of <strong>adjusting the log level on a per HTTP request basis</strong>. In practice, it could let you access the DEBUG logging of a service in production, without having to restart for configuration updates.</p>
 
-&lt;h3 id=&quot;4-container&quot;&gt;4. Container&lt;/h3&gt;
+<h3 id="4-container">4. Container</h3>
 
-&lt;p&gt;When it’s time to ship your application there’s nothing better than packaging in a container.&lt;/p&gt;
+<p>When it’s time to ship your application there’s nothing better than packaging in a container.</p>
 
-&lt;p&gt;In the example I’ll show you, &lt;a href=&quot;https://www.juliaaano.com/blog/2018/02/25/fast-java-builds-with-docker/&quot;&gt;&lt;strong&gt;Docker&lt;/strong&gt; is used to build and run the Java app&lt;/a&gt;, making the process portable and transparent regardless where it is executed.&lt;/p&gt;
+<p>In the example I’ll show you, <a href="https://www.juliaaano.com/blog/2018/02/25/fast-java-builds-with-docker/"><strong>Docker</strong> is used to build and run the Java app</a>, making the process portable and transparent regardless where it is executed.</p>
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-docker&quot; data-lang=&quot;docker&quot;&gt;&lt;span class=&quot;c&quot;&gt;### BUILDER IMAGE ###&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; maven:3-jdk-11-slim as builder&lt;/span&gt;
+<figure class="highlight"><pre><code class="language-docker" data-lang="docker"><span class="c">### BUILDER IMAGE ###</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">maven:3-jdk-11-slim</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="s">builder</span>
 
-&lt;span class=&quot;k&quot;&gt;COPY&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; pom.xml /build/&lt;/span&gt;
+<span class="k">COPY</span><span class="s"> pom.xml /build/</span>
 
-&lt;span class=&quot;k&quot;&gt;RUN &lt;/span&gt;mvn &lt;span class=&quot;nt&quot;&gt;--file&lt;/span&gt; build/pom.xml &lt;span class=&quot;nt&quot;&gt;--batch-mode&lt;/span&gt; dependency:go-offline
+<span class="k">RUN </span>mvn <span class="nt">--file</span> build/pom.xml <span class="nt">--batch-mode</span> dependency:go-offline
 
-&lt;span class=&quot;k&quot;&gt;COPY&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; src /build/src/&lt;/span&gt;
+<span class="k">COPY</span><span class="s"> src /build/src/</span>
 
-&lt;span class=&quot;k&quot;&gt;RUN &lt;/span&gt;mvn &lt;span class=&quot;nt&quot;&gt;--file&lt;/span&gt; build/pom.xml &lt;span class=&quot;nt&quot;&gt;--batch-mode&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--offline&lt;/span&gt; package &lt;span class=&quot;nt&quot;&gt;-DskipTests&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\
-&lt;/span&gt;	&lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;app &lt;span class=&quot;se&quot;&gt;\
-&lt;/span&gt;	&lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;mv &lt;/span&gt;build/target/app-&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;.jar app/app.jar
+<span class="k">RUN </span>mvn <span class="nt">--file</span> build/pom.xml <span class="nt">--batch-mode</span> <span class="nt">--offline</span> package <span class="nt">-DskipTests</span> <span class="se">\
+</span>	<span class="o">&amp;&amp;</span> <span class="nb">mkdir </span>app <span class="se">\
+</span>	<span class="o">&amp;&amp;</span> <span class="nb">mv </span>build/target/app-<span class="k">*</span>.jar app/app.jar
 
-&lt;span class=&quot;c&quot;&gt;### PRODUCTION IMAGE ###&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; openjdk:11-jre-slim&lt;/span&gt;
+<span class="c">### PRODUCTION IMAGE ###</span>
+<span class="k">FROM</span><span class="s"> openjdk:11-jre-slim</span>
 
-&lt;span class=&quot;k&quot;&gt;COPY&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; --from=builder app/app.jar app/app.jar&lt;/span&gt;
+<span class="k">COPY</span><span class="s"> --from=builder app/app.jar app/app.jar</span>
 
-&lt;span class=&quot;k&quot;&gt;WORKDIR&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; /app&lt;/span&gt;
+<span class="k">WORKDIR</span><span class="s"> /app</span>
 
-&lt;span class=&quot;k&quot;&gt;CMD&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; [&quot;java&quot;, &quot;-jar&quot;, &quot;app.jar&quot;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<span class="k">CMD</span><span class="s"> ["java", "-jar", "app.jar"]</span></code></pre></figure>
 
-&lt;p&gt;The code comes from &lt;a href=&quot;https://github.com/juliaaano/archetypes/tree/master/sparkjava&quot; target=&quot;_blank&quot;&gt;&lt;strong&gt;this repo&lt;/strong&gt;&lt;/a&gt;, where you also find samples to configure &lt;a href=&quot;https://github.com/juliaaano/archetypes/tree/master/sparkjava/src/main/resources/archetype-resources/manifests&quot; target=&quot;_blank&quot;&gt;Kubernetes and Istio&lt;/a&gt;.&lt;/p&gt;
+<p>The code comes from <a href="https://github.com/juliaaano/archetypes/tree/master/sparkjava" target="_blank"><strong>this repo</strong></a>, where you also find samples to configure <a href="https://github.com/juliaaano/archetypes/tree/master/sparkjava/src/main/resources/archetype-resources/manifests" target="_blank">Kubernetes and Istio</a>.</p>
 
-&lt;h3 id=&quot;5-pipeline&quot;&gt;5. Pipeline&lt;/h3&gt;
+<h3 id="5-pipeline">5. Pipeline</h3>
 
-&lt;p&gt;An application deployment pipeline should be set early on in the project. At least something to test and build the artifacts should be in place from the beginning.&lt;/p&gt;
+<p>An application deployment pipeline should be set early on in the project. At least something to test and build the artifacts should be in place from the beginning.</p>
 
-&lt;p&gt;&lt;a href=&quot;https://github.com/juliaaano/archetypes/blob/master/sparkjava/src/main/resources/archetype-resources/.travis.yml&quot; target=&quot;_blank&quot;&gt;&lt;strong&gt;Here’s a proof of concept pipeline built for Travis CI&lt;/strong&gt;&lt;/a&gt;. The idea is to showcase the implementation of multiple stages where Java, Docker and Github releases are featured.&lt;/p&gt;
+<p><a href="https://github.com/juliaaano/archetypes/blob/master/sparkjava/src/main/resources/archetype-resources/.travis.yml" target="_blank"><strong>Here’s a proof of concept pipeline built for Travis CI</strong></a>. The idea is to showcase the implementation of multiple stages where Java, Docker and Github releases are featured.</p>
 
-&lt;p&gt;More on this topic to be seen in a previous &lt;a href=&quot;https://www.juliaaano.com/blog/2017/04/10/build-and-release-pipeline/&quot;&gt;&lt;strong&gt;post&lt;/strong&gt;&lt;/a&gt; in this very same blog!&lt;/p&gt;
+<p>More on this topic to be seen in a previous <a href="https://www.juliaaano.com/blog/2017/04/10/build-and-release-pipeline/"><strong>post</strong></a> in this very same blog!</p>
 
-&lt;h2 id=&quot;wrap-up&quot;&gt;Wrap up&lt;/h2&gt;
+<h2 id="wrap-up">Wrap up</h2>
 
-&lt;p&gt;Thanks for coming all the way here.&lt;/p&gt;
+<p>Thanks for coming all the way here.</p>
 
-&lt;p&gt;Everything you’ve seen is available and ready to be used in the format of Maven archetypes. To install them, visit &lt;a href=&quot;https://github.com/juliaaano/archetypes/&quot;&gt;https://github.com/juliaaano/archetypes/&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><summary type="html">You’re building from scratch just another microservice and the programing language of choice is once again Java. What are the 5 non-functional capabilities you’re more likely to need to set up before writing any business code? Well, that usually depends on the project’s requirements, however, more often than not I find myself dealing with the same concerns over and over. Here, I’ll show you what they are and how to implement them in a lightweight, almost framework-free approach.</summary></entry><entry><title type="html">Easy encryption with PGP and Docker</title><link href="https://www.juliaaano.com/blog/2020/02/18/encryption-pgp-docker/" rel="alternate" type="text/html" title="Easy encryption with PGP and Docker" /><published>2020-02-18T00:00:00+00:00</published><updated>2020-02-18T00:00:00+00:00</updated><id>https://www.juliaaano.com/blog/2020/02/18/encryption-pgp-docker</id><content type="html" xml:base="https://www.juliaaano.com/blog/2020/02/18/encryption-pgp-docker/">&lt;p&gt;Encryption is complicated. People don’t pay too much attention because the process and tools are often cumbersome. In this post, I show you how to encrypt data effortlessly by combining tools like &lt;a href=&quot;https://gnupg.org/&quot; target=&quot;_blank&quot;&gt;&lt;strong&gt;GPG&lt;/strong&gt;&lt;/a&gt; and &lt;strong&gt;Docker&lt;/strong&gt; (or &lt;a href=&quot;https://podman.io/&quot; target=&quot;_blank&quot;&gt;&lt;strong&gt;Podman&lt;/strong&gt;&lt;/a&gt;) containers. Your privacy in this wild wild internet is guaranteed!&lt;/p&gt;
+<p>Everything you’ve seen is available and ready to be used in the format of Maven archetypes. To install them, visit <a href="https://github.com/juliaaano/archetypes/">https://github.com/juliaaano/archetypes/</a>.</p>]]></content><author><name></name></author><summary type="html"><![CDATA[Five essential non-funcional capabilities a microservice app should have.]]></summary></entry><entry><title type="html">Easy encryption with PGP and Docker</title><link href="https://www.juliaaano.com/blog/2020/02/18/encryption-pgp-docker/" rel="alternate" type="text/html" title="Easy encryption with PGP and Docker" /><published>2020-02-18T00:00:00+00:00</published><updated>2020-02-18T00:00:00+00:00</updated><id>https://www.juliaaano.com/blog/2020/02/18/encryption-pgp-docker</id><content type="html" xml:base="https://www.juliaaano.com/blog/2020/02/18/encryption-pgp-docker/"><![CDATA[<p>Encryption is complicated. People don’t pay too much attention because the process and tools are often cumbersome. In this post, I show you how to encrypt data effortlessly by combining tools like <a href="https://gnupg.org/" target="_blank"><strong>GPG</strong></a> and <strong>Docker</strong> (or <a href="https://podman.io/" target="_blank"><strong>Podman</strong></a>) containers. Your privacy in this wild wild internet is guaranteed!</p>
 
-&lt;!--more--&gt;
+<!--more-->
 
-&lt;h2 id=&quot;tldr&quot;&gt;TL;DR&lt;/h2&gt;
+<h2 id="tldr">TL;DR</h2>
 
-&lt;p&gt;The goal is &lt;strong&gt;for anyone&lt;/strong&gt; to encrypt a message &lt;strong&gt;from anywhere&lt;/strong&gt; addressed to a recipient (in this case myself):&lt;/p&gt;
+<p>The goal is <strong>for anyone</strong> to encrypt a message <strong>from anywhere</strong> addressed to a recipient (in this case myself):</p>
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;send me a secret&quot;&lt;/span&gt; | docker run &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; juliaaano/encrypt&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="s2">"send me a secret"</span> | docker run <span class="nt">-i</span> juliaaano/encrypt</code></pre></figure>
 
-&lt;h2 id=&quot;show-me-how&quot;&gt;Show me how&lt;/h2&gt;
+<h2 id="show-me-how">Show me how</h2>
 
-&lt;p&gt;The intent is to provide a good experience by abstracting the use of GPG with &lt;em&gt;&lt;del&gt;Docker&lt;/del&gt;&lt;/em&gt; Linux containers.&lt;/p&gt;
+<p>The intent is to provide a good experience by abstracting the use of GPG with <em><del>Docker</del></em> Linux containers.</p>
 
-&lt;p&gt;The container image that I use is lightweight, has GPG installed and imports my public PGP key.&lt;/p&gt;
+<p>The container image that I use is lightweight, has GPG installed and imports my public PGP key.</p>
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-docker&quot; data-lang=&quot;docker&quot;&gt;&lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; debian:stable-slim&lt;/span&gt;
+<figure class="highlight"><pre><code class="language-docker" data-lang="docker"><span class="k">FROM</span><span class="s"> debian:stable-slim</span>
 
-&lt;span class=&quot;k&quot;&gt;RUN &lt;/span&gt;apt-get update &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt-get &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; gnupg2 curl
+<span class="k">RUN </span>apt-get update <span class="o">&amp;&amp;</span> apt-get <span class="nb">install</span> <span class="nt">-y</span> gnupg2 curl
 
-&lt;span class=&quot;k&quot;&gt;RUN &lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-sSL&lt;/span&gt; https://www.juliaaano.com/key.asc | gpg &lt;span class=&quot;nt&quot;&gt;--import&lt;/span&gt; -
+<span class="k">RUN </span>curl <span class="nt">-sSL</span> https://www.juliaaano.com/key.asc | gpg <span class="nt">--import</span> -
 
-&lt;span class=&quot;k&quot;&gt;ENTRYPOINT&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; [&quot;gpg&quot;, &quot;--trust-model&quot;, &quot;always&quot;, &quot;--encrypt&quot;, &quot;--armor&quot;, &quot;--output&quot;, &quot;-&quot;, &quot;--recipient&quot;, &quot;juliaaano&quot;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<span class="k">ENTRYPOINT</span><span class="s"> ["gpg", "--trust-model", "always", "--encrypt", "--armor", "--output", "-", "--recipient", "juliaaano"]</span></code></pre></figure>
 
-&lt;h2 id=&quot;about-pgpgpg&quot;&gt;About PGP/GPG&lt;/h2&gt;
+<h2 id="about-pgpgpg">About PGP/GPG</h2>
 
-&lt;p&gt;So far it has been assumed a PGP key pair exists so you have a public key for encryption and “hopefully” its private counterpart for decryption.&lt;/p&gt;
+<p>So far it has been assumed a PGP key pair exists so you have a public key for encryption and “hopefully” its private counterpart for decryption.</p>
 
-&lt;p&gt;Creating a key pair with GPG is easy, and there are several &lt;a href=&quot;https://help.github.com/en/github/authenticating-to-github/generating-a-new-gpg-key&quot; target=&quot;_blank&quot;&gt;resources available&lt;/a&gt;.&lt;/p&gt;
+<p>Creating a key pair with GPG is easy, and there are several <a href="https://help.github.com/en/github/authenticating-to-github/generating-a-new-gpg-key" target="_blank">resources available</a>.</p>
 
-&lt;p&gt;Once you’ve got your keys, you can build and distribute your container image so anyone can send encrypted messages to you. You still need to deal with GPG to decrypt them yourself.&lt;/p&gt;
+<p>Once you’ve got your keys, you can build and distribute your container image so anyone can send encrypted messages to you. You still need to deal with GPG to decrypt them yourself.</p>
 
-&lt;h2 id=&quot;usage-examples&quot;&gt;Usage examples&lt;/h2&gt;
+<h2 id="usage-examples">Usage examples</h2>
 
-&lt;ol&gt;
-&lt;li&gt;
+<ol>
+<li>
 Encrypt a text message or a text file:
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;send me a secret&quot;&lt;/span&gt; | docker run &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; juliaaano/encrypt
-&lt;span class=&quot;nb&quot;&gt;cat &lt;/span&gt;my-sample-file.txt | docker run &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; juliaaano/encrypt&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="s2">"send me a secret"</span> | docker run <span class="nt">-i</span> juliaaano/encrypt
+<span class="nb">cat </span>my-sample-file.txt | docker run <span class="nt">-i</span> juliaaano/encrypt</code></pre></figure>
 
-&lt;/li&gt;
-&lt;li&gt;
+</li>
+<li>
 Save encrypted output to a file:
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;send me a secret&quot;&lt;/span&gt; | docker run &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; juliaaano/encrypt &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; secret.txt.asc&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="s2">"send me a secret"</span> | docker run <span class="nt">-i</span> juliaaano/encrypt <span class="o">&gt;</span> secret.txt.asc</code></pre></figure>
 
-&lt;/li&gt;
-&lt;li&gt;
+</li>
+<li>
 Copy encrypted output to the clipboard (MacOS only):
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;cat &lt;/span&gt;my-sample-file.txt | docker run &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; juliaaano/encrypt | pbcopy&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">cat </span>my-sample-file.txt | docker run <span class="nt">-i</span> juliaaano/encrypt | pbcopy</code></pre></figure>
 
-&lt;/li&gt;
-&lt;li&gt;
+</li>
+<li>
 Encrypt binary (non-text) files:
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;docker run &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; &lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;pwd&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;:/tmp juliaaano/encrypt /tmp/myfile.zip &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; myfile.zip.asc&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker run <span class="nt">-v</span> <span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>:/tmp juliaaano/encrypt /tmp/myfile.zip <span class="o">&gt;</span> myfile.zip.asc</code></pre></figure>
 
-&lt;/li&gt;
-&lt;li&gt;
+</li>
+<li>
 Use Podman containers instead of Docker:
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;send me a secret&quot;&lt;/span&gt; | podman run &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; juliaaano/encrypt
-&lt;span class=&quot;nb&quot;&gt;cat &lt;/span&gt;my-sample-file.txt | podman run &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; juliaaano/encrypt&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="s2">"send me a secret"</span> | podman run <span class="nt">-i</span> juliaaano/encrypt
+<span class="nb">cat </span>my-sample-file.txt | podman run <span class="nt">-i</span> juliaaano/encrypt</code></pre></figure>
 
-&lt;/li&gt;
-&lt;/ol&gt;
+</li>
+</ol>
 
-&lt;h2 id=&quot;summary&quot;&gt;Summary&lt;/h2&gt;
+<h2 id="summary">Summary</h2>
 
-&lt;p&gt;The source code for this project can be found at &lt;a href=&quot;https://github.com/juliaaano/encrypt&quot; target=&quot;_blank&quot;&gt;&lt;strong&gt;juliaaano/encrypt&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
+<p>The source code for this project can be found at <a href="https://github.com/juliaaano/encrypt" target="_blank"><strong>juliaaano/encrypt</strong></a>.</p>
 
-&lt;p&gt;If you like it, comment with an &lt;strong&gt;encrypted&lt;/strong&gt; message down below :-)&lt;/p&gt;</content><author><name></name></author><summary type="html">Encryption is complicated. People don’t pay too much attention because the process and tools are often cumbersome. In this post, I show you how to encrypt data effortlessly by combining tools like GPG and Docker (or Podman) containers. Your privacy in this wild wild internet is guaranteed!</summary></entry><entry><title type="html">How to set up a per-request log level filter</title><link href="https://www.juliaaano.com/blog/2020/01/20/request-log-level-filter/" rel="alternate" type="text/html" title="How to set up a per-request log level filter" /><published>2020-01-20T00:00:00+00:00</published><updated>2020-01-20T00:00:00+00:00</updated><id>https://www.juliaaano.com/blog/2020/01/20/request-log-level-filter</id><content type="html" xml:base="https://www.juliaaano.com/blog/2020/01/20/request-log-level-filter/">&lt;p&gt;The ability to easily change the log level of an application from INFO to DEBUG, or any other log level, is a feature frequently desired to have in any backend system. What if there is a way to configure the application to dynamically set its log level based on an input given by the consumer of the application. More specifically, this blog post will demonstrate how to tune Java’s &lt;strong&gt;&lt;a href=&quot;http://logback.qos.ch/&quot; target=&quot;_blank&quot;&gt;Logback&lt;/a&gt;&lt;/strong&gt; and &lt;strong&gt;&lt;a href=&quot;http://logging.apache.org/log4j/2.x/&quot; target=&quot;_blank&quot;&gt;Log4j&lt;/a&gt;&lt;/strong&gt; libraries to let HTTP clients define what log level to generate on the the server-side by simply passing an HTTP header.&lt;/p&gt;
+<p>If you like it, comment with an <strong>encrypted</strong> message down below :-)</p>]]></content><author><name></name></author><summary type="html"><![CDATA[A trick that combines Docker containers, GPG and PGP encryption.]]></summary></entry><entry><title type="html">How to set up a per-request log level filter</title><link href="https://www.juliaaano.com/blog/2020/01/20/request-log-level-filter/" rel="alternate" type="text/html" title="How to set up a per-request log level filter" /><published>2020-01-20T00:00:00+00:00</published><updated>2020-01-20T00:00:00+00:00</updated><id>https://www.juliaaano.com/blog/2020/01/20/request-log-level-filter</id><content type="html" xml:base="https://www.juliaaano.com/blog/2020/01/20/request-log-level-filter/"><![CDATA[<p>The ability to easily change the log level of an application from INFO to DEBUG, or any other log level, is a feature frequently desired to have in any backend system. What if there is a way to configure the application to dynamically set its log level based on an input given by the consumer of the application. More specifically, this blog post will demonstrate how to tune Java’s <strong><a href="http://logback.qos.ch/" target="_blank">Logback</a></strong> and <strong><a href="http://logging.apache.org/log4j/2.x/" target="_blank">Log4j</a></strong> libraries to let HTTP clients define what log level to generate on the the server-side by simply passing an HTTP header.</p>
 
-&lt;!--more--&gt;
+<!--more-->
 
-&lt;p&gt;In a nutshell, a request like this:&lt;/p&gt;
+<p>In a nutshell, a request like this:</p>
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;curl &lt;span class=&quot;nt&quot;&gt;-H&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;X-Log-Level: DEBUG&quot;&lt;/span&gt; http://localhost:8000/hello&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">curl <span class="nt">-H</span> <span class="s2">"X-Log-Level: DEBUG"</span> http://localhost:8000/hello</code></pre></figure>
 
-&lt;p&gt;Would result in logs &lt;strong&gt;set to the DEBUG level&lt;/strong&gt;, only for that request, in the &lt;em&gt;hello&lt;/em&gt; service logs.
-&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+<p>Would result in logs <strong>set to the DEBUG level</strong>, only for that request, in the <em>hello</em> service logs.
+<br /><br /></p>
 
-&lt;figure class=&quot;image&quot;&gt;
-&lt;amp-img src=&quot;https://d27nechif2d87h.cloudfront.net/images/hario-filters-in-action.jpg&quot; alt=&quot;filters-in-action&quot; class=&quot;image-center&quot; height=&quot;1&quot; width=&quot;1&quot; layout=&quot;responsive&quot;&gt;
-&lt;/amp-img&gt;
-&lt;figcaption class=&quot;image-center-caption&quot;&gt;Image: Filters in action.&lt;/figcaption&gt;
-&lt;/figure&gt;
+<figure class="image">
+<amp-img src="https://d27nechif2d87h.cloudfront.net/images/hario-filters-in-action.jpg" alt="filters-in-action" class="image-center" height="1" width="1" layout="responsive">
+</amp-img>
+<figcaption class="image-center-caption">Image: Filters in action.</figcaption>
+</figure>
 
-&lt;p&gt;Advantages:&lt;/p&gt;
+<p>Advantages:</p>
 
-&lt;ul&gt;
-  &lt;li&gt;Easy troubleshooting in production.&lt;/li&gt;
-  &lt;li&gt;No need to restart the service.&lt;/li&gt;
-  &lt;li&gt;Delegate control to the client.&lt;/li&gt;
-&lt;/ul&gt;
+<ul>
+  <li>Easy troubleshooting in production.</li>
+  <li>No need to restart the service.</li>
+  <li>Delegate control to the client.</li>
+</ul>
 
-&lt;p&gt;&lt;strong&gt;Time for action.&lt;/strong&gt; Getting this to work is mostly a matter of configuring properly the logger framework.&lt;/p&gt;
+<p><strong>Time for action.</strong> Getting this to work is mostly a matter of configuring properly the logger framework.</p>
 
-&lt;p&gt;Both Java logging frameworks Logback and Log4j have a capability called &lt;strong&gt;&lt;a href=&quot;http://logback.qos.ch/manual/filters.html&quot; target=&quot;_blank&quot;&gt;Filters&lt;/a&gt;&lt;/strong&gt;. They allow log events to be evaluated to determine if or how they should be published. A developer can write a custom implementation of a Filter, however many implementations are already provided. One of them is the &lt;strong&gt;&lt;a href=&quot;http://logback.qos.ch/apidocs/ch/qos/logback/classic/turbo/DynamicThresholdFilter.html&quot; target=&quot;_blank&quot;&gt;DynamicThresholdFilter&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
+<p>Both Java logging frameworks Logback and Log4j have a capability called <strong><a href="http://logback.qos.ch/manual/filters.html" target="_blank">Filters</a></strong>. They allow log events to be evaluated to determine if or how they should be published. A developer can write a custom implementation of a Filter, however many implementations are already provided. One of them is the <strong><a href="http://logback.qos.ch/apidocs/ch/qos/logback/classic/turbo/DynamicThresholdFilter.html" target="_blank">DynamicThresholdFilter</a></strong>.</p>
 
-&lt;p&gt;The DynamicThresholdFilter allows filtering by log level based on specific attributes which are present in the MDC.&lt;/p&gt;
+<p>The DynamicThresholdFilter allows filtering by log level based on specific attributes which are present in the MDC.</p>
 
-&lt;p&gt;The &lt;strong&gt;&lt;a href=&quot;http://logback.qos.ch/manual/mdc.html&quot; target=&quot;_blank&quot;&gt;MDC&lt;/a&gt;&lt;/strong&gt; (Mapped Diagnosed Context) is a key piece here because it needs to be used to signal which log level to use in the thread context initiated by the HTTP request.&lt;/p&gt;
+<p>The <strong><a href="http://logback.qos.ch/manual/mdc.html" target="_blank">MDC</a></strong> (Mapped Diagnosed Context) is a key piece here because it needs to be used to signal which log level to use in the thread context initiated by the HTTP request.</p>
 
-&lt;p&gt;Assigning a value to the MDC is simple and can be done with SLF4J:&lt;/p&gt;
+<p>Assigning a value to the MDC is simple and can be done with SLF4J:</p>
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;org.slf4j.MDC.put(&quot;X-Log-Level&quot;, &quot;DEBUG&quot;);&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml">org.slf4j.MDC.put("X-Log-Level", "DEBUG");</code></pre></figure>
 
-&lt;p&gt;The idea is to set the log level in the MDC right after the request comes in, using a Servlet Request Filter, for example.&lt;/p&gt;
+<p>The idea is to set the log level in the MDC right after the request comes in, using a Servlet Request Filter, for example.</p>
 
-&lt;h3 id=&quot;logback-configuration&quot;&gt;Logback configuration&lt;/h3&gt;
+<h3 id="logback-configuration">Logback configuration</h3>
 
-&lt;p&gt;The DynamicThresholdFilter in Logback is quite powerful, but a bit more difficult to distil.&lt;/p&gt;
+<p>The DynamicThresholdFilter in Logback is quite powerful, but a bit more difficult to distil.</p>
 
-&lt;p&gt;A thoroughly &lt;a href=&quot;http://logback.qos.ch/apidocs/ch/qos/logback/classic/turbo/DynamicThresholdFilter.html&quot; target=&quot;_blank&quot;&gt;reading of the official docs&lt;/a&gt; is recommended.&lt;/p&gt;
+<p>A thoroughly <a href="http://logback.qos.ch/apidocs/ch/qos/logback/classic/turbo/DynamicThresholdFilter.html" target="_blank">reading of the official docs</a> is recommended.</p>
 
-&lt;p&gt;Following is an example that achieves the desired outcome. &lt;strong&gt;Notice the need to set the root logger to DEBUG&lt;/strong&gt;. This is required as it will be the lowest log level you will be able to configure as per request. If INFO would be set there, you wouldn’t be able to go any lower than that (DEBUG being the lowest, ERROR the highest).&lt;/p&gt;
+<p>Following is an example that achieves the desired outcome. <strong>Notice the need to set the root logger to DEBUG</strong>. This is required as it will be the lowest log level you will be able to configure as per request. If INFO would be set there, you wouldn’t be able to go any lower than that (DEBUG being the lowest, ERROR the highest).</p>
 
-&lt;p&gt;However, the default log level is still INFO, as it is enforced by the &lt;em&gt;DefaultThreshold&lt;/em&gt; attribute of the Filter.&lt;/p&gt;
+<p>However, the default log level is still INFO, as it is enforced by the <em>DefaultThreshold</em> attribute of the Filter.</p>
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;root&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;level=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;DEBUG&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;appender-ref&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;ref=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;STDOUT&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/root&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;turboFilter&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ch.qos.logback.classic.turbo.DynamicThresholdFilter&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;Key&amp;gt;&lt;/span&gt;X-Log-Level&lt;span class=&quot;nt&quot;&gt;&amp;lt;/Key&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;DefaultThreshold&amp;gt;&lt;/span&gt;${LOG_LEVEL:-INFO}&lt;span class=&quot;nt&quot;&gt;&amp;lt;/DefaultThreshold&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;MDCValueLevelPair&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;value&amp;gt;&lt;/span&gt;ERROR&lt;span class=&quot;nt&quot;&gt;&amp;lt;/value&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;level&amp;gt;&lt;/span&gt;ERROR&lt;span class=&quot;nt&quot;&gt;&amp;lt;/level&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/MDCValueLevelPair&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;MDCValueLevelPair&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;value&amp;gt;&lt;/span&gt;WARN&lt;span class=&quot;nt&quot;&gt;&amp;lt;/value&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;level&amp;gt;&lt;/span&gt;WARN&lt;span class=&quot;nt&quot;&gt;&amp;lt;/level&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/MDCValueLevelPair&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;MDCValueLevelPair&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;value&amp;gt;&lt;/span&gt;DEBUG&lt;span class=&quot;nt&quot;&gt;&amp;lt;/value&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;level&amp;gt;&lt;/span&gt;DEBUG&lt;span class=&quot;nt&quot;&gt;&amp;lt;/level&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/MDCValueLevelPair&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/turboFilter&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;root</span> <span class="na">level=</span><span class="s">"DEBUG"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;appender-ref</span> <span class="na">ref=</span><span class="s">"STDOUT"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/root&gt;</span>
+<span class="nt">&lt;turboFilter</span> <span class="na">class=</span><span class="s">"ch.qos.logback.classic.turbo.DynamicThresholdFilter"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;Key&gt;</span>X-Log-Level<span class="nt">&lt;/Key&gt;</span>
+  <span class="nt">&lt;DefaultThreshold&gt;</span>${LOG_LEVEL:-INFO}<span class="nt">&lt;/DefaultThreshold&gt;</span>
+  <span class="nt">&lt;MDCValueLevelPair&gt;</span>
+    <span class="nt">&lt;value&gt;</span>ERROR<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;level&gt;</span>ERROR<span class="nt">&lt;/level&gt;</span>
+  <span class="nt">&lt;/MDCValueLevelPair&gt;</span>
+  <span class="nt">&lt;MDCValueLevelPair&gt;</span>
+    <span class="nt">&lt;value&gt;</span>WARN<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;level&gt;</span>WARN<span class="nt">&lt;/level&gt;</span>
+  <span class="nt">&lt;/MDCValueLevelPair&gt;</span>
+  <span class="nt">&lt;MDCValueLevelPair&gt;</span>
+    <span class="nt">&lt;value&gt;</span>DEBUG<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;level&gt;</span>DEBUG<span class="nt">&lt;/level&gt;</span>
+  <span class="nt">&lt;/MDCValueLevelPair&gt;</span>
+<span class="nt">&lt;/turboFilter&gt;</span></code></pre></figure>
 
-&lt;h3 id=&quot;log4j-2-configuration&quot;&gt;Log4j 2 configuration&lt;/h3&gt;
+<h3 id="log4j-2-configuration">Log4j 2 configuration</h3>
 
-&lt;p&gt;In Log4j 2 the solution is a bit more straightforward to understand. Consider the value of &lt;em&gt;X-Log-Level&lt;/em&gt; present in MDC.&lt;/p&gt;
+<p>In Log4j 2 the solution is a bit more straightforward to understand. Consider the value of <em>X-Log-Level</em> present in MDC.</p>
 
-&lt;ol&gt;
-  &lt;li&gt;If the value is either TRACE or DEBUG, log events at that level will also be accepted.&lt;/li&gt;
-  &lt;li&gt;If the value is something else (does not match any of &lt;em&gt;keyValuePair&lt;/em&gt; list), INFO is assumed.&lt;/li&gt;
-  &lt;li&gt;If there is no &lt;em&gt;X-Log-Level&lt;/em&gt; at all, &lt;em&gt;onMismatch&lt;/em&gt; ensures the filter is neutral, behaviour doesn’t change.&lt;/li&gt;
-&lt;/ol&gt;
+<ol>
+  <li>If the value is either TRACE or DEBUG, log events at that level will also be accepted.</li>
+  <li>If the value is something else (does not match any of <em>keyValuePair</em> list), INFO is assumed.</li>
+  <li>If there is no <em>X-Log-Level</em> at all, <em>onMismatch</em> ensures the filter is neutral, behaviour doesn’t change.</li>
+</ol>
 
-&lt;p&gt;Look for DynamicThresholdFilter in &lt;a href=&quot;https://logging.apache.org/log4j/2.x/manual/filters.html&quot; target=&quot;_blank&quot;&gt;Log4j’s Filters documentation&lt;/a&gt;.&lt;/p&gt;
+<p>Look for DynamicThresholdFilter in <a href="https://logging.apache.org/log4j/2.x/manual/filters.html" target="_blank">Log4j’s Filters documentation</a>.</p>
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;DynamicThresholdFilter&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;X-Log-Level&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;onMatch&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ACCEPT&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;onMismatch&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;NEUTRAL&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;defaultThreshold&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;INFO&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;keyValuePair&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;TRACE&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;TRACE&lt;/span&gt;
-  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;DEBUG&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;DEBUG&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">DynamicThresholdFilter</span><span class="pi">:</span>
+<span class="na">key</span><span class="pi">:</span> <span class="s">X-Log-Level</span>
+<span class="na">onMatch</span><span class="pi">:</span> <span class="s">ACCEPT</span>
+<span class="na">onMismatch</span><span class="pi">:</span> <span class="s">NEUTRAL</span>
+<span class="na">defaultThreshold</span><span class="pi">:</span> <span class="s">INFO</span>
+<span class="na">keyValuePair</span><span class="pi">:</span>
+  <span class="pi">-</span>
+  <span class="na">key</span><span class="pi">:</span> <span class="s">TRACE</span>
+  <span class="na">value</span><span class="pi">:</span> <span class="s">TRACE</span>
+  <span class="pi">-</span>
+  <span class="na">key</span><span class="pi">:</span> <span class="s">DEBUG</span>
+  <span class="na">value</span><span class="pi">:</span> <span class="s">DEBUG</span></code></pre></figure>
 
-&lt;h2 id=&quot;dont-believe-what-you-see&quot;&gt;Don’t believe what you see?&lt;/h2&gt;
+<h2 id="dont-believe-what-you-see">Don’t believe what you see?</h2>
 
-&lt;p&gt;See those logging filters running. Checkout &lt;strong&gt;&lt;a href=&quot;https://github.com/juliaaano/archetypes/tree/master/sparkjava&quot; target=&quot;_blank&quot;&gt;this project&lt;/a&gt;&lt;/strong&gt; in GitHub. It’s a Maven archetype that will generate a project with many interesting features. The per-request log level filter is one of them.&lt;/p&gt;</content><author><name></name></author><summary type="html">The ability to easily change the log level of an application from INFO to DEBUG, or any other log level, is a feature frequently desired to have in any backend system. What if there is a way to configure the application to dynamically set its log level based on an input given by the consumer of the application. More specifically, this blog post will demonstrate how to tune Java’s Logback and Log4j libraries to let HTTP clients define what log level to generate on the the server-side by simply passing an HTTP header.</summary></entry><entry><title type="html">Fast Java builds with Docker</title><link href="https://www.juliaaano.com/blog/2018/02/25/fast-java-builds-with-docker/" rel="alternate" type="text/html" title="Fast Java builds with Docker" /><published>2018-02-25T00:00:00+00:00</published><updated>2018-02-25T00:00:00+00:00</updated><id>https://www.juliaaano.com/blog/2018/02/25/fast-java-builds-with-docker</id><content type="html" xml:base="https://www.juliaaano.com/blog/2018/02/25/fast-java-builds-with-docker/">&lt;p&gt;There is a common pattern emerging which is to use Docker to &lt;strong&gt;build&lt;/strong&gt; the software artefact. This approach has become popular since your machine or CI agent is not required to have anything installed but Docker. However, if you have tried this before with &lt;strong&gt;Java/Maven&lt;/strong&gt;, you are most likely to know how &lt;strong&gt;slow&lt;/strong&gt; it can be to see Maven download half of the internet inside the container in every single run. Here I show you how to address that issue with a simple trick.&lt;/p&gt;
+<p>See those logging filters running. Checkout <strong><a href="https://github.com/juliaaano/archetypes/tree/master/sparkjava" target="_blank">this project</a></strong> in GitHub. It’s a Maven archetype that will generate a project with many interesting features. The per-request log level filter is one of them.</p>]]></content><author><name></name></author><summary type="html"><![CDATA[This blog shows how to let clients control the log level of the backend app through the HTTP request header.]]></summary></entry><entry><title type="html">Fast Java builds with Docker</title><link href="https://www.juliaaano.com/blog/2018/02/25/fast-java-builds-with-docker/" rel="alternate" type="text/html" title="Fast Java builds with Docker" /><published>2018-02-25T00:00:00+00:00</published><updated>2018-02-25T00:00:00+00:00</updated><id>https://www.juliaaano.com/blog/2018/02/25/fast-java-builds-with-docker</id><content type="html" xml:base="https://www.juliaaano.com/blog/2018/02/25/fast-java-builds-with-docker/"><![CDATA[<p>There is a common pattern emerging which is to use Docker to <strong>build</strong> the software artefact. This approach has become popular since your machine or CI agent is not required to have anything installed but Docker. However, if you have tried this before with <strong>Java/Maven</strong>, you are most likely to know how <strong>slow</strong> it can be to see Maven download half of the internet inside the container in every single run. Here I show you how to address that issue with a simple trick.</p>
 
-&lt;!--more--&gt;
+<!--more-->
 
-&lt;p&gt;What we want to do is to copy the &lt;strong&gt;pom.xml&lt;/strong&gt; and the &lt;strong&gt;app sources&lt;/strong&gt; in two separate steps.&lt;/p&gt;
+<p>What we want to do is to copy the <strong>pom.xml</strong> and the <strong>app sources</strong> in two separate steps.</p>
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-docker&quot; data-lang=&quot;docker&quot;&gt;&lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; maven:3&lt;/span&gt;
+<figure class="highlight"><pre><code class="language-docker" data-lang="docker"><span class="k">FROM</span><span class="s"> maven:3</span>
 
-&lt;span class=&quot;k&quot;&gt;COPY&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; pom.xml /build/&lt;/span&gt;
+<span class="k">COPY</span><span class="s"> pom.xml /build/</span>
 
-&lt;span class=&quot;k&quot;&gt;RUN &lt;/span&gt;mvn &lt;span class=&quot;nt&quot;&gt;--file&lt;/span&gt; build/pom.xml &lt;span class=&quot;nt&quot;&gt;--batch-mode&lt;/span&gt; package
+<span class="k">RUN </span>mvn <span class="nt">--file</span> build/pom.xml <span class="nt">--batch-mode</span> package
 
-&lt;span class=&quot;k&quot;&gt;COPY&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; src /build/src/&lt;/span&gt;
+<span class="k">COPY</span><span class="s"> src /build/src/</span>
 
-&lt;span class=&quot;k&quot;&gt;RUN &lt;/span&gt;mvn &lt;span class=&quot;nt&quot;&gt;--file&lt;/span&gt; build/pom.xml &lt;span class=&quot;nt&quot;&gt;--batch-mode&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--offline&lt;/span&gt; package &lt;span class=&quot;se&quot;&gt;\
-&lt;/span&gt;	&lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;app &lt;span class=&quot;se&quot;&gt;\
-&lt;/span&gt;	&lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;mv &lt;/span&gt;build/target/app-&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;.jar app/app.jar &lt;span class=&quot;se&quot;&gt;\
-&lt;/span&gt;	&lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;rm&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-rf&lt;/span&gt; build&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<span class="k">RUN </span>mvn <span class="nt">--file</span> build/pom.xml <span class="nt">--batch-mode</span> <span class="nt">--offline</span> package <span class="se">\
+</span>	<span class="o">&amp;&amp;</span> <span class="nb">mkdir </span>app <span class="se">\
+</span>	<span class="o">&amp;&amp;</span> <span class="nb">mv </span>build/target/app-<span class="k">*</span>.jar app/app.jar <span class="se">\
+</span>	<span class="o">&amp;&amp;</span> <span class="nb">rm</span> <span class="nt">-rf</span> build</code></pre></figure>
 
-&lt;p&gt;The two most important things in this example are running Maven with the pom.xml in isolation and once the sources are added, running Maven again with the &lt;em&gt;–offline&lt;/em&gt; option set.&lt;/p&gt;
+<p>The two most important things in this example are running Maven with the pom.xml in isolation and once the sources are added, running Maven again with the <em>–offline</em> option set.</p>
 
-&lt;p&gt;This is only possible thanks to Docker’s built-in cache. Before you ask, yes, if you make any changes to the pom.xml you will invalidate the subsequent cached instructions and you will download half of the internet again. It only works under the assumption that application code is changed more often than the dependency management configuration.&lt;/p&gt;
+<p>This is only possible thanks to Docker’s built-in cache. Before you ask, yes, if you make any changes to the pom.xml you will invalidate the subsequent cached instructions and you will download half of the internet again. It only works under the assumption that application code is changed more often than the dependency management configuration.</p>
 
-&lt;h3 id=&quot;multi-stage-builds&quot;&gt;Multi-stage builds&lt;/h3&gt;
+<h3 id="multi-stage-builds">Multi-stage builds</h3>
 
-&lt;p&gt;The previous example alone doesn’t provide much context. After all, what do you do with that Dockerfile?&lt;/p&gt;
+<p>The previous example alone doesn’t provide much context. After all, what do you do with that Dockerfile?</p>
 
-&lt;p&gt;I hope you have heard about &lt;strong&gt;&lt;a href=&quot;https://docs.docker.com/develop/develop-images/multistage-build/&quot; target=&quot;_blank&quot;&gt;Docker multi-stage builds&lt;/a&gt;&lt;/strong&gt;. It has been introduced to encourage the use of docker as a builder engine.&lt;/p&gt;
+<p>I hope you have heard about <strong><a href="https://docs.docker.com/develop/develop-images/multistage-build/" target="_blank">Docker multi-stage builds</a></strong>. It has been introduced to encourage the use of docker as a builder engine.</p>
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-docker&quot; data-lang=&quot;docker&quot;&gt;&lt;span class=&quot;c&quot;&gt;### BUILDER IMAGE ###&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; maven:3 as builder&lt;/span&gt;
+<figure class="highlight"><pre><code class="language-docker" data-lang="docker"><span class="c">### BUILDER IMAGE ###</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">maven:3</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="s">builder</span>
 
-&lt;span class=&quot;k&quot;&gt;COPY&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; pom.xml /build/&lt;/span&gt;
+<span class="k">COPY</span><span class="s"> pom.xml /build/</span>
 
-&lt;span class=&quot;k&quot;&gt;RUN &lt;/span&gt;mvn &lt;span class=&quot;nt&quot;&gt;--file&lt;/span&gt; build/pom.xml &lt;span class=&quot;nt&quot;&gt;--batch-mode&lt;/span&gt; package
+<span class="k">RUN </span>mvn <span class="nt">--file</span> build/pom.xml <span class="nt">--batch-mode</span> package
 
-&lt;span class=&quot;k&quot;&gt;COPY&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; src /build/src/&lt;/span&gt;
+<span class="k">COPY</span><span class="s"> src /build/src/</span>
 
-&lt;span class=&quot;k&quot;&gt;RUN &lt;/span&gt;mvn &lt;span class=&quot;nt&quot;&gt;--file&lt;/span&gt; build/pom.xml &lt;span class=&quot;nt&quot;&gt;--batch-mode&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--offline&lt;/span&gt; package &lt;span class=&quot;se&quot;&gt;\
-&lt;/span&gt;	&lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;app &lt;span class=&quot;se&quot;&gt;\
-&lt;/span&gt;	&lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;mv &lt;/span&gt;build/target/app-&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;.jar app/app.jar &lt;span class=&quot;se&quot;&gt;\
-&lt;/span&gt;	&lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;rm&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-rf&lt;/span&gt; build
+<span class="k">RUN </span>mvn <span class="nt">--file</span> build/pom.xml <span class="nt">--batch-mode</span> <span class="nt">--offline</span> package <span class="se">\
+</span>	<span class="o">&amp;&amp;</span> <span class="nb">mkdir </span>app <span class="se">\
+</span>	<span class="o">&amp;&amp;</span> <span class="nb">mv </span>build/target/app-<span class="k">*</span>.jar app/app.jar <span class="se">\
+</span>	<span class="o">&amp;&amp;</span> <span class="nb">rm</span> <span class="nt">-rf</span> build
 
-&lt;span class=&quot;c&quot;&gt;### PRODUCTION IMAGE ###&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; openjdk:8-jre-alpine&lt;/span&gt;
+<span class="c">### PRODUCTION IMAGE ###</span>
+<span class="k">FROM</span><span class="s"> openjdk:8-jre-alpine</span>
 
-&lt;span class=&quot;k&quot;&gt;COPY&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; --from=builder app/app.jar app/app.jar&lt;/span&gt;
+<span class="k">COPY</span><span class="s"> --from=builder app/app.jar app/app.jar</span>
 
-&lt;span class=&quot;k&quot;&gt;CMD&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; [&quot;java&quot;, &quot;-jar&quot;, &quot;app.jar&quot;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<span class="k">CMD</span><span class="s"> ["java", "-jar", "app.jar"]</span></code></pre></figure>
 
-&lt;p&gt;The idea is to show how easy Docker can be used to both build and run your software. Ultimately, entire pipelines could be created with just a Dockerfile and multi-stage builds. That would be a very comfortable position for the developer who would be able to execute all these stages locally exactly the same as the CI agent.&lt;/p&gt;
+<p>The idea is to show how easy Docker can be used to both build and run your software. Ultimately, entire pipelines could be created with just a Dockerfile and multi-stage builds. That would be a very comfortable position for the developer who would be able to execute all these stages locally exactly the same as the CI agent.</p>
 
-&lt;p&gt;More information at &lt;a href=&quot;https://github.com/juliaaano/archetypes&quot; target=&quot;_blank&quot;&gt;https://github.com/juliaaano/archetypes&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">There is a common pattern emerging which is to use Docker to build the software artefact. This approach has become popular since your machine or CI agent is not required to have anything installed but Docker. However, if you have tried this before with Java/Maven, you are most likely to know how slow it can be to see Maven download half of the internet inside the container in every single run. Here I show you how to address that issue with a simple trick.</summary></entry><entry><title type="html">Easy conversion of HTTP payloads</title><link href="https://www.juliaaano.com/blog/2017/06/24/payload/" rel="alternate" type="text/html" title="Easy conversion of HTTP payloads" /><published>2017-06-24T00:00:00+00:00</published><updated>2017-06-24T00:00:00+00:00</updated><id>https://www.juliaaano.com/blog/2017/06/24/payload</id><content type="html" xml:base="https://www.juliaaano.com/blog/2017/06/24/payload/">&lt;p&gt;Almost every application needs to handle data in an interchangeable format. In the world of http JSON based API’s, the task of serializing and deserializing the payloads are something usually delegated to a third party library. Some examples are &lt;em&gt;Jackson&lt;/em&gt;, &lt;em&gt;Gson&lt;/em&gt; and the most recent Java EE spec &lt;em&gt;JsonP&lt;/em&gt;. What if there is a way where applications can be decoupled from these providers in a similar fashion of how SLF4J does for logging? That’s the goal of &lt;strong&gt;&lt;a href=&quot;https://github.com/juliaaano/payload&quot; target=&quot;_blank&quot;&gt;Payload&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
+<p>More information at <a href="https://github.com/juliaaano/archetypes" target="_blank">https://github.com/juliaaano/archetypes</a></p>]]></content><author><name></name></author><summary type="html"><![CDATA[A smart way to cache Maven builds in Docker.]]></summary></entry><entry><title type="html">Easy conversion of HTTP payloads</title><link href="https://www.juliaaano.com/blog/2017/06/24/payload/" rel="alternate" type="text/html" title="Easy conversion of HTTP payloads" /><published>2017-06-24T00:00:00+00:00</published><updated>2017-06-24T00:00:00+00:00</updated><id>https://www.juliaaano.com/blog/2017/06/24/payload</id><content type="html" xml:base="https://www.juliaaano.com/blog/2017/06/24/payload/"><![CDATA[<p>Almost every application needs to handle data in an interchangeable format. In the world of http JSON based API’s, the task of serializing and deserializing the payloads are something usually delegated to a third party library. Some examples are <em>Jackson</em>, <em>Gson</em> and the most recent Java EE spec <em>JsonP</em>. What if there is a way where applications can be decoupled from these providers in a similar fashion of how SLF4J does for logging? That’s the goal of <strong><a href="https://github.com/juliaaano/payload" target="_blank">Payload</a></strong>.</p>
 
-&lt;!--more--&gt;
+<!--more-->
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;com.juliaaano&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;payload&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;${check.latest}&lt;span class=&quot;nt&quot;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>com.juliaaano<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>payload<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>${check.latest}<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span></code></pre></figure>
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// Serialization&lt;/span&gt;
-&lt;span class=&quot;nc&quot;&gt;Payload&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;MyObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;payload&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 
-	&lt;span class=&quot;no&quot;&gt;JSON&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;payload&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;newInstance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MyObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
-&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;json&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;payload&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;raw&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// Serialization</span>
+<span class="nc">Payload</span><span class="o">&lt;</span><span class="nc">MyObject</span><span class="o">&gt;</span> <span class="n">payload</span> <span class="o">=</span> 
+	<span class="no">JSON</span><span class="o">.</span><span class="na">payload</span><span class="o">().</span><span class="na">newInstance</span><span class="o">(</span><span class="k">new</span> <span class="nc">MyObject</span><span class="o">());</span>
+<span class="nc">String</span> <span class="n">json</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="na">raw</span><span class="o">();</span></code></pre></figure>
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// Deserialization&lt;/span&gt;
-&lt;span class=&quot;nc&quot;&gt;Payload&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;MyObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;payload&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;
-	&lt;span class=&quot;no&quot;&gt;XML&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;payload&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;newInstance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xmlAsString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MyObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;nc&quot;&gt;MyObject&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;obj&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;payload&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// Deserialization</span>
+<span class="nc">Payload</span><span class="o">&lt;</span><span class="nc">MyObject</span><span class="o">&gt;</span> <span class="n">payload</span> <span class="o">=</span>
+	<span class="no">XML</span><span class="o">.</span><span class="na">payload</span><span class="o">().</span><span class="na">newInstance</span><span class="o">(</span><span class="n">xmlAsString</span><span class="o">,</span> <span class="nc">MyObject</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="nc">MyObject</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="na">get</span><span class="o">();</span></code></pre></figure>
 
-&lt;p&gt;Payload acts as a &lt;strong&gt;facade&lt;/strong&gt; for the various libraries out there, which means it needs to find in the classpath a third party to do the actual work. Just like SLF4J would need log4J or Logback, for example.&lt;/p&gt;
+<p>Payload acts as a <strong>facade</strong> for the various libraries out there, which means it needs to find in the classpath a third party to do the actual work. Just like SLF4J would need log4J or Logback, for example.</p>
 
-&lt;p&gt;The design is quite flexible in the way it can accommodate custom implementations of the mechanism that does the conversion. I call it the &lt;strong&gt;Provider&lt;/strong&gt; in this context. Understand more about providers in &lt;a href=&quot;https://github.com/juliaaano/payload#providers&quot; target=&quot;_blank&quot;&gt;https://github.com/juliaaano/payload#providers&lt;/a&gt;.&lt;/p&gt;
+<p>The design is quite flexible in the way it can accommodate custom implementations of the mechanism that does the conversion. I call it the <strong>Provider</strong> in this context. Understand more about providers in <a href="https://github.com/juliaaano/payload#providers" target="_blank">https://github.com/juliaaano/payload#providers</a>.</p>
 
-&lt;p&gt;&lt;strong&gt;Testing&lt;/strong&gt; is something that you might want to use this library for. The ability to swap the underlying provider gives you a way to assemble your JSON test data using a different instrument rather than the one used production, but still keeping the same API.&lt;/p&gt;
+<p><strong>Testing</strong> is something that you might want to use this library for. The ability to swap the underlying provider gives you a way to assemble your JSON test data using a different instrument rather than the one used production, but still keeping the same API.</p>
 
-&lt;p&gt;No major &lt;strong&gt;performance&lt;/strong&gt; drawbacks have been identified by using &lt;em&gt;Payload&lt;/em&gt; instead of directly employing Jackson or Gson. The project contains a few JUnit &lt;a href=&quot;https://github.com/juliaaano/payload/blob/0.0.3/src/test/java/com/juliaaano/payload/json/JsonBenchmark.java&quot; target=&quot;_blank&quot;&gt;benchmark tests&lt;/a&gt; to address the matter.&lt;/p&gt;
+<p>No major <strong>performance</strong> drawbacks have been identified by using <em>Payload</em> instead of directly employing Jackson or Gson. The project contains a few JUnit <a href="https://github.com/juliaaano/payload/blob/0.0.3/src/test/java/com/juliaaano/payload/json/JsonBenchmark.java" target="_blank">benchmark tests</a> to address the matter.</p>
 
-&lt;p&gt;I have created a small app as a &lt;strong&gt;proof of concept&lt;/strong&gt; for this project: &lt;a href=&quot;https://github.com/juliaaano/payload-tests&quot; target=&quot;_blank&quot;&gt;Payload Tests&lt;/a&gt;. There you can see how things are expected to work, including the implementation of a custom provider.&lt;/p&gt;
+<p>I have created a small app as a <strong>proof of concept</strong> for this project: <a href="https://github.com/juliaaano/payload-tests" target="_blank">Payload Tests</a>. There you can see how things are expected to work, including the implementation of a custom provider.</p>
 
-&lt;p&gt;Great effort has been put in the &lt;strong&gt;design&lt;/strong&gt; aspect. It is fair to mention the main motivation behind this initiative was actually to exercise good practices such as object composition, OOP, build a pipeline to continuously release in Maven Central, just to name a few. If you have read this far and have also found value in what has been built, I’d be more than happy to accept your contributions. Keep the good coding.&lt;/p&gt;</content><author><name></name></author><summary type="html">Almost every application needs to handle data in an interchangeable format. In the world of http JSON based API’s, the task of serializing and deserializing the payloads are something usually delegated to a third party library. Some examples are Jackson, Gson and the most recent Java EE spec JsonP. What if there is a way where applications can be decoupled from these providers in a similar fashion of how SLF4J does for logging? That’s the goal of Payload.</summary></entry><entry><title type="html">Build and release pipeline</title><link href="https://www.juliaaano.com/blog/2017/04/10/build-and-release-pipeline/" rel="alternate" type="text/html" title="Build and release pipeline" /><published>2017-04-10T00:00:00+00:00</published><updated>2017-04-10T00:00:00+00:00</updated><id>https://www.juliaaano.com/blog/2017/04/10/build-and-release-pipeline</id><content type="html" xml:base="https://www.juliaaano.com/blog/2017/04/10/build-and-release-pipeline/">&lt;p&gt;A guide to get you started with the implementation of a software build pipeline in &lt;strong&gt;&lt;a href=&quot;https://travis-ci.org/&quot; target=&quot;_blank&quot;&gt;Travis CI&lt;/a&gt;&lt;/strong&gt; that automatically gets your code released to GitHub and pushed to a Docker registry. It takes you through some extra features such as Java’s JAR signing (GPG) and encryption of secret data for your build. The examples assume that Java and Maven are in use. Furthermore, if releasing to &lt;strong&gt;&lt;a href=&quot;http://central.sonatype.org/pages/apache-maven.html&quot; target=&quot;_blank&quot;&gt;Maven Central&lt;/a&gt;&lt;/strong&gt; is your goal, this guide will take you right there at the door.&lt;/p&gt;
+<p>Great effort has been put in the <strong>design</strong> aspect. It is fair to mention the main motivation behind this initiative was actually to exercise good practices such as object composition, OOP, build a pipeline to continuously release in Maven Central, just to name a few. If you have read this far and have also found value in what has been built, I’d be more than happy to accept your contributions. Keep the good coding.</p>]]></content><author><name></name></author><summary type="html"><![CDATA[A library to convert JSON, XML and more.]]></summary></entry><entry><title type="html">Build and release pipeline</title><link href="https://www.juliaaano.com/blog/2017/04/10/build-and-release-pipeline/" rel="alternate" type="text/html" title="Build and release pipeline" /><published>2017-04-10T00:00:00+00:00</published><updated>2017-04-10T00:00:00+00:00</updated><id>https://www.juliaaano.com/blog/2017/04/10/build-and-release-pipeline</id><content type="html" xml:base="https://www.juliaaano.com/blog/2017/04/10/build-and-release-pipeline/"><![CDATA[<p>A guide to get you started with the implementation of a software build pipeline in <strong><a href="https://travis-ci.org/" target="_blank">Travis CI</a></strong> that automatically gets your code released to GitHub and pushed to a Docker registry. It takes you through some extra features such as Java’s JAR signing (GPG) and encryption of secret data for your build. The examples assume that Java and Maven are in use. Furthermore, if releasing to <strong><a href="http://central.sonatype.org/pages/apache-maven.html" target="_blank">Maven Central</a></strong> is your goal, this guide will take you right there at the door.</p>
 
-&lt;!--more--&gt;
+<!--more-->
 
-&lt;h2 id=&quot;goals&quot;&gt;Goals&lt;/h2&gt;
+<h2 id="goals">Goals</h2>
 
-&lt;p&gt;For every commit pushed to the master branch in GitHub, the following tasks should be completed by Travis:&lt;/p&gt;
+<p>For every commit pushed to the master branch in GitHub, the following tasks should be completed by Travis:</p>
 
-&lt;ul&gt;
-  &lt;li&gt;Software is built and dependencies are resolved.&lt;/li&gt;
-  &lt;li&gt;Artifacts are signed.&lt;/li&gt;
-  &lt;li&gt;Docker image is built.&lt;/li&gt;
-  &lt;li&gt;Tests run.&lt;/li&gt;
-  &lt;li&gt;Image is pushed with tag ‘latest’ to &lt;a href=&quot;https://hub.docker.com&quot; target=&quot;_blank&quot;&gt;Docker Hub&lt;/a&gt;.&lt;/li&gt;
-&lt;/ul&gt;
+<ul>
+  <li>Software is built and dependencies are resolved.</li>
+  <li>Artifacts are signed.</li>
+  <li>Docker image is built.</li>
+  <li>Tests run.</li>
+  <li>Image is pushed with tag ‘latest’ to <a href="https://hub.docker.com" target="_blank">Docker Hub</a>.</li>
+</ul>
 
-&lt;p&gt;These are the basics that should invariably happen. Additionally, as a consequence of the command:&lt;/p&gt;
+<p>These are the basics that should invariably happen. Additionally, as a consequence of the command:</p>
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;s&quot;&gt;git tag v1.0.0 &amp;amp;&amp;amp; git push --tags&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s">git tag v1.0.0 &amp;&amp; git push --tags</span></code></pre></figure>
 
-&lt;p&gt;Travis should also trigger:&lt;/p&gt;
+<p>Travis should also trigger:</p>
 
-&lt;ul&gt;
-  &lt;li&gt;Maven to set a new version based on the Git tag name.&lt;/li&gt;
-  &lt;li&gt;Docker to push an image with the same tag as the Git tag name.&lt;/li&gt;
-  &lt;li&gt;Creation of a new GitHub release with all artifacts, javadocs, sources and signature files.&lt;/li&gt;
-&lt;/ul&gt;
+<ul>
+  <li>Maven to set a new version based on the Git tag name.</li>
+  <li>Docker to push an image with the same tag as the Git tag name.</li>
+  <li>Creation of a new GitHub release with all artifacts, javadocs, sources and signature files.</li>
+</ul>
 
-&lt;h2 id=&quot;travis&quot;&gt;Travis&lt;/h2&gt;
+<h2 id="travis">Travis</h2>
 
-&lt;p&gt;Make sure Travis and GitHub integration are properly set up.&lt;/p&gt;
+<p>Make sure Travis and GitHub integration are properly set up.</p>
 
-&lt;p&gt;One of the great advantages of CI tools like Travis is that the build configuration is defined as code and version controlled with the rest of your project in Git. In practice, this means you should have a &lt;strong&gt;.travis.yml&lt;/strong&gt; file checked in your repository.&lt;/p&gt;
+<p>One of the great advantages of CI tools like Travis is that the build configuration is defined as code and version controlled with the rest of your project in Git. In practice, this means you should have a <strong>.travis.yml</strong> file checked in your repository.</p>
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;language&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;java&lt;/span&gt;
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">language</span><span class="pi">:</span> <span class="s">java</span>
 
-&lt;span class=&quot;na&quot;&gt;jdk&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;oraclejdk8&lt;/span&gt;
+<span class="na">jdk</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">oraclejdk8</span>
 
-&lt;span class=&quot;na&quot;&gt;services&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker&lt;/span&gt;
+<span class="na">services</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">docker</span>
 
-&lt;span class=&quot;na&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;directories&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;$HOME/.m2&quot;&lt;/span&gt;
+<span class="na">cache</span><span class="pi">:</span>
+  <span class="na">directories</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s2">"</span><span class="s">$HOME/.m2"</span>
 
-&lt;span class=&quot;na&quot;&gt;before_install&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# travis encrypt-file command automatically generates the openssl command&lt;/span&gt;
-  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;openssl aes-256-cbc -K $encrypted_88b828c73747_key -iv $encrypted_88b828c73747_iv -in codesign.asc.enc -out codesign.asc -d&lt;/span&gt;
-  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;gpg --batch --fast-import codesign.asc&lt;/span&gt;
-  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;if [ -n &quot;$TRAVIS_TAG&quot; ]; then&lt;/span&gt;
-      &lt;span class=&quot;s&quot;&gt;mvn versions:set -DnewVersion=$TRAVIS_TAG;&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;fi&lt;/span&gt;
+<span class="na">before_install</span><span class="pi">:</span>
+  <span class="c1"># travis encrypt-file command automatically generates the openssl command</span>
+  <span class="pi">-</span> <span class="s">openssl aes-256-cbc -K $encrypted_88b828c73747_key -iv $encrypted_88b828c73747_iv -in codesign.asc.enc -out codesign.asc -d</span>
+  <span class="pi">-</span> <span class="s">gpg --batch --fast-import codesign.asc</span>
+  <span class="pi">-</span> <span class="s">if [ -n "$TRAVIS_TAG" ]; then</span>
+      <span class="s">mvn versions:set -DnewVersion=$TRAVIS_TAG;</span>
+    <span class="s">fi</span>
 
-&lt;span class=&quot;na&quot;&gt;install&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mvn install -DskipTests=true -B -V -Psign -Dgpg.passphrase=$GPG_PASSPHRASE&lt;/span&gt;
-  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker build -t $TRAVIS_REPO_SLUG .&lt;/span&gt;
+<span class="na">install</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">mvn install -DskipTests=true -B -V -Psign -Dgpg.passphrase=$GPG_PASSPHRASE</span>
+  <span class="pi">-</span> <span class="s">docker build -t $TRAVIS_REPO_SLUG .</span>
 
-&lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mvn test -B&lt;/span&gt;
+<span class="na">script</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">mvn test -B</span>
 
-&lt;span class=&quot;na&quot;&gt;after_success&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker login -u=$DOCKER_USERNAME -p=$DOCKER_PASSWORD;&lt;/span&gt;
-  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;if [ -n &quot;$TRAVIS_TAG&quot; ]; then&lt;/span&gt;
-      &lt;span class=&quot;s&quot;&gt;docker tag $TRAVIS_REPO_SLUG $TRAVIS_REPO_SLUG:$TRAVIS_TAG;&lt;/span&gt;
-      &lt;span class=&quot;s&quot;&gt;docker push $TRAVIS_REPO_SLUG:$TRAVIS_TAG;&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;elif [ &quot;$TRAVIS_BRANCH&quot; == &quot;master&quot; ]; then&lt;/span&gt;
-      &lt;span class=&quot;s&quot;&gt;docker push $TRAVIS_REPO_SLUG;&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;fi&lt;/span&gt;
+<span class="na">after_success</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">docker login -u=$DOCKER_USERNAME -p=$DOCKER_PASSWORD;</span>
+  <span class="pi">-</span> <span class="s">if [ -n "$TRAVIS_TAG" ]; then</span>
+      <span class="s">docker tag $TRAVIS_REPO_SLUG $TRAVIS_REPO_SLUG:$TRAVIS_TAG;</span>
+      <span class="s">docker push $TRAVIS_REPO_SLUG:$TRAVIS_TAG;</span>
+    <span class="s">elif [ "$TRAVIS_BRANCH" == "master" ]; then</span>
+      <span class="s">docker push $TRAVIS_REPO_SLUG;</span>
+    <span class="s">fi</span>
 
-&lt;span class=&quot;na&quot;&gt;deploy&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;provider&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;releases&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;api_key&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;secure&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;encrypted-key-generated-by-travis-setup-releases-cli&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;file_glob&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;target/app-*.jar&lt;/span&gt;
-    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;target/java-starter-*.jar&lt;/span&gt;
-    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;target/java-starter-*.jar.asc&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;skip_cleanup&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;repo&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;juliaaano/java-starter&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;branch&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;master&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;tags&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<span class="na">deploy</span><span class="pi">:</span>
+  <span class="na">provider</span><span class="pi">:</span> <span class="s">releases</span>
+  <span class="na">api_key</span><span class="pi">:</span>
+    <span class="na">secure</span><span class="pi">:</span> <span class="s">encrypted-key-generated-by-travis-setup-releases-cli</span>
+  <span class="na">file_glob</span><span class="pi">:</span> <span class="kc">true</span>
+  <span class="na">file</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">target/app-*.jar</span>
+    <span class="pi">-</span> <span class="s">target/java-starter-*.jar</span>
+    <span class="pi">-</span> <span class="s">target/java-starter-*.jar.asc</span>
+  <span class="na">skip_cleanup</span><span class="pi">:</span> <span class="kc">true</span>
+  <span class="na">on</span><span class="pi">:</span>
+    <span class="na">repo</span><span class="pi">:</span> <span class="s">juliaaano/java-starter</span>
+    <span class="na">branch</span><span class="pi">:</span> <span class="s">master</span>
+    <span class="na">tags</span><span class="pi">:</span> <span class="kc">true</span></code></pre></figure>
 
-&lt;h2 id=&quot;jar-sign-and-encryption&quot;&gt;JAR Sign and Encryption&lt;/h2&gt;
+<h2 id="jar-sign-and-encryption">JAR Sign and Encryption</h2>
 
-&lt;p&gt;In the &lt;strong&gt;before_install&lt;/strong&gt; step of the .travis.yml example above, there is a command to decrypt a codesign.asc.enc file to a decrypted codesign.asc one. This is done securely because my repository, in Travis, is the only one with a private key to decrypt it. Previously, I had used &lt;a href=&quot;https://docs.travis-ci.com/user/encrypting-files&quot; target=&quot;_blank&quot;&gt;Travis CLI in my local machine to encrypt&lt;/a&gt; that file with the public key available in the corresponding Travis build repo.&lt;/p&gt;
+<p>In the <strong>before_install</strong> step of the .travis.yml example above, there is a command to decrypt a codesign.asc.enc file to a decrypted codesign.asc one. This is done securely because my repository, in Travis, is the only one with a private key to decrypt it. Previously, I had used <a href="https://docs.travis-ci.com/user/encrypting-files" target="_blank">Travis CLI in my local machine to encrypt</a> that file with the public key available in the corresponding Travis build repo.</p>
 
-&lt;p&gt;The codesign.asc is nothing more than another private key I have once created with GPG. Since it is a requirement from Maven Central to have signed JARs, I found useful to include it as part of my builds. There are plenty of resources out there &lt;a href=&quot;http://central.sonatype.org/pages/working-with-pgp-signatures.html&quot; target=&quot;_blank&quot;&gt;explaining how to work with&lt;/a&gt; the GnuPG tool.&lt;/p&gt;
+<p>The codesign.asc is nothing more than another private key I have once created with GPG. Since it is a requirement from Maven Central to have signed JARs, I found useful to include it as part of my builds. There are plenty of resources out there <a href="http://central.sonatype.org/pages/working-with-pgp-signatures.html" target="_blank">explaining how to work with</a> the GnuPG tool.</p>
 
-&lt;p&gt;A Maven &lt;a href=&quot;http://maven.apache.org/components/plugins/maven-gpg-plugin/&quot; target=&quot;_blank&quot;&gt;plugin&lt;/a&gt; has the job to do the actual JAR signing. For this case, it assumes my key is set as default in the environment (gpg –fast-import). The passphrase is expected to be configured ahead in Travis as an environment variable: $GPG_PASSPHRASE.&lt;/p&gt;
+<p>A Maven <a href="http://maven.apache.org/components/plugins/maven-gpg-plugin/" target="_blank">plugin</a> has the job to do the actual JAR signing. For this case, it assumes my key is set as default in the environment (gpg –fast-import). The passphrase is expected to be configured ahead in Travis as an environment variable: $GPG_PASSPHRASE.</p>
 
-&lt;p&gt;There is a project with the &lt;strong&gt;pom.xml&lt;/strong&gt; configured with GPG &lt;a href=&quot;https://github.com/juliaaano/payload/blob/1.0.0/pom.xml&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+<p>There is a project with the <strong>pom.xml</strong> configured with GPG <a href="https://github.com/juliaaano/payload/blob/1.0.0/pom.xml" target="_blank">here</a>.</p>
 
-&lt;h2 id=&quot;docker&quot;&gt;Docker&lt;/h2&gt;
+<h2 id="docker">Docker</h2>
 
-&lt;p&gt;Pay attention to the variables &lt;strong&gt;$DOCKER_USERNAME&lt;/strong&gt; and &lt;strong&gt;$DOCKER_PASSWORD&lt;/strong&gt;. They should be manually assigned in Travis (same as $GPG_PASSPHRASE) and in my case they refer to my own Docker Hub credentials.&lt;/p&gt;
+<p>Pay attention to the variables <strong>$DOCKER_USERNAME</strong> and <strong>$DOCKER_PASSWORD</strong>. They should be manually assigned in Travis (same as $GPG_PASSPHRASE) and in my case they refer to my own Docker Hub credentials.</p>
 
-&lt;p&gt;Besides the build and push steps, one good idea might be executing a ‘docker run’ during the ‘script’ stage and conditionally fail or pass the build.&lt;/p&gt;
+<p>Besides the build and push steps, one good idea might be executing a ‘docker run’ during the ‘script’ stage and conditionally fail or pass the build.</p>
 
-&lt;h2 id=&quot;github-release&quot;&gt;GitHub Release&lt;/h2&gt;
+<h2 id="github-release">GitHub Release</h2>
 
-&lt;p&gt;Every successful build derived from master and with a tag is directly posted to a GitHub release. An access token (api_key) is required by Travis, but again the command line tool &lt;a href=&quot;https://docs.travis-ci.com/user/deployment/releases/&quot; target=&quot;_blank&quot;&gt;handles that for you&lt;/a&gt;.&lt;/p&gt;
+<p>Every successful build derived from master and with a tag is directly posted to a GitHub release. An access token (api_key) is required by Travis, but again the command line tool <a href="https://docs.travis-ci.com/user/deployment/releases/" target="_blank">handles that for you</a>.</p>
 
-&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+<h2 id="conclusion">Conclusion</h2>
 
-&lt;p&gt;Much has been said about continuous delivery. I strongly agree it is a matter of process and people before anything else. Nonetheless, I don’t find examples or how-to’s out there quite often. Probably because the resulting implementation is specific to the development process in place. I hope you can use this to get you started and evolve it towards your own deployment pipeline.&lt;/p&gt;
+<p>Much has been said about continuous delivery. I strongly agree it is a matter of process and people before anything else. Nonetheless, I don’t find examples or how-to’s out there quite often. Probably because the resulting implementation is specific to the development process in place. I hope you can use this to get you started and evolve it towards your own deployment pipeline.</p>
 
-&lt;p&gt;The solution presented in this blog came from my Spark Java Maven &lt;strong&gt;Archetypes&lt;/strong&gt; project. Check out the source code at &lt;a href=&quot;https://github.com/juliaaano/archetypes/tree/master/sparkjava&quot; target=&quot;_blank&quot;&gt;https://github.com/juliaaano/archetypes/tree/master/sparkjava&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><summary type="html">A guide to get you started with the implementation of a software build pipeline in Travis CI that automatically gets your code released to GitHub and pushed to a Docker registry. It takes you through some extra features such as Java’s JAR signing (GPG) and encryption of secret data for your build. The examples assume that Java and Maven are in use. Furthermore, if releasing to Maven Central is your goal, this guide will take you right there at the door.</summary></entry><entry><title type="html">API &amp;amp; Platforms are the new SOA</title><link href="https://www.juliaaano.com/blog/2017/03/04/apis-the-new-soa/" rel="alternate" type="text/html" title="API &amp;amp; Platforms are the new SOA" /><published>2017-03-04T00:00:00+00:00</published><updated>2017-03-04T00:00:00+00:00</updated><id>https://www.juliaaano.com/blog/2017/03/04/apis-the-new-soa</id><content type="html" xml:base="https://www.juliaaano.com/blog/2017/03/04/apis-the-new-soa/">&lt;p&gt;The business around API’s is growing these days. There has been quite a lot of talking about how companies should be building platforms to achieve innovation and reach new markets. It’s all about opening your business to let others create value on top of it. The financial industry (i.e. banks) is taking the lead in this area. One thing I didn’t realize before is how similar this movement is to the old gold SOA.&lt;/p&gt;
+<p>The solution presented in this blog came from my Spark Java Maven <strong>Archetypes</strong> project. Check out the source code at <a href="https://github.com/juliaaano/archetypes/tree/master/sparkjava" target="_blank">https://github.com/juliaaano/archetypes/tree/master/sparkjava</a>.</p>]]></content><author><name></name></author><summary type="html"><![CDATA[Software build and release pipeline in Travis CI for a Java Maven based project.]]></summary></entry><entry><title type="html">API &amp;amp; Platforms are the new SOA</title><link href="https://www.juliaaano.com/blog/2017/03/04/apis-the-new-soa/" rel="alternate" type="text/html" title="API &amp;amp; Platforms are the new SOA" /><published>2017-03-04T00:00:00+00:00</published><updated>2017-03-04T00:00:00+00:00</updated><id>https://www.juliaaano.com/blog/2017/03/04/apis-the-new-soa</id><content type="html" xml:base="https://www.juliaaano.com/blog/2017/03/04/apis-the-new-soa/"><![CDATA[<p>The business around API’s is growing these days. There has been quite a lot of talking about how companies should be building platforms to achieve innovation and reach new markets. It’s all about opening your business to let others create value on top of it. The financial industry (i.e. banks) is taking the lead in this area. One thing I didn’t realize before is how similar this movement is to the old gold SOA.</p>
 
-&lt;!--more--&gt;
+<!--more-->
 
-&lt;p&gt;When I think about Service Oriented Architectures, I remember the promise of having areas of business modeled as &lt;strong&gt;web services&lt;/strong&gt; that were supposed to be shared and discoverable on the internet. A significant fact which represented this period was the vendor-mafia that came and raped the industry by pushing their heavy weight ESB products.&lt;/p&gt;
+<p>When I think about Service Oriented Architectures, I remember the promise of having areas of business modeled as <strong>web services</strong> that were supposed to be shared and discoverable on the internet. A significant fact which represented this period was the vendor-mafia that came and raped the industry by pushing their heavy weight ESB products.</p>
 
-&lt;amp-img media=&quot;(min-width: 600px)&quot; src=&quot;https://d27nechif2d87h.cloudfront.net/images/blue-bus.svg&quot; alt=&quot;enterprise-service-bus&quot; width=&quot;1&quot; height=&quot;1&quot; class=&quot;image-right&quot; layout=&quot;responsive&quot;&gt;
-&lt;/amp-img&gt;
+<amp-img media="(min-width: 600px)" src="https://d27nechif2d87h.cloudfront.net/images/blue-bus.svg" alt="enterprise-service-bus" width="1" height="1" class="image-right" layout="responsive">
+</amp-img>
 
-&lt;p&gt;It turns out Platforms &amp;amp; API’s are not proposing something much different from what people expected from SOA before. I am afraid the same old vendors have already perceived that.&lt;/p&gt;
+<p>It turns out Platforms &amp; API’s are not proposing something much different from what people expected from SOA before. I am afraid the same old vendors have already perceived that.</p>
 
-&lt;p&gt;Not long ago I had the opportunity to attend a conference focused on the API/Platform space. I noticed a bunch of companies with bundle products that remembered pretty much the enterprise service buses we learned to be suspicious about. More specifically, there were solutions that addressed the issues of the enterprise in &lt;strong&gt;horizontal&lt;/strong&gt; layers, where API’s were exposed in standard ways with some sort of orchestrator in the middle.&lt;/p&gt;
+<p>Not long ago I had the opportunity to attend a conference focused on the API/Platform space. I noticed a bunch of companies with bundle products that remembered pretty much the enterprise service buses we learned to be suspicious about. More specifically, there were solutions that addressed the issues of the enterprise in <strong>horizontal</strong> layers, where API’s were exposed in standard ways with some sort of orchestrator in the middle.</p>
 
-&lt;p&gt;While I draw this parallel between API’s and SOA, I can’t avoid to remember how many discussions there has been around Microservices and SOA. I guess that was the &lt;strong&gt;wrong&lt;/strong&gt; comparison. The new SOA is “The Platform”. Microservices are just an implementation detail.&lt;/p&gt;
+<p>While I draw this parallel between API’s and SOA, I can’t avoid to remember how many discussions there has been around Microservices and SOA. I guess that was the <strong>wrong</strong> comparison. The new SOA is “The Platform”. Microservices are just an implementation detail.</p>
 
-&lt;p&gt;Lastly, I do understand there are many differences between the new API movement and SOA. One example is the &lt;strong&gt;developer engagement&lt;/strong&gt;. It seems to be more interesting to build apps on top of friendly JSON and hypermedia driven api’s than it used to be with the problematic XML SOAP protocol. However, in principle, I believe both approaches share the same purpose.&lt;/p&gt;</content><author><name></name></author><summary type="html">The business around API’s is growing these days. There has been quite a lot of talking about how companies should be building platforms to achieve innovation and reach new markets. It’s all about opening your business to let others create value on top of it. The financial industry (i.e. banks) is taking the lead in this area. One thing I didn’t realize before is how similar this movement is to the old gold SOA.</summary></entry><entry><title type="html">Make it simple with Spark Java</title><link href="https://www.juliaaano.com/blog/2017/02/21/make-simple-with-spark-java/" rel="alternate" type="text/html" title="Make it simple with Spark Java" /><published>2017-02-21T00:00:00+00:00</published><updated>2017-02-21T00:00:00+00:00</updated><id>https://www.juliaaano.com/blog/2017/02/21/make-simple-with-spark-java</id><content type="html" xml:base="https://www.juliaaano.com/blog/2017/02/21/make-simple-with-spark-java/">&lt;p&gt;About an year ago I’ve stumbled upon this interesting little framework called &lt;strong&gt;&lt;a href=&quot;http://sparkjava.com/&quot; target=&quot;_blank&quot;&gt;Spark Java&lt;/a&gt;&lt;/strong&gt;. If you are looking for a lightweight alternative to quickly develop &lt;strong&gt;REST APIs in Java&lt;/strong&gt;, you might like this.&lt;/p&gt;
+<p>Lastly, I do understand there are many differences between the new API movement and SOA. One example is the <strong>developer engagement</strong>. It seems to be more interesting to build apps on top of friendly JSON and hypermedia driven api’s than it used to be with the problematic XML SOAP protocol. However, in principle, I believe both approaches share the same purpose.</p>]]></content><author><name></name></author><summary type="html"><![CDATA[The API / Platform space and Service Oriented Architectures have much in common, specially the appetite from vendors to sell their solutions.]]></summary></entry><entry><title type="html">Make it simple with Spark Java</title><link href="https://www.juliaaano.com/blog/2017/02/21/make-simple-with-spark-java/" rel="alternate" type="text/html" title="Make it simple with Spark Java" /><published>2017-02-21T00:00:00+00:00</published><updated>2017-02-21T00:00:00+00:00</updated><id>https://www.juliaaano.com/blog/2017/02/21/make-simple-with-spark-java</id><content type="html" xml:base="https://www.juliaaano.com/blog/2017/02/21/make-simple-with-spark-java/"><![CDATA[<p>About an year ago I’ve stumbled upon this interesting little framework called <strong><a href="http://sparkjava.com/" target="_blank">Spark Java</a></strong>. If you are looking for a lightweight alternative to quickly develop <strong>REST APIs in Java</strong>, you might like this.</p>
 
-&lt;!--more--&gt;
+<!--more-->
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/hello&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Hello World&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">get</span><span class="o">(</span><span class="s">"/hello"</span><span class="o">,</span> <span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">res</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="s">"Hello World"</span><span class="o">);</span>
+<span class="o">}</span></code></pre></figure>
 
-&lt;p&gt;Pretty straightforward. Spark Java leverages Java 8 to provide an easy to use and understand api. Method get() registers the endpoint and starts up an embedded Jetty server to handle the incoming http requests.&lt;/p&gt;
+<p>Pretty straightforward. Spark Java leverages Java 8 to provide an easy to use and understand api. Method get() registers the endpoint and starts up an embedded Jetty server to handle the incoming http requests.</p>
 
-&lt;p&gt;Look at this other example:&lt;/p&gt;
+<p>Look at this other example:</p>
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Repository&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;repository&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Repository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/hello&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;application/json&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nc&quot;&gt;Entity&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;entity&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;repository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;201&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;entity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;JsonResponseTransformer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+  <span class="kd">final</span> <span class="nc">Repository</span> <span class="n">repository</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Repository</span><span class="o">();</span>
+  <span class="n">post</span><span class="o">(</span><span class="s">"/hello"</span><span class="o">,</span> <span class="s">"application/json"</span><span class="o">,</span> <span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">res</span><span class="o">)</span> <span class="o">-&gt;</span>
+    <span class="nc">Entity</span> <span class="n">entity</span> <span class="o">=</span> <span class="n">repository</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">body</span><span class="o">());</span>
+    <span class="n">res</span><span class="o">.</span><span class="na">status</span><span class="o">(</span><span class="mi">201</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">entity</span><span class="o">;</span>
+  <span class="o">},</span> <span class="k">new</span> <span class="nc">JsonResponseTransformer</span><span class="o">());</span>
+<span class="o">}</span></code></pre></figure>
 
-&lt;p&gt;Here we declare a &lt;strong&gt;POST&lt;/strong&gt; endpoint that only gets called if the client sets Accept: “application/json” request header. Moreover, we return an entity that is serialized to &lt;strong&gt;JSON&lt;/strong&gt; using an object that implements ResponseTransformer; it could possibly use &lt;a href=&quot;https://github.com/google/gson&quot; target=&quot;_blank&quot;&gt;Gson&lt;/a&gt; behind the scenes.&lt;/p&gt;
+<p>Here we declare a <strong>POST</strong> endpoint that only gets called if the client sets Accept: “application/json” request header. Moreover, we return an entity that is serialized to <strong>JSON</strong> using an object that implements ResponseTransformer; it could possibly use <a href="https://github.com/google/gson" target="_blank">Gson</a> behind the scenes.</p>
 
-&lt;p&gt;Spark Java has not invented anything new. The design is pretty much taken from Ruby’s Sinatra framework.&lt;/p&gt;
+<p>Spark Java has not invented anything new. The design is pretty much taken from Ruby’s Sinatra framework.</p>
 
-&lt;h3 id=&quot;in-summary&quot;&gt;In summary&lt;/h3&gt;
+<h3 id="in-summary">In summary</h3>
 
-&lt;p&gt;Simple, easy to maintain and understand.&lt;/p&gt;
+<p>Simple, easy to maintain and understand.</p>
 
-&lt;p&gt;No “magic”. Get rid of all the levels of indirection that a framework like Spring MVC introduces.&lt;/p&gt;
+<p>No “magic”. Get rid of all the levels of indirection that a framework like Spring MVC introduces.</p>
 
-&lt;p&gt;Better &lt;strong&gt;separation of concerns&lt;/strong&gt;. Spark Java does not try to save the world.&lt;/p&gt;
+<p>Better <strong>separation of concerns</strong>. Spark Java does not try to save the world.</p>
 
-&lt;h3 id=&quot;theres-more&quot;&gt;There’s more…&lt;/h3&gt;
+<h3 id="theres-more">There’s more…</h3>
 
-&lt;p&gt;Let’s go a bit fancy. Here’s a design idea you can use when there are multiple endpoints to configure.&lt;/p&gt;
+<p>Let’s go a bit fancy. Here’s a design idea you can use when there are multiple endpoints to configure.</p>
 
-&lt;p&gt;First, create a builder interface:&lt;/p&gt;
+<p>First, create a builder interface:</p>
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;EndpointBuilder&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;configure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Service&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;spark&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;basePath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">EndpointBuilder</span> <span class="o">{</span>
+  <span class="kt">void</span> <span class="nf">configure</span><span class="o">(</span><span class="nc">Service</span> <span class="n">spark</span><span class="o">,</span> <span class="nc">String</span> <span class="n">basePath</span><span class="o">);</span>
+<span class="o">}</span></code></pre></figure>
 
-&lt;p&gt;Now, let’s say you have one of many other rest endpoints resources to set up:&lt;/p&gt;
+<p>Now, let’s say you have one of many other rest endpoints resources to set up:</p>
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CustomerEndpoint&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;EndpointBuilder&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomerEndpoint</span> <span class="kd">implements</span> <span class="nc">EndpointBuilder</span> <span class="o">{</span>
 
-  &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CustomerService&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;customerService&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  <span class="kd">private</span> <span class="kd">final</span> <span class="nc">CustomerService</span> <span class="n">customerService</span><span class="o">;</span>
 
-  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;CustomerEndpoint&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;CustomerService&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;service&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;customerService&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;service&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  <span class="kd">public</span> <span class="nf">CustomerEndpoint</span><span class="o">(</span><span class="nc">CustomerService</span> <span class="n">service</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">customerService</span> <span class="o">=</span> <span class="n">service</span><span class="o">;</span>
+  <span class="o">}</span>
 
-  &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;configure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Service&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;spark&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;basePath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;spark&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;basePath&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;/customer&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;hello&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;});&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">configure</span><span class="o">(</span><span class="nc">Service</span> <span class="n">spark</span><span class="o">,</span> <span class="nc">String</span> <span class="n">basePath</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">spark</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">basePath</span> <span class="o">+</span> <span class="s">"/customer"</span><span class="o">,</span> <span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">res</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="s">"hello"</span><span class="o">;</span>
+    <span class="o">});</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
 
-&lt;p&gt;Finally, create a RestContext class that will hold the spark instance and will enable you to configure whatever routes you wish:&lt;/p&gt;
+<p>Finally, create a RestContext class that will hold the spark instance and will enable you to configure whatever routes you wish:</p>
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;RestContext&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">RestContext</span> <span class="o">{</span>
 
-  &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Logger&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;LoggerFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getLogger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;RestContext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Service&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;spark&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;basePath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">Logger</span> <span class="n">logger</span> <span class="o">=</span> <span class="nc">LoggerFactory</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="nc">RestContext</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="kd">private</span> <span class="kd">final</span> <span class="nc">Service</span> <span class="n">spark</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="kd">final</span> <span class="nc">String</span> <span class="n">basePath</span><span class="o">;</span>
 
-  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;RestContext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;basePath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;basePath&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;basePath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;spark&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Service&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ignite&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// import spark.Service;&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  <span class="kd">public</span> <span class="nf">RestContext</span><span class="o">(</span><span class="kt">int</span> <span class="n">port</span><span class="o">,</span> <span class="nc">String</span> <span class="n">basePath</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">basePath</span> <span class="o">=</span> <span class="n">basePath</span><span class="o">;</span>
+    <span class="n">spark</span> <span class="o">=</span> <span class="nc">Service</span><span class="o">.</span><span class="na">ignite</span><span class="o">().</span><span class="na">port</span><span class="o">(</span><span class="n">port</span><span class="o">);</span> <span class="c1">// import spark.Service;</span>
+  <span class="o">}</span>
 
-  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;addEndpoint&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;EndpointBuilder&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endpoint&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;endpoint&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;configure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;spark&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;basePath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;REST endpoints registered for {}.&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endpoint&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getClass&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getSimpleName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addEndpoint</span><span class="o">(</span><span class="nc">EndpointBuilder</span> <span class="n">endpoint</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">endpoint</span><span class="o">.</span><span class="na">configure</span><span class="o">(</span><span class="n">spark</span><span class="o">,</span> <span class="n">basePath</span><span class="o">);</span>
+    <span class="n">logger</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"REST endpoints registered for {}."</span><span class="o">,</span> <span class="n">endpoint</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getSimpleName</span><span class="o">());</span>
+  <span class="o">}</span>
 
-  &lt;span class=&quot;c1&quot;&gt;// Then you can even have some fun:&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;enableCors&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;spark&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;before&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;header&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Access-Control-Allow-Origin&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;*&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;header&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Access-Control-Allow-Methods&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;GET, POST, PUT, DELETE, OPTIONS&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;header&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Access-Control-Allow-Headers&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Content-Type, api_key, Authorization&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;});&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;CORS support enabled.&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+  <span class="c1">// Then you can even have some fun:</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">enableCors</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">spark</span><span class="o">.</span><span class="na">before</span><span class="o">((</span><span class="n">request</span><span class="o">,</span> <span class="n">response</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+      <span class="n">response</span><span class="o">.</span><span class="na">header</span><span class="o">(</span><span class="s">"Access-Control-Allow-Origin"</span><span class="o">,</span> <span class="s">"*"</span><span class="o">);</span>
+      <span class="n">response</span><span class="o">.</span><span class="na">header</span><span class="o">(</span><span class="s">"Access-Control-Allow-Methods"</span><span class="o">,</span> <span class="s">"GET, POST, PUT, DELETE, OPTIONS"</span><span class="o">);</span>
+      <span class="n">response</span><span class="o">.</span><span class="na">header</span><span class="o">(</span><span class="s">"Access-Control-Allow-Headers"</span><span class="o">,</span> <span class="s">"Content-Type, api_key, Authorization"</span><span class="o">);</span>
+    <span class="o">});</span>
+    <span class="n">logger</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"CORS support enabled."</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
 
-&lt;p&gt;You should be able to use this context class in your main method (and optionally in your test classes):&lt;/p&gt;
+<p>You should be able to use this context class in your main method (and optionally in your test classes):</p>
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;nc&quot;&gt;RestContext&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;RestContext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8080&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;/api&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;addEndpoint&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CustomerEndpoint&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CustomerService&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()));&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;addEndpoint&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AnotherEndpoint&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// you can add or remove as many as you want.&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;enableCors&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;</content><author><name></name></author><summary type="html">About an year ago I’ve stumbled upon this interesting little framework called Spark Java. If you are looking for a lightweight alternative to quickly develop REST APIs in Java, you might like this.</summary></entry><entry><title type="html">Building this Blog</title><link href="https://www.juliaaano.com/blog/2017/02/07/building-this-blog/" rel="alternate" type="text/html" title="Building this Blog" /><published>2017-02-07T00:00:00+00:00</published><updated>2017-02-07T00:00:00+00:00</updated><id>https://www.juliaaano.com/blog/2017/02/07/building-this-blog</id><content type="html" xml:base="https://www.juliaaano.com/blog/2017/02/07/building-this-blog/">&lt;p&gt;A few weeks ago I decided to engage in a project of building a blog. I was looking for challenges, I wanted to build something of my own, without using some of these well known platforms like Wordpress, Blogger, etc. It was more about the journey and satisfaction of dealing with a domain that I was never very familiar with: &lt;strong&gt;front-end development&lt;/strong&gt;.&lt;/p&gt;
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+  <span class="nc">RestContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RestContext</span><span class="o">(</span><span class="mi">8080</span><span class="o">,</span> <span class="s">"/api"</span><span class="o">);</span>
+  <span class="n">context</span><span class="o">.</span><span class="na">addEndpoint</span><span class="o">(</span><span class="k">new</span> <span class="nc">CustomerEndpoint</span><span class="o">(</span><span class="k">new</span> <span class="nc">CustomerService</span><span class="o">()));</span>
+  <span class="n">context</span><span class="o">.</span><span class="na">addEndpoint</span><span class="o">(</span><span class="k">new</span> <span class="nc">AnotherEndpoint</span><span class="o">());</span> <span class="c1">// you can add or remove as many as you want.</span>
+  <span class="n">context</span><span class="o">.</span><span class="na">enableCors</span><span class="o">();</span>
+<span class="o">}</span></code></pre></figure>]]></content><author><name></name></author><summary type="html"><![CDATA[Take it easy and develop REST APIs in Java. Fast, elegant, declarative and functional.]]></summary></entry><entry><title type="html">Building this Blog</title><link href="https://www.juliaaano.com/blog/2017/02/07/building-this-blog/" rel="alternate" type="text/html" title="Building this Blog" /><published>2017-02-07T00:00:00+00:00</published><updated>2017-02-07T00:00:00+00:00</updated><id>https://www.juliaaano.com/blog/2017/02/07/building-this-blog</id><content type="html" xml:base="https://www.juliaaano.com/blog/2017/02/07/building-this-blog/"><![CDATA[<p>A few weeks ago I decided to engage in a project of building a blog. I was looking for challenges, I wanted to build something of my own, without using some of these well known platforms like Wordpress, Blogger, etc. It was more about the journey and satisfaction of dealing with a domain that I was never very familiar with: <strong>front-end development</strong>.</p>
 
-&lt;!--more--&gt;
-&lt;p&gt;The result is this website you are seeing now. Although it may look simple (that’s always the goal!), there has been many things I’ve been through during this project. I would like to share with you the major practices and tools I learned the past weeks. This way I hope I can help you if you are also interested on building your own website.&lt;/p&gt;
+<!--more-->
+<p>The result is this website you are seeing now. Although it may look simple (that’s always the goal!), there has been many things I’ve been through during this project. I would like to share with you the major practices and tools I learned the past weeks. This way I hope I can help you if you are also interested on building your own website.</p>
 
-&lt;p&gt;I’ll be brief, most of the topics deserve their own blog posts, and I’m looking forward to write more about them in the future.&lt;/p&gt;
+<p>I’ll be brief, most of the topics deserve their own blog posts, and I’m looking forward to write more about them in the future.</p>
 
-&lt;h3 id=&quot;jekyll&quot;&gt;Jekyll&lt;/h3&gt;
+<h3 id="jekyll">Jekyll</h3>
 
-&lt;p&gt;The great deal about this website is that it is completely static. I use &lt;strong&gt;&lt;a href=&quot;https://jekyllrb.com&quot; target=&quot;_blank&quot;&gt;Jekyll&lt;/a&gt;&lt;/strong&gt; to generate, from templates, the whole content on every source commit. This means no dynamic content, no databases, no &lt;a href=&quot;https://en.wikipedia.org/wiki/Content_management_system&quot; target=&quot;_blank&quot;&gt;CMS&lt;/a&gt;; just &lt;strong&gt;plain html&lt;/strong&gt;. I reckon this makes development much simpler because I’ve established just enough architecture to solve my problem.&lt;/p&gt;
+<p>The great deal about this website is that it is completely static. I use <strong><a href="https://jekyllrb.com" target="_blank">Jekyll</a></strong> to generate, from templates, the whole content on every source commit. This means no dynamic content, no databases, no <a href="https://en.wikipedia.org/wiki/Content_management_system" target="_blank">CMS</a>; just <strong>plain html</strong>. I reckon this makes development much simpler because I’ve established just enough architecture to solve my problem.</p>
 
-&lt;h3 id=&quot;github-pages&quot;&gt;GitHub Pages&lt;/h3&gt;
+<h3 id="github-pages">GitHub Pages</h3>
 
-&lt;p&gt;Here comes the magic! &lt;strong&gt;&lt;a href=&quot;https://pages.github.com&quot; target=&quot;_blank&quot;&gt;GitHub Pages&lt;/a&gt;&lt;/strong&gt; has a wonderful &lt;a href=&quot;https://help.github.com/articles/about-github-pages-and-jekyll/&quot; target=&quot;_blank&quot;&gt;integration with Jekyll&lt;/a&gt;. Everytime you push code to your pages repository/branch, GitHub will build your site. You don’t need to keep stored your generated web site, because GitHub will do that for you behind the scenes. In the end you get continuous integration, deployment and hosting for free.&lt;/p&gt;
+<p>Here comes the magic! <strong><a href="https://pages.github.com" target="_blank">GitHub Pages</a></strong> has a wonderful <a href="https://help.github.com/articles/about-github-pages-and-jekyll/" target="_blank">integration with Jekyll</a>. Everytime you push code to your pages repository/branch, GitHub will build your site. You don’t need to keep stored your generated web site, because GitHub will do that for you behind the scenes. In the end you get continuous integration, deployment and hosting for free.</p>
 
-&lt;h3 id=&quot;disqus&quot;&gt;Disqus&lt;/h3&gt;
+<h3 id="disqus">Disqus</h3>
 
-&lt;p&gt;After realising the benefits of having a static website, I asked myself: how am I going to provide comments for the posts? Here &lt;strong&gt;&lt;a href=&quot;https://disqus.com&quot; target=&quot;_blank&quot;&gt;Disqus&lt;/a&gt;&lt;/strong&gt; comes into play. Just like Google &lt;a href=&quot;#analytics&quot;&gt;Analytics&lt;/a&gt;, you add a javascript to your html page and bam! It’s there.&lt;/p&gt;
+<p>After realising the benefits of having a static website, I asked myself: how am I going to provide comments for the posts? Here <strong><a href="https://disqus.com" target="_blank">Disqus</a></strong> comes into play. Just like Google <a href="#analytics">Analytics</a>, you add a javascript to your html page and bam! It’s there.</p>
 
-&lt;h3 id=&quot;analytics&quot;&gt;Analytics&lt;/h3&gt;
+<h3 id="analytics">Analytics</h3>
 
-&lt;p&gt;I guess &lt;strong&gt;&lt;a href=&quot;https://www.google.com/analytics/&quot; target=&quot;_blank&quot;&gt;Google Analytics&lt;/a&gt;&lt;/strong&gt; is de facto standard for this kind of thing. If you know better solutions, I’m happy to hear.&lt;/p&gt;
+<p>I guess <strong><a href="https://www.google.com/analytics/" target="_blank">Google Analytics</a></strong> is de facto standard for this kind of thing. If you know better solutions, I’m happy to hear.</p>
 
-&lt;h3 id=&quot;domain-dns&quot;&gt;Domain (DNS)&lt;/h3&gt;
+<h3 id="domain-dns">Domain (DNS)</h3>
 
-&lt;p&gt;Time to setup a custom domain name. I’ve long used juliaaano as an online identity and I hope one day I can tell you the story why. DNS is provided by &lt;strong&gt;&lt;a href=&quot;https://aws.amazon.com/route53/&quot; target=&quot;_blank&quot;&gt;Amazon Route 53&lt;/a&gt;&lt;/strong&gt;. All I had to do there was to create a &lt;a href=&quot;https://help.github.com/articles/using-a-custom-domain-with-github-pages/&quot; target=&quot;_blank&quot;&gt;couple of CNAME entries here and there&lt;/a&gt;.&lt;/p&gt;
+<p>Time to setup a custom domain name. I’ve long used juliaaano as an online identity and I hope one day I can tell you the story why. DNS is provided by <strong><a href="https://aws.amazon.com/route53/" target="_blank">Amazon Route 53</a></strong>. All I had to do there was to create a <a href="https://help.github.com/articles/using-a-custom-domain-with-github-pages/" target="_blank">couple of CNAME entries here and there</a>.</p>
 
-&lt;h3 id=&quot;accelerated-mobile-pages&quot;&gt;Accelerated Mobile Pages&lt;/h3&gt;
+<h3 id="accelerated-mobile-pages">Accelerated Mobile Pages</h3>
 
-&lt;p&gt;I’m proud to say this website is powered by &lt;strong&gt;&lt;a href=&quot;https://www.ampproject.org&quot; target=&quot;_blank&quot;&gt;AMP&lt;/a&gt;&lt;/strong&gt;. I stumbled upon this technology by accident and got immediately really excited about it. Besides ensuring your pages load super fast, AMP helps you to build better html. Other than that, it’s a step towards the &lt;a href=&quot;https://en.wikipedia.org/wiki/Progressive_web_app&quot; target=&quot;_blank&quot;&gt;Progressive Web Apps&lt;/a&gt; movement. It’s been designed to delivery content to mobile devices, but I see no reason why I wouldn’t use with desktops.&lt;/p&gt;
+<p>I’m proud to say this website is powered by <strong><a href="https://www.ampproject.org" target="_blank">AMP</a></strong>. I stumbled upon this technology by accident and got immediately really excited about it. Besides ensuring your pages load super fast, AMP helps you to build better html. Other than that, it’s a step towards the <a href="https://en.wikipedia.org/wiki/Progressive_web_app" target="_blank">Progressive Web Apps</a> movement. It’s been designed to delivery content to mobile devices, but I see no reason why I wouldn’t use with desktops.</p>
 
-&lt;h3 id=&quot;content-delivery-network-cdn&quot;&gt;Content Delivery Network (CDN)&lt;/h3&gt;
+<h3 id="content-delivery-network-cdn">Content Delivery Network (CDN)</h3>
 
-&lt;p&gt;Since I’ve decided to embrace performance by using AMP, nothing more natural than leverage it with the power of CDNs. All my images, javascript and fonts are delivered by &lt;strong&gt;&lt;a href=&quot;https://aws.amazon.com/cloudfront/&quot; target=&quot;_blank&quot;&gt;Amazon CloudFront&lt;/a&gt;&lt;/strong&gt;, backed by &lt;a href=&quot;https://aws.amazon.com/s3&quot; target=&quot;_blank&quot;&gt;Amazon S3&lt;/a&gt;. If you decide to have fun with this stuff, pay special attention to cache headers and Cross-Origin Resource Sharing (CORS) settings.&lt;/p&gt;
+<p>Since I’ve decided to embrace performance by using AMP, nothing more natural than leverage it with the power of CDNs. All my images, javascript and fonts are delivered by <strong><a href="https://aws.amazon.com/cloudfront/" target="_blank">Amazon CloudFront</a></strong>, backed by <a href="https://aws.amazon.com/s3" target="_blank">Amazon S3</a>. If you decide to have fun with this stuff, pay special attention to cache headers and Cross-Origin Resource Sharing (CORS) settings.</p>
 
-&lt;h3 id=&quot;compress-html&quot;&gt;Compress HTML&lt;/h3&gt;
+<h3 id="compress-html">Compress HTML</h3>
 
-&lt;p&gt;Getting the html optimised to be delivered over the network is a piece of cake with &lt;strong&gt;&lt;a href=&quot;https://github.com/penibelst/jekyll-compress-html&quot; target=&quot;_blank&quot;&gt;Jekyll Compress Html&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
+<p>Getting the html optimised to be delivered over the network is a piece of cake with <strong><a href="https://github.com/penibelst/jekyll-compress-html" target="_blank">Jekyll Compress Html</a></strong>.</p>
 
-&lt;h3 id=&quot;responsive&quot;&gt;Responsive&lt;/h3&gt;
+<h3 id="responsive">Responsive</h3>
 
-&lt;p&gt;It has been challenging to learn a few CSS tricks to get this website look decent in different screen sizes. I assume you should always have this in mind.&lt;/p&gt;
+<p>It has been challenging to learn a few CSS tricks to get this website look decent in different screen sizes. I assume you should always have this in mind.</p>
 
-&lt;h3 id=&quot;accessibility&quot;&gt;Accessibility&lt;/h3&gt;
+<h3 id="accessibility">Accessibility</h3>
 
-&lt;p&gt;I hope this blog is friendly to people who are visually impaired. I’ve favoured HTML5 tags (header, nav, section, etc.) instead of divs and I’ve tried to use &lt;strong&gt;&lt;a href=&quot;https://www.w3.org/WAI/intro/aria&quot; target=&quot;_blank&quot;&gt;WAI-ARIA&lt;/a&gt;&lt;/strong&gt; best practices.&lt;/p&gt;
+<p>I hope this blog is friendly to people who are visually impaired. I’ve favoured HTML5 tags (header, nav, section, etc.) instead of divs and I’ve tried to use <strong><a href="https://www.w3.org/WAI/intro/aria" target="_blank">WAI-ARIA</a></strong> best practices.</p>
 
-&lt;h3 id=&quot;fonts&quot;&gt;Fonts&lt;/h3&gt;
+<h3 id="fonts">Fonts</h3>
 
-&lt;p&gt;Why not have a deterministic approach to how your text will look like? I’ve noticed that major websites use their own &lt;strong&gt;typeface&lt;/strong&gt;. Although I didn’t want to license ($$$) a paid web font at this moment, I liked the idea to self host the &lt;a href=&quot;https://github.com/showcases/fonts&quot; target=&quot;_blank&quot;&gt;free fonts&lt;/a&gt; my blog is using. The benefits are a stronger visual identity and a more predictable behavior, since you don’t rely on the browser picking up the font for you.&lt;/p&gt;
+<p>Why not have a deterministic approach to how your text will look like? I’ve noticed that major websites use their own <strong>typeface</strong>. Although I didn’t want to license ($$$) a paid web font at this moment, I liked the idea to self host the <a href="https://github.com/showcases/fonts" target="_blank">free fonts</a> my blog is using. The benefits are a stronger visual identity and a more predictable behavior, since you don’t rely on the browser picking up the font for you.</p>
 
-&lt;h3 id=&quot;font-awesome&quot;&gt;Font Awesome&lt;/h3&gt;
+<h3 id="font-awesome">Font Awesome</h3>
 
-&lt;p&gt;How awesome is &lt;strong&gt;&lt;a href=&quot;https://fontawesome.com&quot; target=&quot;_blank&quot;&gt;Font Awesome&lt;/a&gt;&lt;/strong&gt; with its endless number of icons. You can setup a private account with their CDN where you are able to do some customisations as well as configure to asynchronously load the fonts in your page. Awesome!&lt;/p&gt;
+<p>How awesome is <strong><a href="https://fontawesome.com" target="_blank">Font Awesome</a></strong> with its endless number of icons. You can setup a private account with their CDN where you are able to do some customisations as well as configure to asynchronously load the fonts in your page. Awesome!</p>
 
-&lt;h3 id=&quot;favicons&quot;&gt;Favicons&lt;/h3&gt;
+<h3 id="favicons">Favicons</h3>
 
-&lt;p&gt;Nowadays favicons go beyond the scope of displaying a nice little image in your browser when a web page is bookmarked. There are specific icons for Android, iPhone and so on. Therefore, if you want to look good in all different platforms, make sure you define them properly &lt;a href=&quot;https://realfavicongenerator.net&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt; or &lt;a href=&quot;https://www.websiteplanet.com/webtools/favicon-generator&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+<p>Nowadays favicons go beyond the scope of displaying a nice little image in your browser when a web page is bookmarked. There are specific icons for Android, iPhone and so on. Therefore, if you want to look good in all different platforms, make sure you define them properly <a href="https://realfavicongenerator.net" target="_blank">here</a> or <a href="https://www.websiteplanet.com/webtools/favicon-generator" target="_blank">here</a>.</p>
 
-&lt;h3 id=&quot;atom-feeds-rss&quot;&gt;Atom Feeds (RSS)&lt;/h3&gt;
+<h3 id="atom-feeds-rss">Atom Feeds (RSS)</h3>
 
-&lt;p&gt;I keep a RSS-like feed of all my posts. The &lt;strong&gt;&lt;a href=&quot;https://github.com/jekyll/jekyll-feed&quot; target=&quot;_blank&quot;&gt;jekyll-feed&lt;/a&gt;&lt;/strong&gt; plugin does that seamlessly for me.&lt;/p&gt;
+<p>I keep a RSS-like feed of all my posts. The <strong><a href="https://github.com/jekyll/jekyll-feed" target="_blank">jekyll-feed</a></strong> plugin does that seamlessly for me.</p>
 
-&lt;h3 id=&quot;meta-tags-open-graphtwitter&quot;&gt;Meta Tags (Open Graph/Twitter)&lt;/h3&gt;
+<h3 id="meta-tags-open-graphtwitter">Meta Tags (Open Graph/Twitter)</h3>
 
-&lt;p&gt;This becomes relevant when someone shares a page from your website in a social network. You need to define which image, title and text to display when Facebook/Twitter render the post/tweet card, for example. I’m using a combination of &lt;strong&gt;&lt;a href=&quot;https://developers.facebook.com/docs/sharing/opengraph&quot; target=&quot;_blank&quot;&gt;Open Graph&lt;/a&gt;&lt;/strong&gt; and &lt;strong&gt;&lt;a href=&quot;https://dev.twitter.com/cards/overview&quot; target=&quot;_blank&quot;&gt;Twitter Cards&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
+<p>This becomes relevant when someone shares a page from your website in a social network. You need to define which image, title and text to display when Facebook/Twitter render the post/tweet card, for example. I’m using a combination of <strong><a href="https://developers.facebook.com/docs/sharing/opengraph" target="_blank">Open Graph</a></strong> and <strong><a href="https://dev.twitter.com/cards/overview" target="_blank">Twitter Cards</a></strong>.</p>
 
-&lt;h3 id=&quot;seo&quot;&gt;SEO&lt;/h3&gt;
+<h3 id="seo">SEO</h3>
 
-&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/jekyll/jekyll-seo-tag&quot; target=&quot;_blank&quot;&gt;Jekyll SEO Tag&lt;/a&gt;&lt;/strong&gt; to the rescue.&lt;/p&gt;
+<p><strong><a href="https://github.com/jekyll/jekyll-seo-tag" target="_blank">Jekyll SEO Tag</a></strong> to the rescue.</p>
 
-&lt;h3 id=&quot;sitemap&quot;&gt;Sitemap&lt;/h3&gt;
+<h3 id="sitemap">Sitemap</h3>
 
-&lt;p&gt;A sitemap makes easier for Google to find my pages (SEO++). The plugin &lt;strong&gt;&lt;a href=&quot;https://github.com/jekyll/jekyll-sitemap&quot; target=&quot;_blank&quot;&gt;Jekyll Sitemap&lt;/a&gt;&lt;/strong&gt; creates a new sitemap.xml file on every build.&lt;/p&gt;
+<p>A sitemap makes easier for Google to find my pages (SEO++). The plugin <strong><a href="https://github.com/jekyll/jekyll-sitemap" target="_blank">Jekyll Sitemap</a></strong> creates a new sitemap.xml file on every build.</p>
 
-&lt;h3 id=&quot;w3c&quot;&gt;W3C&lt;/h3&gt;
+<h3 id="w3c">W3C</h3>
 
-&lt;p&gt;I often test my site against the &lt;strong&gt;&lt;a href=&quot;https://validator.w3.org&quot; target=&quot;_blank&quot;&gt;W3C Validator&lt;/a&gt;&lt;/strong&gt;. It helps me to spot malformed html and stay compliant with W3C standards.&lt;/p&gt;
+<p>I often test my site against the <strong><a href="https://validator.w3.org" target="_blank">W3C Validator</a></strong>. It helps me to spot malformed html and stay compliant with W3C standards.</p>
 
-&lt;h3 id=&quot;htmlproofer&quot;&gt;HTMLProofer&lt;/h3&gt;
+<h3 id="htmlproofer">HTMLProofer</h3>
 
-&lt;p&gt;Fantastic tool to validate generated html output: &lt;strong&gt;&lt;a href=&quot;https://github.com/gjtorikian/html-proofer&quot; target=&quot;_blank&quot;&gt;HTMLProofer&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
+<p>Fantastic tool to validate generated html output: <strong><a href="https://github.com/gjtorikian/html-proofer" target="_blank">HTMLProofer</a></strong>.</p>
 
-&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+<h2 id="conclusion">Conclusion</h2>
 
-&lt;p&gt;It’s been a nice learning experience to go through this road. As a developer, I wanted to be a bit more professional by building my presence online with my own hands.&lt;/p&gt;
+<p>It’s been a nice learning experience to go through this road. As a developer, I wanted to be a bit more professional by building my presence online with my own hands.</p>
 
-&lt;p&gt;I would like to aknowledge and thank &lt;strong&gt;&lt;a href=&quot;http://www.yegor256.com&quot; target=&quot;_blank&quot;&gt;Yegor Bugayenko&lt;/a&gt;&lt;/strong&gt; for his blog and &lt;a href=&quot;http://www.yegor256.com/256-bloghacks.html&quot; target=&quot;_blank&quot;&gt;book&lt;/a&gt;. They’ve both served to me as a model and foundation for this project.&lt;/p&gt;</content><author><name></name></author><summary type="html">A few weeks ago I decided to engage in a project of building a blog. I was looking for challenges, I wanted to build something of my own, without using some of these well known platforms like Wordpress, Blogger, etc. It was more about the journey and satisfaction of dealing with a domain that I was never very familiar with: front-end development.</summary></entry></feed>
+<p>I would like to aknowledge and thank <strong><a href="http://www.yegor256.com" target="_blank">Yegor Bugayenko</a></strong> for his blog and <a href="http://www.yegor256.com/256-bloghacks.html" target="_blank">book</a>. They’ve both served to me as a model and foundation for this project.</p>]]></content><author><name></name></author><summary type="html"><![CDATA[The history, technology, tools and practices behind this blog.]]></summary></entry></feed>
