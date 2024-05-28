@@ -1,14 +1,15 @@
 name: ci-cd
 
 on:
+  workflow_dispatch:
   push:
     branches: [master]
     paths-ignore:
       - "README.md"
 
 permissions:
-  packages: write
-  contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: ci-cd
@@ -19,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: set datetime
         run: |
           echo "datetime=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_ENV
@@ -29,8 +30,8 @@ jobs:
         with:
           image: ${{ github.repository }}
           tags: latest ${{ github.sha }}
-          dockerfiles: |
-            ./Dockerfile
+          containerfiles: |
+            ./Containerfile
           build-args: |
             CREATED_AT=${{ env.datetime }}
             GITHUB_SHA=${{ github.sha }}
@@ -43,24 +44,42 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+  # deploy:
+  #   if: github.ref == 'refs/heads/master'
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: checkout
+  #       uses: actions/checkout@v4
+  #       with:
+  #         ref: gh-pages
+  #     - name: copy generated site
+  #       run: docker run --rm ghcr.io/${{ github.repository }}:$GITHUB_SHA tar -c -C /usr/share/nginx html | tar -x
+  #     - name: deploy github pages
+  #       uses: JamesIves/github-pages-deploy-action@v4
+  #       with:
+  #         branch: gh-pages
+  #         folder: html
+
   deploy:
     if: github.ref == 'refs/heads/master'
     needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: checkout
-        uses: actions/checkout@v3
-        with:
-          ref: gh-pages
-      - name: copy generated site
+      - name: extract generated site
         run: docker run --rm ghcr.io/${{ github.repository }}:$GITHUB_SHA tar -c -C /usr/share/nginx html | tar -x
       # - name: html proofer
       #   uses: chabad360/htmlproofer@v2
       #   with:
       #     directory: "./html"
       #     arguments: "--assume-extension --ignore-status-codes '999,302' --ignore-urls 'https://jekyllrb.com', 'https://fontawesome.com', 'https://www.websiteplanet.com/webtools/favicon-generator', 'https://red.ht/juliano'"
-      - name: deploy github pages
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: upload pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          branch: gh-pages
-          folder: html
+          path: html
+      - name: deploy github pages
+        id: deployment
+        uses: actions/deploy-pages@v4
