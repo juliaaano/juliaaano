@@ -6,15 +6,11 @@ description: |
 og_image: /images/juliano-traveling.jpg
 ---
 
-<amp-img
-    media="(min-width: 600px)"
-    src="{{ site.cdn.https }}/images/juliano-traveling.jpg"
-    alt="juliano-traveling"
-    class="image-right"
-    width="480"
-    height="640"
-    layout="responsive">
-</amp-img>
+<picture class="image-right">
+    <source media="(min-width: 600px)" srcset="{{ site.cdn.https }}/images/juliano-traveling.jpg">
+    <source media="(max-width: 599px)" srcset="{{ site.cdn.https }}/images/juliano-traveling-short.jpg">
+    <img src="{{ site.cdn.https }}/images/juliano-traveling.jpg" alt="juliano-traveling" width="480" height="640" loading="lazy">
+</picture>
 
 Hello, my name is Juliano.
 
@@ -31,15 +27,6 @@ Some people **I follow** and admire are [Gregor Hohpe](http://www.enterpriseinte
 **Books** that have highly influenced me are [listed here](http://a.co/3mjBzXy){:target="_blank"}.
 
 I hold a BSc in Information Systems and a specialization title in Project Management with an emphasis in the PMBOK® Guide and Standards.
-
-<amp-img
-    media="(max-width: 600px)"
-    src="{{ site.cdn.https }}/images/juliano-traveling-short.jpg"
-    alt="juliano-traveling"
-    width="480"
-    height="350"
-    layout="responsive">
-</amp-img>
 
 Travelling is absolutely part of my life and I take it seriously. Besides touristing every now and then, I have already lived, worked and studied in different countries, including Brazil, the US, Germany and Australia.
 

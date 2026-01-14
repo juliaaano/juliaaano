@@ -35,13 +35,15 @@ I guess **[Google Analytics](https://www.google.com/analytics/){:target="_blank"
 
 Time to setup a custom domain name. I've long used juliaaano as an online identity and I hope one day I can tell you the story why. DNS is provided by **[Amazon Route 53](https://aws.amazon.com/route53/){:target="_blank"}**. All I had to do there was to create a [couple of CNAME entries here and there](https://help.github.com/articles/using-a-custom-domain-with-github-pages/){:target="_blank"}.
 
-### Accelerated Mobile Pages
+### ~~Accelerated Mobile Pages~~ (Removed)
 
-I'm proud to say this website is powered by **[AMP](https://www.ampproject.org){:target="_blank"}**. I stumbled upon this technology by accident and got immediately really excited about it. Besides ensuring your pages load super fast, AMP helps you to build better html. Other than that, it's a step towards the [Progressive Web Apps](https://en.wikipedia.org/wiki/Progressive_web_app){:target="_blank"} movement. It's been designed to delivery content to mobile devices, but I see no reason why I wouldn't use with desktops.
+~~I'm proud to say this website is powered by **[AMP](https://www.ampproject.org){:target="_blank"}**. I stumbled upon this technology by accident and got immediately really excited about it. Besides ensuring your pages load super fast, AMP helps you to build better html. Other than that, it's a step towards the [Progressive Web Apps](https://en.wikipedia.org/wiki/Progressive_web_app){:target="_blank"} movement. It's been designed to delivery content to mobile devices, but I see no reason why I wouldn't use with desktops.~~
+
+**Update (2025):** AMP has been removed from this site. Google no longer requires AMP for preferential search ranking, making the additional complexity unnecessary. The site now uses standard HTML with modern best practices like lazy loading images.
 
 ### Content Delivery Network (CDN)
 
-Since I've decided to embrace performance by using AMP, nothing more natural than leverage it with the power of CDNs. All my images, javascript and fonts are delivered by **[Amazon CloudFront](https://aws.amazon.com/cloudfront/){:target="_blank"}**, backed by [Amazon S3](https://aws.amazon.com/s3){:target="_blank"}. If you decide to have fun with this stuff, pay special attention to cache headers and Cross-Origin Resource Sharing (CORS) settings. 
+All my images, javascript and fonts are delivered by **[Amazon CloudFront](https://aws.amazon.com/cloudfront/){:target="_blank"}**, backed by [Amazon S3](https://aws.amazon.com/s3){:target="_blank"}. If you decide to have fun with this stuff, pay special attention to cache headers and Cross-Origin Resource Sharing (CORS) settings. 
 
 ### Compress HTML
 
