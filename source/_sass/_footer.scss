@@ -1,6 +1,9 @@
+@use 'variables' as vars;
+@use 'commons';
+
 .footer {
-    @extend %gray;
-    font-size: .85 * $em;
-    margin-top: 4 * $em;
+    @include commons.gray;
+    font-size: .85 * vars.$em;
+    margin-top: 4 * vars.$em;
     text-align: center;
 }

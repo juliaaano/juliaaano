@@ -1,8 +1,11 @@
+@use 'variables' as vars;
+@use 'commons';
+
 .disqus {
-    @extend %unprintable;
-    @extend %wrapper;
+    @include commons.unprintable;
+    @include commons.wrapper;
     width: 80%;
-    @media all and (max-width: $width * 1.3) {
+    @media all and (max-width: vars.$width * 1.3) {
         width: 100%;
     }
 }

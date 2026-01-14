@@ -1,7 +1,8 @@
 // Variables
 // --------------------------
+@use "sass:string";
 
-$fa-font-path:        "#{$font-path}/font-awesome/fontawesome-5.12.1/webfonts" !default;
+$fa-font-path:        "" !default;
 $fa-font-size-base:    16px !default;
 $fa-font-display:      auto !default;
 $fa-css-prefix:        fa !default;
@@ -15,7 +16,7 @@ $fa-secondary-opacity: .4 !default;
 
 // Convenience function used to set content property
 @function fa-content($fa-var) {
-  @return unquote("\"#{ $fa-var }\"");
+  @return string.unquote("\"#{ $fa-var }\"");
 }
 
 // $fa-var-500px: \f26e;

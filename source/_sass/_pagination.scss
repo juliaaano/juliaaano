@@ -1,5 +1,8 @@
+@use 'variables' as vars;
+@use 'commons';
+
 .pagination {
-    @extend %unprintable;
+    @include commons.unprintable;
     text-align: center;
     margin: auto;
     width: 75%;
@@ -10,7 +13,7 @@
         float: right;
     }
     .mute {
-        @extend %gray;
+        @include commons.gray;
         visibility: hidden;
     }
     a {

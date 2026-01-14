@@ -1,5 +1,8 @@
+@use 'variables' as vars;
+@use 'commons';
+
 .buttons {
-    @extend %unprintable;
+    @include commons.unprintable;
     .share {
         a,
         a:visited {
@@ -9,21 +12,21 @@
             position: relative;
             .fab {
                 $size: 1.2;
-                border: 1px solid $gray;
+                border: 1px solid vars.$gray;
                 border-radius: 50%;
-                color: $gray;
+                color: vars.$gray;
                 display: inline-block;
-                height: $size * $em;
-                line-height: $size * $em;
-                margin-bottom: .2 * $em;
-                margin-right: .2 * $em;
-                padding: .4 * $size * $em;
+                height: $size * vars.$em;
+                line-height: $size * vars.$em;
+                margin-bottom: .2 * vars.$em;
+                margin-right: .2 * vars.$em;
+                padding: .4 * $size * vars.$em;
                 text-align: center;
                 vertical-align: middle;
-                width: $size * $em;
+                width: $size * vars.$em;
                 &:hover {
-                    background-color: $gray;
-                    color: $white;
+                    background-color: vars.$gray;
+                    color: vars.$white;
                 }
             }
         }

@@ -1,4 +1,6 @@
-%unprintable {
+@use 'variables' as vars;
+
+@mixin unprintable {
     @media print {
         display: none;
         visibility: hidden;
@@ -6,21 +8,21 @@
 }
 
 .unprintable {
-    @extend %unprintable;
+    @include unprintable;
 }
 
-%desktop-only {
-    @media all and (max-width: $width) {
+@mixin desktop-only {
+    @media all and (max-width: vars.$width) {
         display: none;
     }
 }
 
 .desktop-only {
-    @extend %desktop-only;
+    @include desktop-only;
 }
 
-%gray {
-    color: $gray;
+@mixin gray {
+    color: vars.$gray;
     a,
     a:visited {
         color: inherit;
@@ -28,27 +30,27 @@
 }
 
 .gray {
-    @extend %gray;
+    @include gray;
 }
 
-%wrapper {
+@mixin wrapper {
     box-sizing: border-box;
-    line-height: 1.4 * $em;
+    line-height: 1.4 * vars.$em;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 2 * $em;
-    margin-bottom: 2 * $em;
-    padding-left: 2 * $em;
-    padding-right: 2 * $em;
-    width: $width;
-    @media all and (max-width: $width) {
-        margin-top: 1 * $em;
-        padding-left: $em;
-        padding-right: $em;
+    margin-top: 2 * vars.$em;
+    margin-bottom: 2 * vars.$em;
+    padding-left: 2 * vars.$em;
+    padding-right: 2 * vars.$em;
+    width: vars.$width;
+    @media all and (max-width: vars.$width) {
+        margin-top: 1 * vars.$em;
+        padding-left: vars.$em;
+        padding-right: vars.$em;
         width: 100%;
     }
 }
 
 .wrapper {
-    @extend %wrapper;
+    @include wrapper;
 }

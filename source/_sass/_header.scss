@@ -1,7 +1,10 @@
+@use 'variables' as vars;
+@use 'commons';
+
 .header {
-    @extend %unprintable;
+    @include commons.unprintable;
     text-align: center;
-    @media all and (max-width: $width) {
+    @media all and (max-width: vars.$width) {
         text-align: left;
         .face {
             float: left;
@@ -45,7 +48,7 @@
         }
         li {
             display: inline;
-            margin-right: .4 * $em;
+            margin-right: .4 * vars.$em;
             &:after {
                 content: ' ';
             }
