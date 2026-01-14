@@ -1,5 +1,5 @@
 ### BUILDER IMAGE ###
-FROM docker.io/ruby:3.2.1-bullseye as builder
+FROM docker.io/ruby:3.4.4-bookworm as builder
 
 RUN gem install bundler jekyll
 
@@ -12,7 +12,7 @@ COPY source /build/source/
 RUN cd build && JEKYLL_ENV=production bundle exec jekyll build
 
 ### PRODUCTION IMAGE ###
-FROM docker.io/nginx:1.23.3-alpine
+FROM docker.io/nginx:1.28-alpine
 
 ARG CREATED_AT=none
 ARG GITHUB_SHA=none

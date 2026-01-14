@@ -51,3 +51,7 @@ CI/CD via GitHub Actions (`.github/workflows/ci-cd.yml`):
 # Run locally with Podman/Docker
 podman run --rm -p 50080:80 ghcr.io/juliaaano/juliaaano:latest
 ```
+
+## Documentation References
+
+Always use context7 for referencing library and sources documentation.
