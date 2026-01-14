@@ -7,6 +7,6 @@
         {% include scss/{{ page.style }} %}
     {% endif %}
 {% endcapture %}
-<style amp-custom>
+<style>
     {{ include_to_scssify | scssify | strip_newlines }}
 </style>

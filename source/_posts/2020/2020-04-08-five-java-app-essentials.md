@@ -14,14 +14,7 @@ You're building from scratch just another microservice and the programing langua
 <!--more-->
 
 <figure class="image">
-<amp-img
-    src="{{ site.cdn.https }}/images/five-app-essentials.png"
-    alt="filters-in-action"
-    class="image-center-2"
-    height="1"
-    width="1"
-    layout="responsive">
-</amp-img>
+<img src="{{ site.cdn.https }}/images/five-app-essentials.png" alt="filters-in-action" class="image-center-2" loading="lazy">
 <figcaption class="image-center-caption">Image: Top five.</figcaption>
 </figure>
 

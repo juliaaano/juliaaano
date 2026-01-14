@@ -23,14 +23,7 @@ Would result in logs **set to the DEBUG level**, only for that request, in the *
 <br><br>
 
 <figure class="image">
-<amp-img
-    src="{{ site.cdn.https }}/images/hario-filters-in-action.jpg"
-    alt="filters-in-action"
-    class="image-center"
-    height="1"
-    width="1"
-    layout="responsive">
-</amp-img>
+<img src="{{ site.cdn.https }}/images/hario-filters-in-action.jpg" alt="filters-in-action" class="image-center" loading="lazy">
 <figcaption class="image-center-caption">Image: Filters in action.</figcaption>
 </figure>
 

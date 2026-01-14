@@ -2,22 +2,13 @@
 layout: compress
 ---
 
-{% capture disqus %}{% if jekyll.environment == "production" and page.comments %}enabled{% endif %}{% endcapture %}
 {% capture analytics %}{% if jekyll.environment == "production" %}enabled{% endif %}{% endcapture %}
 
 <!DOCTYPE html>
-<html ⚡>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
-    <script async src="https://cdn.ampproject.org/v0.js"></script>
-    {% if analytics == "enabled" %}
-        <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
-    {% endif %}
-    {% if disqus == "enabled" or page.iframe == "required" %}
-        <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
-    {% endif %}
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
-    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
     {% include styles.html %}
     {% include favicon.html %}
     {% include twitter-card.html %}
@@ -28,7 +19,7 @@ layout: compress
 <body itemscope itemtype="https://schema.org/WebPage">
     <header class="wrapper header">
         <a href="/about-me" class="face">
-            <amp-img src="{{ site.cdn.https }}/images/jay-profile-2025-640px.jpg" alt="Photo of Juliano Mohr" height="80" width="80"></amp-img>
+            <img src="{{ site.cdn.https }}/images/jay-profile-2025-640px.jpg" alt="Photo of Juliano Mohr" height="80" width="80">
         </a>
         <nav>
             {% include social.html %}

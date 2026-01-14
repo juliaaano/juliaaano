@@ -14,14 +14,7 @@ Thanks to [**Quarkus**](https://quarkus.io/){:target="_blank"} and [**GitHub Act
 <!--more-->
 
 <figure class="image">
-<amp-img
-    src="{{ site.cdn.https }}/images/pipelines-by-sea.jpeg"
-    alt="pipelines-by-sea"
-    class="image-center"
-    height="1"
-    width="1"
-    layout="responsive">
-</amp-img>
+<img src="{{ site.cdn.https }}/images/pipelines-by-sea.jpeg" alt="pipelines-by-sea" class="image-center" loading="lazy">
 <figcaption class="image-center-caption">Image: Pipelines by the sea.</figcaption>
 </figure>
 
@@ -89,14 +82,7 @@ Cache invalidation will basically occur whenever the pom.xml changes.
 Another powerful feature is the [code scanning](https://github.com/features/security){:target="_blank"} action. Powered by CodeQL, it can be found in the Quarkus app as a separate [workflow](https://github.com/juliaaano/quarkus/blob/master/.github/workflows/scanning.yml){:target="_blank"}.
 
 <figure class="image">
-<amp-img
-    src="{{ site.cdn.https }}/images/github-code-scanning.png"
-    alt="github-code-scanning"
-    class="image-center"
-    height="1"
-    width="1"
-    layout="responsive">
-</amp-img>
+<img src="{{ site.cdn.https }}/images/github-code-scanning.png" alt="github-code-scanning" class="image-center" loading="lazy">
 <figcaption class="image-center-caption">Image: GitHub code scanning.</figcaption>
 </figure>
 

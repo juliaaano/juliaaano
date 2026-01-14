@@ -1,15 +1,9 @@
-<amp-analytics type="gtag" data-credentials="include">
-<script type="application/json">
-{
-  "vars" : {
-    "gtag_id": "G-L43RN1HQJ2",
-    "config" : {
-      "G-L43RN1HQJ2": {
-        "groups": "default",
-        "linker": { "domains": ["juliaaano.com", "www.juliaaano.com"] }
-      }
-    }
-  }
-}
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-L43RN1HQJ2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-L43RN1HQJ2', {
+    'linker': { 'domains': ['juliaaano.com', 'www.juliaaano.com'] }
+  });
 </script>
-</amp-analytics>
