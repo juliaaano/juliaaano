@@ -1,7 +1,12 @@
 ### BUILDER IMAGE ###
-FROM docker.io/ruby:3.2.1-bullseye as builder
+FROM docker.io/ruby:3.4.4-bookworm as builder
 
 RUN gem install bundler jekyll
+
+# Download Tailwind CLI
+RUN curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/latest/download/tailwindcss-linux-x64 \
+    && chmod +x tailwindcss-linux-x64 \
+    && mv tailwindcss-linux-x64 /usr/local/bin/tailwindcss
 
 COPY Gemfile Gemfile.lock _config.yml /build/
 
@@ -9,10 +14,12 @@ RUN cd build && bundle install
 
 COPY source /build/source/
 
+# Build Tailwind CSS then Jekyll
+RUN cd build && tailwindcss -i source/assets/css/input.css -o source/assets/css/main.css --minify
 RUN cd build && JEKYLL_ENV=production bundle exec jekyll build
 
 ### PRODUCTION IMAGE ###
-FROM docker.io/nginx:1.23.3-alpine
+FROM docker.io/nginx:1.28-alpine
 
 ARG CREATED_AT=none
 ARG GITHUB_SHA=none

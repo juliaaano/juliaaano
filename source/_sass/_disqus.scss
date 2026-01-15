@@ -1,8 +1,0 @@
-.disqus {
-    @extend %unprintable;
-    @extend %wrapper;
-    width: 80%;
-    @media all and (max-width: $width * 1.3) {
-        width: 100%;
-    }
-}

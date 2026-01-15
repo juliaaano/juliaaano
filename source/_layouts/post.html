@@ -1,5 +1,4 @@
 ---
-style: post.scss
 layout: default
 ---
 
@@ -24,28 +23,29 @@ layout: default
                 {% endif %}
 
                 <li class="unprintable">
-                    <i class="icon icon-comments"></i>
-                    <a href="{{ site.url }}{{ page.url }}#disqus_thread" itemprop="discussionUrl">comments</a>
+                    <span class="inline-flex items-center gap-1">
+                        {% include icons/comment.html %}
+                        <a href="{{ site.url }}{{ page.url }}#disqus_thread" itemprop="discussionUrl">comments</a>
+                    </span>
                 </li>
             </ul>
 
-            <div class="buttons notranslate desktop-only">
-                <nav class="share">
-
-                    <a href="https://twitter.com/share?url={{ site.url }}{{ page.url }}&amp;text={{ page.title | cgi_escape }}" title="Share on Twitter" rel="nofollow">
-                        <i class="fab fa-twitter notranslate" aria-hidden="true"></i>
+            <div class="mt-4 desktop-only unprintable">
+                <nav class="flex gap-2">
+                    <a href="https://twitter.com/share?url={{ site.url }}{{ page.url }}&amp;text={{ page.title | cgi_escape }}" title="Share on Twitter" rel="nofollow" class="share-btn">
+                        {% include icons/twitter.html %}
                     </a>
-                    <a href="https://www.linkedin.com/cws/share?url={{ site.url }}{{ page.url }}" title="Share on LinkedIn" rel="nofollow">
-                        <i class="fab fa-linkedin-in notranslate" aria-hidden="true"></i>
+                    <a href="https://www.linkedin.com/cws/share?url={{ site.url }}{{ page.url }}" title="Share on LinkedIn" rel="nofollow" class="share-btn">
+                        {% include icons/linkedin.html %}
                     </a>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ site.url }}{{ page.url }}" title="Share on Facebook" rel="nofollow">
-                        <i class="fab fa-facebook-f notranslate" aria-hidden="true"></i>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ site.url }}{{ page.url }}" title="Share on Facebook" rel="nofollow" class="share-btn">
+                        {% include icons/facebook.html %}
                     </a>
                 </nav>
             </div>
         </header>
         <main>
-            <article class="main" itemprop="articleBody">
+            <article class="mt-8" itemprop="articleBody">
                 {{ content }}
             </article>
         </main>

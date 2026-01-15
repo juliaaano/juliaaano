@@ -1,4 +1,9 @@
+# Deny all by default - whitelist only what's needed for the container build
+# Works with both Docker (.dockerignore) and Podman/Buildah (Containerfile)
 *
+
+# Required for Jekyll build
 !source
 !_config.yml
-!Gemfile*
+!Gemfile
+!Gemfile.lock

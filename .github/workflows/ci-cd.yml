@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: set datetime
         run: |
           echo "datetime=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_ENV
@@ -51,7 +51,7 @@ jobs:
   #   runs-on: ubuntu-latest
   #   steps:
   #     - name: checkout
-  #       uses: actions/checkout@v4
+  #       uses: actions/checkout@v6
   #       with:
   #         ref: gh-pages
   #     - name: copy generated site
@@ -78,7 +78,7 @@ jobs:
       #     directory: "./html"
       #     arguments: "--assume-extension --ignore-status-codes '999,302' --ignore-urls 'https://jekyllrb.com', 'https://fontawesome.com', 'https://www.websiteplanet.com/webtools/favicon-generator', 'https://red.ht/juliano'"
       - name: upload pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: html
       - name: deploy github pages
