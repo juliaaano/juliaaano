@@ -31,6 +31,7 @@ jobs:
         with:
           image: ${{ github.repository }}
           tags: latest ${{ github.sha }}
+          platforms: linux/amd64, linux/arm64
           containerfiles: |
             ./Containerfile
           build-args: |
@@ -44,23 +45,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-  # deploy:
-  #   if: github.ref == 'refs/heads/master'
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: checkout
-  #       uses: actions/checkout@v6
-  #       with:
-  #         ref: gh-pages
-  #     - name: copy generated site
-  #       run: docker run --rm ghcr.io/${{ github.repository }}:$GITHUB_SHA tar -c -C /usr/share/nginx html | tar -x
-  #     - name: deploy github pages
-  #       uses: JamesIves/github-pages-deploy-action@v4
-  #       with:
-  #         branch: gh-pages
-  #         folder: html
 
   deploy:
     if: github.ref == 'refs/heads/master'

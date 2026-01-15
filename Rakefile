@@ -14,7 +14,7 @@ task :tailwind_setup do
 		when /linux.*arm64/ then 'linux-arm64'
 		else 'linux-x64'
 		end
-		sh "curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/latest/download/tailwindcss-#{platform}"
+		sh "curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/download/v4.1.18/tailwindcss-#{platform}"
 		sh "chmod +x tailwindcss-#{platform}"
 		sh "mv tailwindcss-#{platform} #{TAILWIND_CLI}"
 	end
@@ -44,12 +44,6 @@ end
 desc 'Clean Jekyll site'
 task :clean do
 	sh "bundle exec jekyll clean"
-	rm_f 'source/assets/css/main.css'
-end
-
-desc 'Build Jekyll for production'
-task :build => :tailwind_build do
-	sh "JEKYLL_ENV=production bundle exec jekyll build"
 end
 
 desc 'Validate generated site through HTML proofer'

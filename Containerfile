@@ -4,7 +4,7 @@ FROM docker.io/ruby:3.4.4-bookworm as builder
 RUN gem install bundler jekyll
 
 # Download Tailwind CLI
-RUN curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/latest/download/tailwindcss-linux-x64 \
+RUN curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/download/v4.1.18/tailwindcss-linux-x64 \
     && chmod +x tailwindcss-linux-x64 \
     && mv tailwindcss-linux-x64 /usr/local/bin/tailwindcss
 

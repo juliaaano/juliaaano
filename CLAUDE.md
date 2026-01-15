@@ -17,9 +17,6 @@ bundle install
 # Local development server with drafts and live reload
 rake serve
 
-# Production build
-rake build
-
 # Clean generated site
 rake clean
 
@@ -34,7 +31,6 @@ rake proofer
   - `_posts/` - Blog posts organized by year subdirectories (e.g., `2017/`, `2021/`)
   - `_layouts/` - Page templates (default, post, page, compress)
   - `_includes/` - Reusable HTML partials
-  - `_sass/` - SCSS stylesheets
 - **Configuration**: `_config.yml` defines site settings, plugins, and CDN URLs
 - **Output**: `_site/` (generated, not committed)
 
