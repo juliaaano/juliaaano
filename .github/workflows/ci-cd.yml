@@ -25,6 +25,10 @@ jobs:
       - name: set datetime
         run: |
           echo "datetime=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_ENV
+      - name: Install qemu dependency
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y qemu-user-static
       - name: build image
         id: build-image
         uses: redhat-actions/buildah-build@v2
