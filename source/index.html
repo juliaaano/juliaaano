@@ -1,5 +1,4 @@
 ---
-style: homepage.scss
 layout: default
 title: "Home"
 description: |
@@ -40,13 +39,15 @@ description: |
                     {% include reading-time.html %}
                 </li>
                 <li>
-                    <i class="icon icon-comments"></i>
-                    <a href="{{ site.url }}{{ post.url }}#disqus_thread" itemprop="discussionUrl">comments</a>
+                    <span class="inline-flex items-center gap-1">
+                        {% include icons/comment.html %}
+                        <a href="{{ site.url }}{{ post.url }}#disqus_thread" itemprop="discussionUrl">comments</a>
+                    </span>
                 </li>
             </ul>
         </header>
 
-        <div itemprop="description">
+        <div itemprop="description" class="mt-4">
             {{ post.excerpt }}
         </div>
         <p>
@@ -57,16 +58,16 @@ description: |
 {% endfor %}
 </div>
 
-<div class="wrapper pagination">
+<div class="wrapper pagination unprintable">
     {% if paginator.next_page %}
-        <a href="{{ paginator.next_page_path }}" class="left">Older <i class="icon icon-fast-backward"></i></a>
+        <a href="{{ paginator.next_page_path }}" class="float-left inline-flex items-center gap-1">Older {% include icons/chevron-left.html %}</a>
     {% else %}
-        <span class="mute left">Older <i class="icon icon-fast-backward"></i></span>
+        <span class="mute float-left inline-flex items-center gap-1">Older {% include icons/chevron-left.html %}</span>
     {% endif %}
     <span>page {{ paginator.page }} of {{ paginator.total_pages }}</span>
     {% if paginator.previous_page %}
-        <a href="{{ paginator.previous_page_path }}" class="right"><i class="icon icon-fast-forward"></i> Newer</a>
+        <a href="{{ paginator.previous_page_path }}" class="float-right inline-flex items-center gap-1">{% include icons/chevron-right.html %} Newer</a>
     {% else %}
-        <span class="mute right"><i class="icon icon-fast-forward"></i> Newer</span>
+        <span class="mute float-right inline-flex items-center gap-1">{% include icons/chevron-right.html %} Newer</span>
     {% endif %}
 </div>

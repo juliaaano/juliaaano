@@ -6,3 +6,10 @@ juliaaano.sublime-project
 juliaaano.sublime-workspace
 .ruby-version
 .jekyll-cache/
+
+# Tailwind CLI binary
+tailwindcss
+tailwindcss-*
+
+# Generated CSS (keep input.css, ignore output)
+source/assets/css/main.css
