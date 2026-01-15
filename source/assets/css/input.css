@@ -84,6 +84,61 @@
     text-decoration: none;
   }
 
+  h2 {
+    font-size: 27px;
+    font-weight: bold;
+    line-height: 32px;
+    margin-top: 36px;
+    margin-bottom: 18px;
+  }
+
+  h3 {
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 27px;
+    margin-top: 27px;
+    margin-bottom: 14px;
+  }
+
+  h4 {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 22px;
+    margin-top: 18px;
+    margin-bottom: 9px;
+  }
+
+  p {
+    margin-top: 18px;
+    margin-bottom: 18px;
+  }
+
+  ul, ol {
+    margin-top: 18px;
+    margin-bottom: 18px;
+    padding-left: 36px;
+  }
+
+  li {
+    margin-bottom: 9px;
+  }
+
+  blockquote {
+    margin: 18px 0;
+    padding-left: 18px;
+    border-left: 4px solid var(--color-brand-gray-light);
+    color: var(--color-brand-gray-dark);
+    font-style: italic;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   a, a:visited {
     color: inherit;
     text-decoration: underline;
@@ -147,7 +202,7 @@
 
 @utility image-right {
   float: right;
-  min-width: 300px;
+  max-width: 280px;
   margin-left: 18px;
   margin-bottom: 18px;
 }
