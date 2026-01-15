@@ -1,12 +1,20 @@
 ### BUILDER IMAGE ###
 FROM docker.io/ruby:3.4.4-bookworm as builder
 
-RUN gem install bundler jekyll
-
 # Download Tailwind CLI
-RUN curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/download/v4.1.18/tailwindcss-linux-x64 \
-    && chmod +x tailwindcss-linux-x64 \
-    && mv tailwindcss-linux-x64 /usr/local/bin/tailwindcss
+ARG TAILWIND_VERSION=4.1.18
+ARG TARGETARCH
+RUN set -eux; \
+    case "$TARGETARCH" in \
+        amd64) tailwind_arch="x64" ;; \
+        arm64) tailwind_arch="arm64" ;; \
+        *) echo "Unsupported arch: $TARGETARCH" >&2; exit 1 ;; \
+    esac; \
+    curl -sLO "https://github.com/tailwindlabs/tailwindcss/releases/download/v${TAILWIND_VERSION}/tailwindcss-linux-${tailwind_arch}"; \
+    chmod +x "tailwindcss-linux-${tailwind_arch}"; \
+    mv "tailwindcss-linux-${tailwind_arch}" /usr/local/bin/tailwindcss
+
+RUN gem install bundler jekyll
 
 COPY Gemfile Gemfile.lock _config.yml /build/
 
