@@ -17,9 +17,6 @@ description: |
 <div itemscope itemtype="https://schema.org/Blog">
 {% for post in paginator.posts %}
     <section class="wrapper" itemprop="blogPosts" itemscope itemtype="https://schema.org/BlogPosting">
-
-        {% include microdata.html %}
-
         <header>
             <h1>
                 <a href="{{ post.url }}">

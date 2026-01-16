@@ -22,6 +22,28 @@ paginate_path: "/page/:num/"
 #   title: juliaaano.com
 #   subtitle: Programming Blog
 
+# https://github.com/jekyll/jekyll-seo-tag
+twitter:
+  username: juliaaano
+  card: summary
+
+author:
+  name: Juliano Mohr
+  twitter: juliaaano
+
+social:
+  name: Juliano Mohr
+  links:
+    - https://twitter.com/juliaaano
+    - https://www.linkedin.com/in/juliaaano
+    - https://github.com/juliaaano
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: https://d27nechif2d87h.cloudfront.net/images/juliano-bonanza-coffee.jpg
+
 # https://github.com/penibelst/jekyll-compress-html
 compress_html:
   ignore:
