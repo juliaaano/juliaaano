@@ -9,7 +9,7 @@ comments: true
 og_image: /images/sparkjava-icon.png
 ---
 
-About an year ago I've stumbled upon this interesting little framework called **[Spark Java](http://sparkjava.com/){:target="_blank"}**. If you are looking for a lightweight alternative to quickly develop **REST APIs in Java**, you might like this.
+About an year ago I've stumbled upon this interesting little framework called **[Spark Java](https://sparkjava.com/){:target="_blank"}**. If you are looking for a lightweight alternative to quickly develop **REST APIs in Java**, you might like this.
 
 <!--more-->
 

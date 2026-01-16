@@ -30,7 +30,7 @@ Enough said, I rest my case and give you here my list of **five essential micros
 
 The most common way to reach a service from the "outside" is via an **HTTP API**. The majority of software backend applications nowadays implement some sort of REST API.
 
-[**Spark Java**](http://sparkjava.com/){:target="_blank"} is a simple, yet powerful micro-framework that provides a DSL for rapid development of HTTP endpoints. It is less invasive compared to other web frameworks, but still offers a lot of power and flexibility.
+[**Spark Java**](https://sparkjava.com/){:target="_blank"} is a simple, yet powerful micro-framework that provides a DSL for rapid development of HTTP endpoints. It is less invasive compared to other web frameworks, but still offers a lot of power and flexibility.
 
 {% highlight java %}
 import static spark.Spark.*;
@@ -48,7 +48,7 @@ I wrote a blog post in the past about Spark Java [**here**](https://www.juliaaan
 
 Seeing that *~~REST~~* APIs are everywhere, we must think about how to **test** them.
 
-[**Rest Assured**](http://rest-assured.io/){:target="_blank"} is a great option. It has been out there for a while, so chances are you have heard about it. In short, it's a Java DSL for testing of REST services.
+[**Rest Assured**](https://rest-assured.io/){:target="_blank"} is a great option. It has been out there for a while, so chances are you have heard about it. In short, it's a Java DSL for testing of REST services.
 
 {% highlight java %}
 @Test
@@ -82,7 +82,7 @@ In a world of distributed microservices, it's imperative to be able to trace req
 
 For this reason, it is recommended that every logging statement should include a correlation identifier to the request that it belongs to.
 
-In Java, a popular solution is to use a logging framework that supports [**MDC - Mapped Diagnostic Context**](http://logback.qos.ch/manual/mdc.html){:target="_blank"}. With MDC, you are given access to store information in the context of a thread. This allows for an elegant solution where a "Request ID" is set to MDC and later read and written by the logging framework.
+In Java, a popular solution is to use a logging framework that supports [**MDC - Mapped Diagnostic Context**](https://logback.qos.ch/manual/mdc.html){:target="_blank"}. With MDC, you are given access to store information in the context of a thread. This allows for an elegant solution where a "Request ID" is set to MDC and later read and written by the logging framework.
 
 The Request ID should originate from the incoming request and always propagate through by each service. A common approach is to use HTTP Headers to carry this information. The header names should be standardized, **X-Request-ID** being a usual example of a name.
 
@@ -96,7 +96,7 @@ String correlationId = "APP-".concat(now().format(ISO_ORDINAL_DATE)).concat(rand
 MDC.put("X-Request-ID", correlationId);
 {% endhighlight %}
 
-And finally, an example of how to use X-Request-ID in [**Logback**](http://logback.qos.ch/){:target="_blank"}:
+And finally, an example of how to use X-Request-ID in [**Logback**](https://logback.qos.ch/){:target="_blank"}:
 
 {% highlight xml %}
 <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">

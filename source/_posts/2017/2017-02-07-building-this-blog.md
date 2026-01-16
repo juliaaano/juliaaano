@@ -75,7 +75,7 @@ I keep a RSS-like feed of all my posts. The **[jekyll-feed](https://github.com/j
 
 ### Meta Tags (Open Graph/Twitter)
 
-This becomes relevant when someone shares a page from your website in a social network. You need to define which image, title and text to display when Facebook/Twitter render the post/tweet card, for example. I'm using a combination of **[Open Graph](https://developers.facebook.com/docs/sharing/opengraph){:target="_blank"}** and **[Twitter Cards](https://dev.twitter.com/cards/overview){:target="_blank"}**.
+This becomes relevant when someone shares a page from your website in a social network. You need to define which image, title and text to display when Facebook/Twitter render the post/tweet card, for example. I'm using a combination of **[Open Graph](https://ogp.me/){:target="_blank"}** and **[Twitter Cards](https://developer.x.com/en/docs/x-for-websites/cards/overview/abouts-cards){:target="_blank"}**.
 
 ### SEO
 
@@ -97,4 +97,4 @@ Fantastic tool to validate generated html output: **[HTMLProofer](https://github
 
 It's been a nice learning experience to go through this road. As a developer, I wanted to be a bit more professional by building my presence online with my own hands.
 
-I would like to aknowledge and thank **[Yegor Bugayenko](http://www.yegor256.com){:target="_blank"}** for his blog and [book](http://www.yegor256.com/256-bloghacks.html){:target="_blank"}. They've both served to me as a model and foundation for this project.
+I would like to aknowledge and thank **[Yegor Bugayenko](https://www.yegor256.com){:target="_blank"}** for his blog and [book](https://www.yegor256.com/256-bloghacks.html){:target="_blank"}. They've both served to me as a model and foundation for this project.

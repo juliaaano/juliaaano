@@ -9,7 +9,7 @@ comments: true
 og_image: /images/hario-filters-in-action.jpg
 ---
 
-The ability to easily change the log level of an application from INFO to DEBUG, or any other log level, is a feature frequently desired to have in any backend system. What if there is a way to configure the application to dynamically set its log level based on an input given by the consumer of the application. More specifically, this blog post will demonstrate how to tune Java's **[Logback](http://logback.qos.ch/){:target="_blank"}** and **[Log4j](http://logging.apache.org/log4j/2.x/){:target="_blank"}** libraries to let HTTP clients define what log level to generate on the the server-side by simply passing an HTTP header.
+The ability to easily change the log level of an application from INFO to DEBUG, or any other log level, is a feature frequently desired to have in any backend system. What if there is a way to configure the application to dynamically set its log level based on an input given by the consumer of the application. More specifically, this blog post will demonstrate how to tune Java's **[Logback](https://logback.qos.ch/){:target="_blank"}** and **[Log4j](https://logging.apache.org/log4j/2.x/){:target="_blank"}** libraries to let HTTP clients define what log level to generate on the the server-side by simply passing an HTTP header.
 
 <!--more-->
 
@@ -35,11 +35,11 @@ Advantages:
 
 **Time for action.** Getting this to work is mostly a matter of configuring properly the logger framework.
 
-Both Java logging frameworks Logback and Log4j have a capability called **[Filters](http://logback.qos.ch/manual/filters.html){:target="_blank"}**. They allow log events to be evaluated to determine if or how they should be published. A developer can write a custom implementation of a Filter, however many implementations are already provided. One of them is the **[DynamicThresholdFilter](http://logback.qos.ch/apidocs/ch/qos/logback/classic/turbo/DynamicThresholdFilter.html){:target="_blank"}**.
+Both Java logging frameworks Logback and Log4j have a capability called **[Filters](https://logback.qos.ch/manual/filters.html){:target="_blank"}**. They allow log events to be evaluated to determine if or how they should be published. A developer can write a custom implementation of a Filter, however many implementations are already provided. One of them is the **[DynamicThresholdFilter](https://logback.qos.ch/manual/filters.html){:target="_blank"}**.
 
 The DynamicThresholdFilter allows filtering by log level based on specific attributes which are present in the MDC.
 
-The **[MDC](http://logback.qos.ch/manual/mdc.html){:target="_blank"}** (Mapped Diagnosed Context) is a key piece here because it needs to be used to signal which log level to use in the thread context initiated by the HTTP request.
+The **[MDC](https://logback.qos.ch/manual/mdc.html){:target="_blank"}** (Mapped Diagnosed Context) is a key piece here because it needs to be used to signal which log level to use in the thread context initiated by the HTTP request.
 
 Assigning a value to the MDC is simple and can be done with SLF4J:
 
@@ -53,7 +53,7 @@ The idea is to set the log level in the MDC right after the request comes in, us
 
 The DynamicThresholdFilter in Logback is quite powerful, but a bit more difficult to distil.
 
-A thoroughly [reading of the official docs](http://logback.qos.ch/apidocs/ch/qos/logback/classic/turbo/DynamicThresholdFilter.html){:target="_blank"} is recommended.
+A thoroughly [reading of the official docs](https://logback.qos.ch/manual/filters.html){:target="_blank"} is recommended.
 
 Following is an example that achieves the desired outcome. **Notice the need to set the root logger to DEBUG**. This is required as it will be the lowest log level you will be able to configure as per request. If INFO would be set there, you wouldn't be able to go any lower than that (DEBUG being the lowest, ERROR the highest).
 

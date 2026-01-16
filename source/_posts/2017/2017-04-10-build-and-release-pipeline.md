@@ -9,7 +9,7 @@ comments: true
 og_image: /images/pipeline.png
 ---
 
-A guide to get you started with the implementation of a software build pipeline in **[Travis CI](https://travis-ci.org/){:target="_blank"}** that automatically gets your code released to GitHub and pushed to a Docker registry. It takes you through some extra features such as Java's JAR signing (GPG) and encryption of secret data for your build. The examples assume that Java and Maven are in use. Furthermore, if releasing to **[Maven Central](http://central.sonatype.org/pages/apache-maven.html){:target="_blank"}** is your goal, this guide will take you right there at the door.
+A guide to get you started with the implementation of a software build pipeline in **[Travis CI](https://travis-ci.org/){:target="_blank"}** that automatically gets your code released to GitHub and pushed to a Docker registry. It takes you through some extra features such as Java's JAR signing (GPG) and encryption of secret data for your build. The examples assume that Java and Maven are in use. Furthermore, if releasing to **[Maven Central](https://central.sonatype.org/pages/apache-maven.html){:target="_blank"}** is your goal, this guide will take you right there at the door.
 
 <!--more-->
 
@@ -98,9 +98,9 @@ deploy:
 
 In the **before_install** step of the .travis.yml example above, there is a command to decrypt a codesign.asc.enc file to a decrypted codesign.asc one. This is done securely because my repository, in Travis, is the only one with a private key to decrypt it. Previously, I had used [Travis CLI in my local machine to encrypt](https://docs.travis-ci.com/user/encrypting-files){:target="_blank"} that file with the public key available in the corresponding Travis build repo.
 
-The codesign.asc is nothing more than another private key I have once created with GPG. Since it is a requirement from Maven Central to have signed JARs, I found useful to include it as part of my builds. There are plenty of resources out there [explaining how to work with](http://central.sonatype.org/pages/working-with-pgp-signatures.html){:target="_blank"} the GnuPG tool.
+The codesign.asc is nothing more than another private key I have once created with GPG. Since it is a requirement from Maven Central to have signed JARs, I found useful to include it as part of my builds. There are plenty of resources out there [explaining how to work with](https://central.sonatype.org/pages/working-with-pgp-signatures.html){:target="_blank"} the GnuPG tool.
 
-A Maven [plugin](http://maven.apache.org/components/plugins/maven-gpg-plugin/){:target="_blank"} has the job to do the actual JAR signing. For this case, it assumes my key is set as default in the environment (gpg --fast-import). The passphrase is expected to be configured ahead in Travis as an environment variable: $GPG_PASSPHRASE.
+A Maven [plugin](https://maven.apache.org/plugins/maven-gpg-plugin/){:target="_blank"} has the job to do the actual JAR signing. For this case, it assumes my key is set as default in the environment (gpg --fast-import). The passphrase is expected to be configured ahead in Travis as an environment variable: $GPG_PASSPHRASE.
 
 There is a project with the **pom.xml** configured with GPG [here](https://github.com/juliaaano/payload/blob/1.0.0/pom.xml){:target="_blank"}.
 
