@@ -64,7 +64,7 @@ jobs:
         uses: chabad360/htmlproofer@v2
         with:
           directory: "./html"
-          arguments: "--assume-extension --ignore-urls 'https://jekyllrb.com', 'https://www.websiteplanet.com/webtools/favicon-generator'"
+          arguments: "--assume-extension --ignore-urls 'https://jekyllrb.com,https://www.websiteplanet.com/webtools/favicon-generator'"
       - name: upload pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
