@@ -64,6 +64,7 @@ jobs:
         uses: chabad360/htmlproofer@v2
         with:
           directory: "./html"
+          arguments: --ignore-status-codes "429"
       - name: upload pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
